@@ -47,7 +47,7 @@ class App extends Component {
 		  var _this=this;
 		  setTimeout(()=>{
 			   _this.itemClick(5, data[5]);
-		  },3000);
+		  },1500);
         
       }
       this.dragMove(this.refs.music);
