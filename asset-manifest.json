@@ -1,8 +1,8 @@
 {
-  "main.css": "static/css/main.2e756c00.css",
-  "main.css.map": "static/css/main.2e756c00.css.map",
-  "main.js": "static/js/main.0486a90d.js",
-  "main.js.map": "static/js/main.0486a90d.js.map",
+  "main.css": "static/css/main.40b99d30.css",
+  "main.css.map": "static/css/main.40b99d30.css.map",
+  "main.js": "static/js/main.9c9f3881.js",
+  "main.js.map": "static/js/main.9c9f3881.js.map",
   "static\\media\\a20.9.png": "static/media/a20.9.1aa927ec.png",
   "static\\media\\acg.png": "static/media/acg.8dc9dbba.png",
   "static\\media\\ae2.png": "static/media/ae2.f8ee94d3.png",
@@ -10,11 +10,12 @@
   "static\\media\\ff1.jpg": "static/media/ff1.be022a7b.jpg",
   "static\\media\\ff2.jpg": "static/media/ff2.39ca8e9a.jpg",
   "static\\media\\ff3.jpg": "static/media/ff3.0a5aacd7.jpg",
-  "static\\media\\iloveyou": "static/media/iloveyou.5363f82b.bin",
+  "static\\media\\iloveyou": "static/media/iloveyou.720ab716.bin",
   "static\\media\\psb.png": "static/media/psb.da3de548.png",
   "static\\media\\ww.jpg": "static/media/ww.46ec2d97.jpg",
-  "static\\media\\全部都是你": "static/media/全部都是你.b044a156.bin",
-  "static\\media\\刚好遇见你": "static/media/刚好遇见你.705f059a.bin",
-  "static\\media\\小芳": "static/media/小芳.b90c6ea9.bin",
-  "static\\media\\想把我唱给你听": "static/media/想把我唱给你听.ad1cdf28.bin"
+  "static\\media\\偏偏喜欢你": "static/media/偏偏喜欢你.6a73ddc8.bin",
+  "static\\media\\全部都是你": "static/media/全部都是你.db9b4c71.bin",
+  "static\\media\\刚好遇见你": "static/media/刚好遇见你.eed23658.bin",
+  "static\\media\\小芳": "static/media/小芳.ba26bcf0.bin",
+  "static\\media\\想把我唱给你听": "static/media/想把我唱给你听.cb9a18b1.bin"
 }
