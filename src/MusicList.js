@@ -4,7 +4,7 @@ const data = [
       author: "Cover-小芳芳",
       url: "http://up.mcyt.net/?down/38579.mp3",
       pic: require('./ff/ff2.jpg'),
-      lrc:require('./lrcs/刚好遇见你')
+      lrc1:require('./lrcs/刚好遇见你')
    }
    ,
    {
@@ -12,7 +12,7 @@ const data = [
       author: "Cover-小芳芳",
       url: "http://up.mcyt.net/?down/32841.mp3",
       pic: require('./ff/ff1.jpg'),
-      lrc:require('./lrcs/小芳')
+      lrc1:require('./lrcs/小芳')
    }
    ,
    {
@@ -20,7 +20,7 @@ const data = [
       author: "老狼&王婧",
       url: "http://www.ytmp3.cn/?down/45621.mp3",
       pic: require('./img/psb.png'),
-      lrc:require('./lrcs/想把我唱给你听')
+      lrc1:require('./lrcs/想把我唱给你听')
    }
    ,
    {
@@ -28,14 +28,15 @@ const data = [
       author: "Cover-小芳芳",
       url: "http://up.mcyt.net/?down/41986.mp3",
       pic: require('./ff/ff2.jpg'),
-      lrc:require('./lrcs/iloveyou')
+      lrc1:require('./lrcs/iloveyou')
    }
    ,
    {
       name: "偏偏喜欢你",
       author: "陈百强",
       url: "http://up.mcyt.net/?down/31947.mp3",
-      pic: 'http://oeff2vktt.bkt.clouddn.com/image/48.jpg'
+      pic: 'http://oeff2vktt.bkt.clouddn.com/image/48.jpg',
+      lrc1:require('./lrcs/偏偏喜欢你')
    }
    ,
 
@@ -44,7 +45,7 @@ const data = [
       author: "Cover-小芳芳",
       url: "http://up.mcyt.net/?down/38423.mp3",
       pic: require('./ff/ff3.jpg'),
-      lrc:require('./lrcs/全部都是你')
+      lrc1:require('./lrcs/全部都是你')
    }
    ,
    {
@@ -111,12 +112,5 @@ const data = [
       pic: "http://oeff2vktt.bkt.clouddn.com/image/73.jpg"
    }
    ,
-
-   {
-      name: "演员",
-      author: "薛之谦",
-      url: "http://up.mcyt.net/?down/30716.mp3",
-      pic: "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1529058427966&di=31b80ead871693579e0f0a308c8eb139&imgtype=0&src=http%3A%2F%2Fupload.ct.youth.cn%2F2016%2F0405%2F1459849381149.jpg%3F0.014444927219301462"
-   }
   ];
 export default data;

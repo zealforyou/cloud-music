@@ -44,11 +44,11 @@ class App extends Component {
          state = JSON.parse(state);
          this.setState(state);
       } else {
-		  var _this=this;
-		  setTimeout(()=>{
-			   _this.itemClick(5, data[5]);
-		  },1500);
-        
+         var _this = this;
+         setTimeout(() => {
+            _this.itemClick(5, data[5]);
+         }, 1500);
+
       }
       this.dragMove(this.refs.music);
    }
@@ -56,6 +56,7 @@ class App extends Component {
    componentWillUnmount() {
       window.removeEventListener("scroll", this.onScroll);
       var player = this.refs.music;
+      this.removeControl(player);
       this.removeDragMove();
    }
 
@@ -92,34 +93,52 @@ class App extends Component {
       this.num = -1;
    }
 
-   /**
-    * 播放控制
-    */
-   playControl(audio) {
-      var _this = this;
-      audio.addEventListener("loadeddata", //歌曲一经完整的加载完毕( 也可以写成上面提到的那些事件类型)
-         function () {
-            let allTime = audio.duration;
-            _this.setState({
-               loaded: true,
-               playing: true
-            });
-         }, false);
 
-      audio.addEventListener("pause",
-         function () { //监听暂停
-            if (audio.currentTime === audio.duration) {
-               audio.currentTime = 0;
-            }
-         }, false);
-      audio.addEventListener("play",
-         function () { //监听播放
-         }, false);
-      audio.addEventListener("ended", function () {
+   playControl(audio) {
+      let _this=this;
+      /**
+       * 播放控制
+       */
+      function loadeddata() {
+         _this.setState({
+            loaded: true,
+            playing: true
+         });
+      }
+
+      function pause() { //监听暂停
+         let audio = _this.refs.music;
+         if (audio.currentTime === audio.duration) {
+            audio.currentTime = 0;
+         }
+      }
+
+      function play() {
+         console.log("appplay")
+      }
+
+      function ended() {
+         console.log("appended")
          _this.setState({
             playing: false
          });
-      }, false)
+      }
+      this.loadeddata=loadeddata;
+      this.pause=pause;
+      this.play=play;
+      this.ended=ended;
+      //歌曲一经完整的加载完毕( 也可以写成上面提到的那些事件类型)
+      audio.addEventListener("loadeddata", loadeddata, false);
+      audio.addEventListener("pause",pause, false);
+      audio.addEventListener("play", play, false);
+      audio.addEventListener("ended", ended, false);
+   }
+
+   removeControl(audio) {
+      audio.removeEventListener("laodeddata", this.loadeddata, false);
+      audio.removeEventListener("pause", this.pause, false);
+      audio.removeEventListener("play", this.play, false);
+      audio.removeEventListener("ended", this.ended, false);
    }
 
    itemClick(position, item) {
@@ -182,7 +201,7 @@ class App extends Component {
                      <div className='big-img'>
                         <img
                            onClick={() => {
-                              this.setState({dialog: true});
+                              this.setState({dialog1: true});
                            }}
                            src={require('./ff/ff3.jpg')}
                            className='fm'/>
@@ -286,10 +305,10 @@ class App extends Component {
 
                </div>
             </footer>
-            <div className='dialog-center' style={{visibility: this.state.dialog ? 'visible' : 'hidden'}}>
+            <div className='dialog-center' style={{display: this.state.dialog1 ? 'block' : 'none'}}>
                <img className='big' src={require('./ff/ff3.jpg')}/>
                <img className='close' src={require('./img/a_w.png')} onClick={() => {
-                  this.setState({dialog: false});
+                  this.setState({dialog1: false});
                }}/>
             </div>
          </div>

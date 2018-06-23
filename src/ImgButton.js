@@ -8,25 +8,37 @@ export default class ImgBtn extends Component {
 
    componentWillMount() {
       let drawable = this.props.drawable;
-      if(!(drawable.src instanceof Array)){
-         drawable.src=[drawable.src]
+      if (!(drawable.src instanceof Array)) {
+         drawable.src = [drawable.src]
       }
-      if(!(drawable.press instanceof Array)){
-         drawable.press=[drawable.press]
+      if (!(drawable.press instanceof Array)) {
+         drawable.press = [drawable.press]
       }
       this.setState({
          src: this.props.selected ? drawable.src[1] : drawable.src[0],
          selected: this.props.selected ? this.props.selected : false
       });
    }
-
+   componentWillReceiveProps(nextProps){
+      let drawable = nextProps.drawable;
+      if (!(drawable.src instanceof Array)) {
+         drawable.src = [drawable.src]
+      }
+      if (!(drawable.press instanceof Array)) {
+         drawable.press = [drawable.press]
+      }
+      this.setState({
+         src: nextProps.selected ? drawable.src[1] : drawable.src[0],
+         selected: nextProps.selected ? nextProps.selected : false
+      });
+   }
    render() {
       let {onCheckChanged, onClick, drawable, ...other} = this.props;
-      if(!(drawable.src instanceof Array)){
-         drawable.src=[drawable.src]
+      if (!(drawable.src instanceof Array)) {
+         drawable.src = [drawable.src]
       }
-      if(!(drawable.press instanceof Array)){
-         drawable.press=[drawable.press]
+      if (!(drawable.press instanceof Array)) {
+         drawable.press = [drawable.press]
       }
       return (
          <div className='ImgBtn' {...other}

@@ -1,9 +1,11 @@
 import React, {Component} from 'react';
 import ImgBtn from './ImgButton';
 import SeekBar from './SeekBar';
+import LrcView from "./LrcView";
 
 const Style = require('./Page2.css');
 const $ = require('jquery');
+const lrcParse = require('./LrcManager');
 export default class Page2 extends Component {
    constructor() {
       super();
@@ -31,32 +33,43 @@ export default class Page2 extends Component {
    componentWillUnmount() {
       var player = this.music;
       this.removeDragMove();
+      this.removeControl(player);
       window.localStorage.setItem("state", JSON.stringify(this.state));
       window.localStorage.setItem("back", '1');
    }
 
    _showLrc() {
-      var _this=this;
-      if(this.state.item.lrc&&!this.state.item.lrcStr){
-         this.state.item.lrcLoading=true;
-         $.ajax(this.state.item.lrc,{
-            success(res){
-               res=res.replace(/"/g,'').replace(/[\n]/g,'<br/>');
+      var _this = this;
+      let lrc1 = this.state.item.lrc1, lrc = this.state.item.lrc;
+      if ((lrc1 && !this.state.item.lrcEntity) || (lrc && !this.state.item.lrcStr)) {
+         $.ajax(lrc1 ? lrc1 : lrc, {
+            success(res) {
                console.log(res);
-               _this.state.item.lrcLoading=false;
-               _this.state.item.lrcStr=res;
-               $("#lrc").html(res);
-               _this.setState({item:_this.state.item});
+               if (lrc1) {
+                  _this._showLrcView(res);
+               } else {
+                  _this._showLrcText(res);
+               }
             },
-            error(){
-               _this.state.item.lrcLoading=false;
-               _this.state.item.lrcErr=true;
-               _this.setState({item:_this.state.item});
+            error() {
+
             }
          })
       }
-
    }
+
+   _showLrcView(res) {
+      let data = lrcParse(res);
+      this.setState({
+         lrcEntity: data
+      });
+   }
+
+   _showLrcText(res) {
+      res = res.replace(/"/g, '').replace(/[\n]/g, '<br/>');
+      $(".dialog-lrc").html(`<p id='lrc'>${res}</p>`);
+   }
+
 
    num = -1;
 
@@ -83,34 +96,58 @@ export default class Page2 extends Component {
       this.num = -1;
    }
 
+
    /**
     * 播放控制
     */
    playControl(audio) {
-      var _this = this;
-      audio.addEventListener("loadeddata", //歌曲一经完整的加载完毕( 也可以写成上面提到的那些事件类型)
-         function () {
-            let allTime = audio.duration;
-            _this.setState({
-               loaded: true,
-               playing: true
-            });
-         }, false);
+      let _this = this;
 
-      audio.addEventListener("pause",
-         function () { //监听暂停
-            if (audio.currentTime === audio.duration) {
-               audio.currentTime = 0;
-            }
-         }, false);
-      audio.addEventListener("play",
-         function () { //监听播放
-         }, false);
-      audio.addEventListener("ended", function () {
+      /**
+       * 播放控制
+       */
+      function loadeddata() {
+         _this.setState({
+            loaded: true,
+            playing: true
+         });
+      }
+
+      function pause() { //监听暂停
+         let audio = _this.music;
+         if (audio.currentTime === audio.duration) {
+            audio.currentTime = 0;
+         }
+      }
+
+      function play() {
+         console.log("page2play");
+      }
+
+      function ended() {
+         console.log("page2ended");
          _this.setState({
             playing: false
          });
-      }, false)
+      }
+
+      this.loadeddata = loadeddata;
+      this.pause = pause;
+      this.play = play;
+      this.ended = ended;
+
+      //歌曲一经完整的加载完毕( 也可以写成上面提到的那些事件类型)
+      audio.addEventListener("loadeddata", loadeddata, false);
+      audio.addEventListener("pause", pause, false);
+      audio.addEventListener("play", play, false);
+      audio.addEventListener("ended", ended, false);
+   }
+
+   removeControl(audio) {
+      audio.removeEventListener("laodeddata", this.loadeddata);
+      audio.removeEventListener("pause", this.pause);
+      audio.removeEventListener("play", this.play);
+      audio.removeEventListener("ended", this.ended);
    }
 
    clickPlay(e) {
@@ -143,10 +180,11 @@ export default class Page2 extends Component {
                   </div>
 
                </div>
-               <img src={require("./img/a8k.png")} style={{}}/>
+               <img src={require("./img/a8k.png")} style={{width: "20px"}}/>
             </div>
             <div className="line">
             </div>
+            {/*光盘区域*/}
             <div className='circle-lrc-contain'>
                <div className="circleContain" style={{display: this.state.dialog ? 'none' : 'block'}} onClick={() => {
                   this.setState({dialog: true});
@@ -163,14 +201,22 @@ export default class Page2 extends Component {
                           style={{animation: this.state.playing ? 'head-in 1s forwards' : 'head-out 1s forwards'}}/>
                   </div>
                </div>
+               {/*歌词dialog*/}
                <div className='dialog-lrc' style={{display: !this.state.dialog ? 'none' : 'block'}} onClick={() => {
                   this.setState({dialog: false});
                }}>
-                  <p id='lrc'>
-                     {/*{this.state.item.lrcErr?"暂无歌词":this.state.item.lrcLoading?"正在加载歌词":this.state.item.lrcStr}*/}
-                  </p>
+                  {this.state.lrcEntity ? (
+                     <LrcView
+                        nextTime={this.state.currentTime}
+                        data={this.state.lrcEntity}
+                        style={{
+                           width: '100%', height: "100%",
+                           margin: 0, padding: 0,
+                        }}/>
+                  ) : ''}
                </div>
             </div>
+            {/*点赞按钮等*/}
             <div className='page2Menu1'>
                <ImgBtn style={{animation: this.state.animation ? this.state.animation : 'none'}} onCheckChanged={(checked) => {
                   this.setState({
@@ -183,14 +229,16 @@ export default class Page2 extends Component {
                <ImgBtn drawable={{press: require("./img/ad3.png"), src: require("./img/ad2.png")}}/>
                <ImgBtn drawable={{press: require("./img/ad0.png"), src: require("./img/acz.png")}}>
                   <small style={{
-                     fontSize: "0.05rem", position: 'absolute', right: '5%'
-                     , top: "25%", transform: "scale(0.8)", fontFamily: "Consolas"
+                     fontSize: "0.1rem", position: 'absolute', right: '11%'
+                     , top: "26%", transform: "scale(1)", fontFamily: "Consolas"
                   }}>999+
                   </small>
                </ImgBtn>
                <ImgBtn drawable={{press: require("./img/adh.png"), src: require("./img/adg.png")}}/>
             </div>
+            {/*进度条*/}
             <SeekBar duration={this.state.duration} currentTime={this.state.currentTime}/>
+            {/*播放控制按钮组*/}
             <div className='flex-row-center controlMenu'>
                <ImgBtn drawable={{
                   src: require('./img/adi.png'),
