@@ -1,8 +1,8 @@
 {
   "main.css": "static/css/main.40b99d30.css",
   "main.css.map": "static/css/main.40b99d30.css.map",
-  "main.js": "static/js/main.a6388f77.js",
-  "main.js.map": "static/js/main.a6388f77.js.map",
+  "main.js": "static/js/main.ea43440c.js",
+  "main.js.map": "static/js/main.ea43440c.js.map",
   "static\\media\\123我爱你": "static/media/123我爱你.d9631b3f.bin",
   "static\\media\\a20.9.png": "static/media/a20.9.1aa927ec.png",
   "static\\media\\acg.png": "static/media/acg.8dc9dbba.png",
@@ -10,5 +10,6 @@
   "static\\media\\aea.png": "static/media/aea.c496a4f0.png",
   "static\\media\\bt_girl.jpg": "static/media/bt_girl.28635978.jpg",
   "static\\media\\empty": "static/media/empty.b921eb38.bin",
-  "static\\media\\ww.jpg": "static/media/ww.46ec2d97.jpg"
+  "static\\media\\ww.jpg": "static/media/ww.46ec2d97.jpg",
+  "static\\media\\人生谏言.txt": "static/media/人生谏言.e636e3ad.txt"
 }
