@@ -67,10 +67,11 @@ export default class LrcView extends Component {
                   return (
                      <li style={{
                         listStyleType: "none",
-                        height:item.lrc?'auto':'30px',
-                        fontSize: highLight ? '20px' : '16px',
+                        height:item.lrc?'auto':'35px',
+                        fontSize: highLight ? '18px' : '15px',
                         lineHeight: '30px', textAlign: 'center',
                         color: highLight ? '#fff' : '#aaa'
+                        ,padding:'0 15px'
                      }}>{item.lrc}</li>
                   )
                })

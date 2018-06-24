@@ -25,7 +25,8 @@ const data = [
       name: "Something Just Like This",
       author: "The Chainsmokers",
       url: "http://up.mcyt.net/?down/45372.mp3",
-      pic: "http://oeff2vktt.bkt.clouddn.com/image/34.jpg"
+      pic: "http://oeff2vktt.bkt.clouddn.com/image/34.jpg",
+      lrc1:require('./lrcs/人生谏言.txt')
    }
    ,
 

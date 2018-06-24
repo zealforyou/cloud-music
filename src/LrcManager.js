@@ -26,7 +26,7 @@ function parseLrc(lrc) {
 
    function parseBody(line) {
       let split = line.split(']');
-      let lrc = '\n';
+      let lrc='';
       let temp=[];
       for (let i = 0; i < split.length; i++) {
          let content = split[i];
@@ -38,7 +38,8 @@ function parseLrc(lrc) {
             time.time = s;
             temp.push(time);
          } else {//歌词
-            lrc = content?content:'';
+
+            lrc =content?content.replace(/[\r\n]/,''):'';
          }
       }
       for (let i = 0; i < temp.length; i++) {
@@ -57,7 +58,7 @@ function parseLrc(lrc) {
       }
    }
    result.body.times.sort(function (a, b) {
-      return a.time - b.time;
+      return a.time === b.time?b.lrc.length-a.lrc.length:a.time-b.time
    });
    return result;
 }
