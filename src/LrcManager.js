@@ -62,5 +62,4 @@ function parseLrc(lrc) {
    return result;
 }
 
-
 module.exports = parseLrc;

@@ -34,22 +34,26 @@ export default class Page2 extends Component {
       var player = this.music;
       this.removeDragMove();
       this.removeControl(player);
-      window.localStorage.setItem("state", JSON.stringify(this.state));
+      this.state.dialog = false;
+     let {lrcEntity,...save}=this.state;
+      window.localStorage.setItem("state", JSON.stringify(save));
       window.localStorage.setItem("back", '1');
    }
 
    _showLrc() {
       var _this = this;
-      let lrc1 = this.state.item.lrc1, lrc = this.state.item.lrc;
-      if ((lrc1 && !this.state.item.lrcEntity) || (lrc && !this.state.item.lrcStr)) {
-         $.ajax(lrc1 ? lrc1 : lrc, {
+      let lrc1 = this.state.item.lrc1;
+      if (this.state.item.lrcEntity) {
+         this.setState({
+            lrcEntity: this.state.item.lrcEntity,
+         });
+      } else {
+         let url = lrc1 ? lrc1 : require('./lrcs/empty');
+         $.ajax(url, {
             success(res) {
                console.log(res);
-               if (lrc1) {
-                  _this._showLrcView(res);
-               } else {
-                  _this._showLrcText(res);
-               }
+               _this._showLrcView(res);
+               // _this._showLrcText(res);
             },
             error() {
 
@@ -60,6 +64,7 @@ export default class Page2 extends Component {
 
    _showLrcView(res) {
       let data = lrcParse(res);
+      this.state.item.lrcEntity = data;
       this.setState({
          lrcEntity: data
       });
@@ -209,6 +214,10 @@ export default class Page2 extends Component {
                      <LrcView
                         nextTime={this.state.currentTime}
                         data={this.state.lrcEntity}
+                        onLrcSelect={(selectLrcId) => {
+                           this.selectLrcId = selectLrcId;
+                        }}
+                        selectLrcId={this.state.selectLrcId}
                         style={{
                            width: '100%', height: "100%",
                            margin: 0, padding: 0,

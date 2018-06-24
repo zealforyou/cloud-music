@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="436fe5a0-87a3-46ca-a0c9-72ecc1c098d2" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lrcs/empty" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/LrcManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/LrcManager.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/LrcView.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/LrcView.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Page2.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Page2.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -16,25 +20,13 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="App.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="App.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/App.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="133">
-              <caret line="49" column="14" selection-start-line="49" selection-start-column="14" selection-end-line="49" selection-end-column="14" />
+            <state relative-caret-position="196">
+              <caret line="203" column="51" selection-start-line="203" selection-start-column="45" selection-end-line="203" selection-end-column="51" />
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/index.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="209">
-              <caret line="11" column="36" selection-start-line="11" selection-start-column="36" selection-end-line="11" selection-end-column="36" />
-              <folding>
-                <element signature="e#0#26#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -43,8 +35,20 @@
       <file leaf-file-name="MusicList.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/MusicList.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="361">
-              <caret line="58" column="24" selection-start-line="58" selection-start-column="24" selection-end-line="58" selection-end-column="24" />
+            <state relative-caret-position="551">
+              <caret line="47" column="10" selection-start-line="47" selection-start-column="10" selection-end-line="47" selection-end-column="10" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="LrcView.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/LrcView.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-19">
+              <caret line="11" column="21" selection-start-line="11" selection-start-column="21" selection-end-line="11" selection-end-column="21" />
+              <folding>
+                <element signature="e#0#39#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -52,21 +56,44 @@
       <file leaf-file-name="Page2.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Page2.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="665">
-              <caret line="35" column="21" selection-start-line="35" selection-start-column="21" selection-end-line="35" selection-end-column="21" />
+            <state relative-caret-position="82">
+              <caret line="26" column="11" selection-start-line="26" selection-start-column="1" selection-end-line="26" selection-end-column="11" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Page2.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="LrcManager.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/LrcManager.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="665">
+              <caret line="62" column="1" selection-start-line="62" selection-start-column="1" selection-end-line="62" selection-end-column="1" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Page2.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Page2.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="340">
-              <caret line="165" column="96" selection-start-line="165" selection-start-column="91" selection-end-line="165" selection-end-column="96" />
+            <state relative-caret-position="324">
+              <caret line="55" column="26" selection-start-line="55" selection-start-column="26" selection-end-line="55" selection-end-column="26" />
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
-                <element signature="e#3269#3944#0" />
-                <element signature="e#3957#3998#0" />
+                <element signature="n#style#0;n#span#1;n#div#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#img#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#div#2;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#img#1;n#div#1;n#div#2;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#img#0;n#div#2;n#div#2;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#3;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#LrcView#0;n#!!top" expanded="true" />
+                <element signature="n#div#0;n#LrcView#0;n#!!top" />
+                <element signature="n#style#0;n#ImgBtn#0;n#div#0;n#LrcView#0;n#!!top" expanded="true" />
+                <element signature="e#6377#6550#0" />
+                <element signature="e#6670#7023#0" />
+                <element signature="n#div#0;n#SeekBar#0;n#!!top" />
+                <element signature="n#style#0;n#div#0;n#div#0;n#SeekBar#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#1;n#div#0;n#SeekBar#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#2;n#div#0;n#SeekBar#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#3;n#div#0;n#SeekBar#0;n#!!top" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -85,24 +112,8 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>selected</find>
-      <find>drawable</find>
-      <find>onCheckChanged</find>
-      <find>btnBig</find>
-      <find>btnBig1</find>
-      <find>anim1</find>
-      <find>div-img1</find>
-      <find>anim2</find>
-      <find>33</find>
-      <find>Zea</find>
-      <find>item</find>
-      <find>currentTime</find>
-      <find>progress</find>
-      <find>this.refs</find>
-      <find>removeDragMove</find>
       <find>dragMove</find>
       <find>circleContain</find>
-      <find>playing</find>
       <find>loaded</find>
       <find>binlyric</find>
       <find>find</find>
@@ -111,13 +122,30 @@
       <find>module</find>
       <find>module.exports</find>
       <find>loadLrc</find>
-      <find>dialog</find>
       <find>lrc</find>
       <find>_showLrc</find>
+      <find>laodeddata</find>
+      <find>audio</find>
+      <find>playControl</find>
+      <find>App.</find>
+      <find>this.</find>
+      <find>removeControl</find>
+      <find>playing</find>
+      <find>setState</find>
+      <find>ul</find>
       <find>lrcStr</find>
+      <find>currentTime</find>
+      <find>\[\d{2}:\d{2}.*\]$\n</find>
+      <find>dialog</find>
+      <find>props.selectLrcId</find>
+      <find>show</find>
+      <find>selectLrcId</find>
+      <find>_scrollTo</find>
+      <find>_selectLrcId</find>
     </findStrings>
     <replaceStrings>
       <replace>playControl</replace>
+      <replace>this.</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -128,22 +156,26 @@
       <list>
         <option value="$PROJECT_DIR$/src/SwitchPage.js" />
         <option value="$PROJECT_DIR$/src/SeekBar.js" />
-        <option value="$PROJECT_DIR$/src/ImgButton.js" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/src/App.css" />
-        <option value="$PROJECT_DIR$/src/LrcView.js" />
-        <option value="$PROJECT_DIR$/src/LrcManager.js" />
         <option value="D:/zhuo.zhang/桌面/binMusic/lrc-parser/example/lrcs/lrc.js" />
-        <option value="$PROJECT_DIR$/src/lrcs/全部都是你" />
-        <option value="$PROJECT_DIR$/src/Page2.js" />
-        <option value="$PROJECT_DIR$/src/Page2.css" />
-        <option value="$PROJECT_DIR$/src/lrcs/刚好遇见你" />
-        <option value="$PROJECT_DIR$/src/lrcs/小芳" />
-        <option value="$PROJECT_DIR$/src/lrcs/想把我唱给你听" />
         <option value="$PROJECT_DIR$/src/lrcs/i love you" />
-        <option value="$PROJECT_DIR$/src/MusicList.js" />
         <option value="$PROJECT_DIR$/src/index.js" />
+        <option value="$PROJECT_DIR$/src/ImgButton.js" />
+        <option value="$PROJECT_DIR$/src/Page2.css" />
+        <option value="$PROJECT_DIR$/src/lrcs/小芳" />
+        <option value="$PROJECT_DIR$/src/lrcs/1.lrc" />
+        <option value="$PROJECT_DIR$/src/lrcs/偏偏喜欢你" />
         <option value="$PROJECT_DIR$/src/App.js" />
+        <option value="$PROJECT_DIR$/src/lrcs/想把我唱给你听" />
+        <option value="$PROJECT_DIR$/src/lrcs/刚好遇见你" />
+        <option value="$PROJECT_DIR$/src/lrcs/iloveyou" />
+        <option value="$PROJECT_DIR$/src/lrcs/全部都是你" />
+        <option value="$PROJECT_DIR$/src/MusicList.js" />
+        <option value="$PROJECT_DIR$/src/LrcManager.js" />
+        <option value="$PROJECT_DIR$/src/LrcView.js" />
+        <option value="$PROJECT_DIR$/src/lrcs/empty" />
+        <option value="$PROJECT_DIR$/src/Page2.js" />
       </list>
     </option>
   </component>
@@ -200,6 +232,12 @@
               <item name="cloud-music" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="cloud-music" type="b2602c69:ProjectViewProjectNode" />
+              <item name="cloud-music" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="lrcs" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -220,6 +258,7 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\cloud-music\src\lrcs" />
       <recent name="D:\reactProject\cloud-music\src" />
       <recent name="D:\reactProject\cloud-music\src\img" />
       <recent name="D:\reactProject\cloud-music\src\ff" />
@@ -335,12 +374,12 @@
       <updated>1529464696175</updated>
       <workItem from="1529464697642" duration="47023000" />
       <workItem from="1529629184564" duration="31457000" />
-      <workItem from="1529688188270" duration="1057000" />
+      <workItem from="1529688188270" duration="33831000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="79537000" />
+    <option name="totallyTimeSpent" value="112311000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -350,6 +389,7 @@
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
+      <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.32960895" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Run" order="2" />
@@ -363,7 +403,6 @@
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Find" order="1" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -404,45 +443,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/MusicList.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1102">
-          <caret line="58" column="24" selection-start-line="58" selection-start-column="24" selection-end-line="58" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/App.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="627">
-          <caret line="35" column="40" lean-forward="true" selection-start-line="35" selection-start-column="40" selection-end-line="35" selection-end-column="40" />
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Page2.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="380">
-          <caret line="20" column="111" selection-start-line="20" selection-start-column="111" selection-end-line="20" selection-end-column="111" />
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-            <element signature="e#3269#3944#0" />
-            <element signature="e#3957#3998#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="76">
-          <caret line="9" column="11" selection-start-line="9" selection-start-column="11" selection-end-line="9" selection-end-column="11" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="380">
@@ -455,9 +455,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/logo.svg">
       <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/index.css">
-      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/src/registerServiceWorker.js">
       <provider selected="true" editor-type-id="text-editor">
@@ -514,12 +511,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ListView.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/img/ac3.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/img/ac4.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
@@ -539,13 +530,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ImgButton.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-285">
-          <caret line="27" column="43" selection-start-line="27" selection-start-column="43" selection-end-line="27" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/ff/ff1.jpg">
       <provider selected="true" editor-type-id="images" />
     </entry>
@@ -558,9 +542,6 @@
           <caret line="21" column="7" selection-start-line="21" selection-start-column="7" selection-end-line="21" selection-end-column="7" />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ff/ff3.jpg">
-      <provider selected="true" editor-type-id="images" />
     </entry>
     <entry file="file://$PROJECT_DIR$/package.json">
       <provider selected="true" editor-type-id="text-editor">
@@ -583,80 +564,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/App.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3078">
-          <caret line="162" column="15" selection-start-line="162" selection-start-column="15" selection-end-line="162" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/lrcs/1.lrc">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="95">
-          <caret line="5" column="28" lean-forward="true" selection-start-line="5" selection-start-column="28" selection-end-line="5" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://D:/zhuo.zhang/桌面/binMusic/lrc-parser/example/lrcs/lrc.js" />
-    <entry file="file://$PROJECT_DIR$/src/lrcs/全部都是你">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="33">
-          <caret line="17" column="13" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/lrcs/刚好遇见你">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="893">
-          <caret line="47" column="7" selection-start-line="47" selection-start-column="7" selection-end-line="47" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/lrcs/想把我唱给你听">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="741">
-          <caret line="39" column="10" selection-start-line="39" selection-start-column="10" selection-end-line="39" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/lrcs/小芳">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/lrcs/iloveyou">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="128">
-          <caret line="40" column="23" lean-forward="true" selection-start-line="40" selection-start-column="23" selection-end-line="40" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Page2.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="665">
-          <caret line="35" column="21" selection-start-line="35" selection-start-column="21" selection-end-line="35" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/LrcManager.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="57">
-          <caret line="3" column="24" selection-start-line="3" selection-start-column="24" selection-end-line="3" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/LrcView.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="228">
-          <caret line="12" column="18" selection-start-line="10" selection-start-column="11" selection-end-line="12" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/MusicList.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="361">
-          <caret line="58" column="24" selection-start-line="58" selection-start-column="24" selection-end-line="58" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="209">
@@ -667,24 +575,164 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Page2.js">
+    <entry file="file://$PROJECT_DIR$/src/img/acg.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/img/a8k.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/img/ac3.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ImgButton.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="165" column="96" selection-start-line="165" selection-start-column="91" selection-end-line="165" selection-end-column="96" />
+        <state relative-caret-position="361">
+          <caret line="31" column="49" selection-start-line="31" selection-start-column="49" selection-end-line="31" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/App.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="196">
+          <caret line="156" column="12" selection-start-line="156" selection-start-column="12" selection-end-line="156" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/index.css">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ListView.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="176">
+          <caret line="13" column="39" selection-start-line="13" selection-start-column="39" selection-end-line="13" selection-end-column="69" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
-            <element signature="e#3269#3944#0" />
-            <element signature="e#3957#3998#0" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/lrcs/偏偏喜欢你">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="38">
+          <caret line="2" column="6" selection-start-line="2" selection-start-column="6" selection-end-line="2" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ff/ff3.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/lrcs/1.lrc">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="228">
+          <caret line="12" column="43" selection-end-line="20" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/lrcs/刚好遇见你">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="114">
+          <caret line="6" column="10" lean-forward="true" selection-start-line="6" selection-start-column="10" selection-end-line="6" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/lrcs/想把我唱给你听">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="380">
+          <caret line="20" column="38" selection-start-line="20" selection-start-column="38" selection-end-line="20" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Page2.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="82">
+          <caret line="26" column="11" selection-start-line="26" selection-start-column="1" selection-end-line="26" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/lrcs/小芳">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="133">
+          <caret line="7" column="15" selection-start-line="7" selection-start-column="15" selection-end-line="7" selection-end-column="15" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/App.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="133">
-          <caret line="49" column="14" selection-start-line="49" selection-start-column="14" selection-end-line="49" selection-end-column="14" />
+        <state relative-caret-position="196">
+          <caret line="203" column="51" selection-start-line="203" selection-start-column="45" selection-end-line="203" selection-end-column="51" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/lrcs/iloveyou">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1026">
+          <caret line="54" column="10" selection-start-line="54" selection-start-column="10" selection-end-line="54" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/lrcs/全部都是你">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-869">
+          <caret line="3" column="15" selection-start-line="3" selection-start-column="15" selection-end-line="3" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/MusicList.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="551">
+          <caret line="47" column="10" selection-start-line="47" selection-start-column="10" selection-end-line="47" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/LrcManager.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="665">
+          <caret line="62" column="1" selection-start-line="62" selection-start-column="1" selection-end-line="62" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/lrcs/empty">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="19" selection-start-column="19" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/LrcView.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-19">
+          <caret line="11" column="21" selection-start-line="11" selection-start-column="21" selection-end-line="11" selection-end-column="21" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Page2.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="324">
+          <caret line="55" column="26" selection-start-line="55" selection-start-column="26" selection-end-line="55" selection-end-column="26" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+            <element signature="n#style#0;n#span#1;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#img#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#2;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#img#1;n#div#1;n#div#2;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#img#0;n#div#2;n#div#2;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#3;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#LrcView#0;n#!!top" expanded="true" />
+            <element signature="n#div#0;n#LrcView#0;n#!!top" />
+            <element signature="n#style#0;n#ImgBtn#0;n#div#0;n#LrcView#0;n#!!top" expanded="true" />
+            <element signature="e#6377#6550#0" />
+            <element signature="e#6670#7023#0" />
+            <element signature="n#div#0;n#SeekBar#0;n#!!top" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#SeekBar#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#0;n#SeekBar#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#2;n#div#0;n#SeekBar#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#3;n#div#0;n#SeekBar#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>

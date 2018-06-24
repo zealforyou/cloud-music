@@ -9,7 +9,7 @@ export default class LrcView extends Component {
    }
 
    componentWillMount() {
-      this.setState({selectLrcId: -1});
+      this.setState({selectLrcId:-1});
    }
 
    componentWillReceiveProps(pre) {
@@ -25,6 +25,9 @@ export default class LrcView extends Component {
       for (let i = 0; i < data.body.times.length; i++) {
          let time = data.body.times[i];
          if (parseInt(nextTime) === parseInt(time.time)&&time.lrc) {
+            if (this.props.onLrcSelect){
+               this.props.onLrcSelect(i);
+            }
             this._scrollTo(i);
             return i;
          }
@@ -82,5 +85,8 @@ export default class LrcView extends Component {
 
 LrcView.propTypes = {
    data: PropTypes.array,
-   nextTime: PropTypes.number
+   nextTime: PropTypes.number,
+   selectLrcId:PropTypes.number,
+   onLrcSelect:PropTypes.func,
+   show:PropTypes.any
 };
