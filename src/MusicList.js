@@ -1,65 +1,10 @@
 const data = [
    {
-      name: "刚好遇见你",
-      author: "Cover-小芳芳",
-      url: "http://up.mcyt.net/?down/38579.mp3",
-      pic: require('./ff/ff2.jpg'),
-      lrc1:require('./lrcs/刚好遇见你')
-   }
-   ,
-   {
-      name: "小芳",
-      author: "Cover-小芳芳",
-      url: "http://up.mcyt.net/?down/32841.mp3",
-      pic: require('./ff/ff1.jpg'),
-      lrc1:require('./lrcs/小芳')
-   }
-   ,
-   {
-      name: "想把我唱给你听",
-      author: "老狼&王婧",
-      url: "http://www.ytmp3.cn/?down/45621.mp3",
-      pic: require('./img/psb.png'),
-      lrc1:require('./lrcs/想把我唱给你听')
-   }
-   ,
-   {
-      name: "I Love You",
-      author: "Cover-小芳芳",
-      url: "http://up.mcyt.net/?down/41986.mp3",
-      pic: require('./ff/ff2.jpg'),
-      lrc1:require('./lrcs/iloveyou')
-   }
-   ,
-   {
-      name: "偏偏喜欢你",
-      author: "陈百强",
-      url: "http://up.mcyt.net/?down/31947.mp3",
-      pic: 'http://oeff2vktt.bkt.clouddn.com/image/48.jpg',
-      lrc1:require('./lrcs/偏偏喜欢你')
-   }
-   ,
-
-   {
-      name: "全部都是你",
-      author: "Cover-小芳芳",
-      url: "http://up.mcyt.net/?down/38423.mp3",
-      pic: require('./ff/ff3.jpg'),
-      lrc1:require('./lrcs/全部都是你')
-   }
-   ,
-   {
-      name: "最美的期待",
-      author: "周笔畅",
-      url: "http://up.mcyt.net/?down/47601.mp3",
-      pic: require('./ff/ff1.jpg')
-   }
-   ,
-   {
-      name: "小幸运",
-      author: "Cover-小芳芳",
-      url: "http://up.mcyt.net/?down/36891.mp3",
-      pic: require('./ff/ff3.jpg')
+      name: "123我爱你",
+      author: "新乐尘符",
+      url: "http://up.mcyt.net/?down/45965.mp3",
+      pic: 'http://oeff2vktt.bkt.clouddn.com/image/76.jpg',
+      lrc1:require('./lrcs/123我爱你')
    }
    ,
    {
@@ -81,13 +26,6 @@ const data = [
       author: "The Chainsmokers",
       url: "http://up.mcyt.net/?down/45372.mp3",
       pic: "http://oeff2vktt.bkt.clouddn.com/image/34.jpg"
-   }
-   ,
-   {
-      name: "123我爱你",
-      author: "新乐尘符",
-      url: "http://up.mcyt.net/?down/45965.mp3",
-      pic: 'http://oeff2vktt.bkt.clouddn.com/image/76.jpg'
    }
    ,
 

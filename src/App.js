@@ -7,7 +7,9 @@ require('./App.css');
 class App extends Component {
    constructor() {
       super();
-      this.bgColor = [43, 57, 57];
+      this.bgColor = [230, 150, 120];
+      this.title="想唱就唱";
+      this.username="唱的响亮";
    }
 
    componentWillMount() {
@@ -46,7 +48,7 @@ class App extends Component {
       } else {
          var _this = this;
          setTimeout(() => {
-            _this.itemClick(5, data[5]);
+            _this.itemClick(0, data[0]);
          }, 1500);
 
       }
@@ -203,7 +205,7 @@ class App extends Component {
                            onClick={() => {
                               this.setState({dialog1: true});
                            }}
-                           src={require('./ff/ff3.jpg')}
+                           src={data.length>0?data[0].pic:require('./img/bt_girl.jpg')}
                            className='fm'/>
                         <span className='flex-row-center' style={{position: 'absolute', zIndex: 1000, right: '5px'}}>
                              <img src={require('./img/zh.png')} style={{width: "12px"}}/>
@@ -218,10 +220,10 @@ class App extends Component {
                         paddingLeft: '1rem',
                         paddingTop: '0.5rem'
                      }}>
-                        <span>想把我唱给你听</span>
+                        <span>{this.title}</span>
                         <div className='flex-row-center' style={{height: '60%'}}>
                            <img src={require('./img/a20.9.png')} className='avatar'/>
-                           <span style={{fontSize: '15px', padding: '0 8px'}}>灰常灰常萱你 </span>
+                           <span style={{fontSize: '15px', padding: '0 8px'}}>{this.username} </span>
                            <img style={{width: '7px'}} src={require('./img/po.png')}/>
                         </div>
                      </div>
@@ -305,8 +307,8 @@ class App extends Component {
 
                </div>
             </footer>
-            <div className='dialog-center' style={{display: this.state.dialog1 ? 'block' : 'none'}}>
-               <img className='big' src={require('./ff/ff3.jpg')}/>
+            <div className='dialog-center' style={{display: this.state.dialog1 ? 'flex' : 'none'}}>
+               <img className='big' src={data.length>0?data[0].pic:require('./img/bt_girl.jpg')}/>
                <img className='close' src={require('./img/a_w.png')} onClick={() => {
                   this.setState({dialog1: false});
                }}/>

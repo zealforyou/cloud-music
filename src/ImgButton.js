@@ -27,10 +27,13 @@ export default class ImgBtn extends Component {
       if (!(drawable.press instanceof Array)) {
          drawable.press = [drawable.press]
       }
-      this.setState({
-         src: nextProps.selected ? drawable.src[1] : drawable.src[0],
-         selected: nextProps.selected ? nextProps.selected : false
-      });
+      if (typeof nextProps.selected!=='undefined'){
+         this.setState({
+            src: nextProps.selected ? drawable.src[1] : drawable.src[0],
+            selected: nextProps.selected ? nextProps.selected : false
+         });
+      }
+
    }
    render() {
       let {onCheckChanged, onClick, drawable, ...other} = this.props;
@@ -61,14 +64,17 @@ export default class ImgBtn extends Component {
                     this.setState({
                        src: drawable.src[0],
                        selected: false
+                    },function () {
+                       onCheckChanged ? onCheckChanged(false) : false;
                     });
-                    onCheckChanged ? onCheckChanged(false) : false;
                  } else {
                     this.setState({
                        src: drawable.src[1],
                        selected: true
+                    },function () {
+                       onCheckChanged ? onCheckChanged(true) : false;
                     });
-                    onCheckChanged ? onCheckChanged(true) : false;
+
                  }
               }}>
             <img src={this.state.src} style={Style.img}/>

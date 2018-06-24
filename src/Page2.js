@@ -229,7 +229,7 @@ export default class Page2 extends Component {
             <div className='page2Menu1'>
                <ImgBtn style={{animation: this.state.animation ? this.state.animation : 'none'}} onCheckChanged={(checked) => {
                   this.setState({
-                     animation: `${checked ? "btnBig" : "btnBig1"} 0.5s cubic-bezier(0.215, 0.610, 0.355, 1.000)`
+                     animation: `${checked ? "btnBig" : "btnBig1"} 0.5s`
                   });
                }} drawable={{
                   press: [require("./img/add.png"), require('./img/adf.png')],
