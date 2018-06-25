@@ -7,7 +7,7 @@ require('./App.css');
 class App extends Component {
    constructor() {
       super();
-      this.bgColor = [230, 150, 120];
+      this.bgColor = [150, 50, 50];
       this.title="想唱就唱";
       this.username="唱的响亮";
    }
