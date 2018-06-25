@@ -233,7 +233,10 @@ class App extends Component {
                         <img src={require('./img/a2l.png')}/>
                         <span>收藏</span>
                      </div>
-                     <div className='flex-c-center'>
+                     <div className='flex-c-center'
+                          onClick={()=>{
+                             this.props.history.push("/CommentPage");
+                          }}>
                         <img src={require('./img/a2j.png')}/>
                         <span>评论</span>
                      </div>
