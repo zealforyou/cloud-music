@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Switch, Route} from 'react-router-dom';
 import App from './App';
 import Page2 from './Page2';
+import CommentPage from './page/CommentPage';
 
 export default class SwitchPage extends Component {
    constructor() {
@@ -17,6 +18,7 @@ export default class SwitchPage extends Component {
             <Switch>
                <Route exact path="/" component={App}/>
                <Route exact path="/Page2" component={Page2}/>
+                <Route exact path="/CommentPage" component={CommentPage}/>
             </Switch>
          </div>
       )

@@ -220,7 +220,7 @@ export default class Page2 extends Component {
                         selectLrcId={this.state.selectLrcId}
                         style={{
                            width: '100%', height: "100%",
-                           margin: 0, padding: 0,
+                           margin: 0, padding: 0,overflow:'scroll'
                         }}/>
                   ) : ''}
                </div>
@@ -240,7 +240,8 @@ export default class Page2 extends Component {
                   <small style={{
                      fontSize: "0.1rem", position: 'absolute', right: '11%'
                      , top: "26%", transform: "scale(1)", fontFamily: "Consolas"
-                  }}>999+
+                  }}
+                  >999+
                   </small>
                </ImgBtn>
                <ImgBtn drawable={{press: require("./img/adh.png"), src: require("./img/adg.png")}}/>

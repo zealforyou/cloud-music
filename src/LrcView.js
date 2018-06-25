@@ -37,8 +37,9 @@ export default class LrcView extends Component {
 
    _scrollTo(position) {
       // var lrcView=this.refs.lrcView;
-      let a = $('#lrcView').parent();
-      let first=a.children('#lrcFirstChild');
+      let a = $('#lrcView');
+      let first=$('#lrcFirstChild');
+      console.log(first.scrollTop());
       // a.scrollTop((position) * 30);
       a.animate({"scrollTop":(position) * 30})
    }
