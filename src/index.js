@@ -8,15 +8,16 @@ import {createStore, combineReducers, applyMiddleware} from 'redux';
 import {Provider} from "react-redux";
 import {ConnectedRouter, routerReducer, routerMiddleware} from 'react-router-redux';
 import createHistory from 'history/createHashHistory';
+import reducers from './reducer/reducers';
 
 const history = createHistory();
 const middleware = routerMiddleware(history);
-const store = createStore(
-   combineReducers({
-      ...reducers,
-      router: routerReducer
-   }),
-   applyMiddleware(middleware));
+const combReducer=combineReducers({
+   ...reducers,
+   router: routerReducer
+});
+const store = createStore(combReducer, applyMiddleware(middleware));
+
 
 ReactDOM.render((
    <Provider store={store}>
