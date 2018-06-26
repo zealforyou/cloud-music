@@ -2,6 +2,13 @@
 //http://www.kugou.com/yy/index.php?r=play/getdata&hash=25a8a5ee71898435f99bdfdd21f3f6e3
 const data = [
    {
+      name: "凉凉 (王者荣耀版)",
+      author: "抓包",
+      url: "http://fs.w.kugou.com/201806260955/e60b2f013dd35bec9677cec8a1df4437/G102/M03/1A/05/BocBAFkpUeGAZ8IaAEnAk_ytX3c314.mp3",
+      pic: "http://singerimg.kugou.com/uploadpic/softhead/400/20170603/20170603111817154.jpg",
+   }
+   ,
+   {
       name: "JULY",
       author: "抓包",
       url: "http:\\/\\/fs.w.kugou.com\\/201806252332\\/c87e4f0c659dfb77066df786c10cdbb3\\/G076\\/M05\\/10\\/19\\/LJQEAFgcRpWAcCWaAC2iwNYOB0w548.mp3",
