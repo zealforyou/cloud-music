@@ -1,4 +1,14 @@
+//抓包接口http://mobilecdn.kugou.com/api/v3/search/song?format=json&keyword=JULY&page=1&pagesize=20&showtype=1
+//http://www.kugou.com/yy/index.php?r=play/getdata&hash=25a8a5ee71898435f99bdfdd21f3f6e3
 const data = [
+   {
+      name: "JULY",
+      author: "抓包",
+      url: "http:\\/\\/fs.w.kugou.com\\/201806252332\\/c87e4f0c659dfb77066df786c10cdbb3\\/G076\\/M05\\/10\\/19\\/LJQEAFgcRpWAcCWaAC2iwNYOB0w548.mp3",
+      pic: "http:\\/\\/singerimg.kugou.com\\/uploadpic\\/softhead\\/400\\/20180525\\/20180525225705340.jpg",
+      lrc1:require('./lrcs/JULY')
+   }
+   ,
    {
       name: "123我爱你",
       author: "新乐尘符",
@@ -21,6 +31,7 @@ const data = [
       pic: "http://oeff2vktt.bkt.clouddn.com/image/3.jpg"
    }
    ,
+
    {
       name: "Something Just Like This",
       author: "The Chainsmokers",
@@ -29,7 +40,6 @@ const data = [
       lrc1:require('./lrcs/人生谏言.txt')
    }
    ,
-
    {
       name: "那个人",
       author: "周延英(英子-effie)",
@@ -49,6 +59,13 @@ const data = [
       author: "苏运莹&田馥甄",
       url: "http://up.mcyt.net/?down/47883.mp3",
       pic: "http://oeff2vktt.bkt.clouddn.com/image/73.jpg"
+   }
+   ,
+   {
+      name: "Animals",
+      author: "抓包",
+      url: "http://fs.w.kugou.com//201806252328//e91f84bb9be416cbc348dafd4ca6f4bf//G035//M08//17//09//Yw0DAFWfrL6Abvm1ACKuXr8EufM029.mp3",
+      pic: "http:\\/\\/singerimg.kugou.com\\/uploadpic\\/softhead\\/400\\/20180525\\/20180525225705340.jpg"
    }
    ,
   ];
