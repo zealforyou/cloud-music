@@ -26,7 +26,11 @@ export default class CommentPage extends Component {
       return (
          <div className='Comment'>
                <div className="header">
-                  <img src={require('../img/ic_left.png')} alt=""/>
+                  <span onClick={()=>{
+                     this.props.history.push(" ");
+                  }}>
+                     <img src={require('../img/ic_left.png')} alt=""/>
+                  </span>
                   <span>评论(67364753)</span>
                </div>
 
