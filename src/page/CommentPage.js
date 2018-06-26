@@ -25,12 +25,11 @@ export default class CommentPage extends Component {
    render() {
       return (
          <div className='Comment'>
+               <div className="header">
+                  <img src={require('../img/ic_left.png')} alt=""/>
+                  <span>评论(67364753)</span>
+               </div>
 
-               <span>
-                   <em><img src={require('../img/ic_left.png')} alt=""/></em>
-                  <em>评论(67364753)</em>
-
-               </span>
          </div>
 
       )
