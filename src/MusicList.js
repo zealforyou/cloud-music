@@ -2,6 +2,13 @@
 //http://www.kugou.com/yy/index.php?r=play/getdata&hash=25a8a5ee71898435f99bdfdd21f3f6e3
 const data = [
    {
+      name: "Solo Dance)",
+      author: "抓包",
+      url: "http://fs.w.kugou.com/201806261009/8c2a8ab79e816e8da6e0640529736bbb/G080/M04/19/1D/8IYBAFgeWYSAAr36ACq5lbsvexo309.mp3",
+      pic: "http://singerimg.kugou.com/uploadpic/softhead/400/20160802/20160802172904831.jpg",
+   }
+   ,
+   {
       name: "凉凉 (王者荣耀版)",
       author: "抓包",
       url: "http://fs.w.kugou.com/201806260955/e60b2f013dd35bec9677cec8a1df4437/G102/M03/1A/05/BocBAFkpUeGAZ8IaAEnAk_ytX3c314.mp3",
