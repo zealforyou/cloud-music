@@ -2,23 +2,18 @@ import React, {Component} from 'react';
 import ImgBtn from './ImgButton';
 import SeekBar from './SeekBar';
 import LrcView from "./LrcView";
-
+import {connect} from "react-redux";
+import {actionType} from "./reducer/appState";
 const Style = require('./Page2.css');
 const $ = require('jquery');
 const lrcParse = require('./LrcManager');
-export default class Page2 extends Component {
+ class Page2 extends Component {
    constructor() {
       super();
    }
 
    componentWillMount() {
-      var query = this.props.location.query;
-      console.log(query);
-      this.setState({
-         ...query,
-         duration: 1,
-         currentTime: 0
-      });
+      this.setState({});
    }
 
    music;
@@ -35,17 +30,15 @@ export default class Page2 extends Component {
       this.removeDragMove();
       this.removeControl(player);
       this.state.dialog = false;
-     let {lrcEntity,...save}=this.state;
-      window.localStorage.setItem("state", JSON.stringify(save));
       window.localStorage.setItem("back", '1');
    }
 
    _showLrc() {
       var _this = this;
-      let lrc1 = this.state.item.lrc1;
-      if (this.state.item.lrcEntity) {
+      let lrc1 = this.props.item.lrc1;
+      if (this.props.item.lrcEntity) {
          this.setState({
-            lrcEntity: this.state.item.lrcEntity,
+            lrcEntity: this.props.item.lrcEntity,
          });
       } else {
          let url = lrc1 ? lrc1 : require('./lrcs/empty');
@@ -64,7 +57,7 @@ export default class Page2 extends Component {
 
    _showLrcView(res) {
       let data = lrcParse(res);
-      this.state.item.lrcEntity = data;
+      this.props.item.lrcEntity = data;
       this.setState({
          lrcEntity: data
       });
@@ -86,12 +79,10 @@ export default class Page2 extends Component {
       let _this = this;
       if (this.num === -1)
          this.num = setInterval(function () {
-            if (_this.state.playing) {
-               _this.setState({
-                  currentTime: audio.currentTime,
-                  duration: audio.duration,
-                  progress: audio.currentTime / audio.duration * 100
-               });
+            if (_this.props.playing) {
+               _this.props.setCurrentTime(audio.currentTime);
+               _this.props.setDuration( audio.duration);
+               _this.props.setProgress(audio.currentTime / audio.duration * 100);
             }
          }, 1000);
    }
@@ -112,10 +103,8 @@ export default class Page2 extends Component {
        * 播放控制
        */
       function loadeddata() {
-         _this.setState({
-            loaded: true,
-            playing: true
-         });
+         _this.props.setLoaded(true);
+         _this.props.setPlaying(true);
       }
 
       function pause() { //监听暂停
@@ -131,9 +120,7 @@ export default class Page2 extends Component {
 
       function ended() {
          console.log("page2ended");
-         _this.setState({
-            playing: false
-         });
+         _this.props.setPlaying(false);
       }
 
       this.loadeddata = loadeddata;
@@ -157,15 +144,11 @@ export default class Page2 extends Component {
 
    clickPlay(e) {
       var player = this.music;
-      if (this.state.playing) {
-         this.setState({
-            playing: false
-         });
+      if (this.props.playing) {
+         this.props.setPlaying(false);
          player.pause();
       } else {
-         this.setState({
-            playing: true
-         });
+         this.props.setPlaying(true);
          player.play();
       }
    }
@@ -180,8 +163,8 @@ export default class Page2 extends Component {
                      this.props.history.goBack()
                   }} src={require("./img/ic_left.png")} width="25px" style={{marginRight: "10px"}}/>
                   <div className='flex-c'>
-                     <span>{this.state.item.name}</span>
-                     <span style={{fontSize: "13px", color: "#ddd"}}>{this.state.item.author}</span>
+                     <span>{this.props.item.name}</span>
+                     <span style={{fontSize: "13px", color: "#ddd"}}>{this.props.item.author}</span>
                   </div>
 
                </div>
@@ -197,13 +180,13 @@ export default class Page2 extends Component {
                }}>
                   <div className='g-pan'>
                      <img className="big" src={require('./img/aea.png')}/>
-                     <img className="small" src={this.state.item.pic}
-                          style={{animationPlayState: this.state.playing ? "running" : "paused"}}/>
+                     <img className="small" src={this.props.item.pic}
+                          style={{animationPlayState: this.props.playing ? "running" : "paused"}}/>
                      <img className="big" src={require('./img/acg.png')}/>
                   </div>
                   <div className='div-img1'>
                      <img src={require('./img/ae2.png')}
-                          style={{animation: this.state.playing ? 'head-in 1s forwards' : 'head-out 1s forwards'}}/>
+                          style={{animation: this.props.playing ? 'head-in 1s forwards' : 'head-out 1s forwards'}}/>
                   </div>
                </div>
                {/*歌词dialog*/}
@@ -212,7 +195,7 @@ export default class Page2 extends Component {
                }}>
                   {this.state.lrcEntity ? (
                      <LrcView
-                        nextTime={this.state.currentTime}
+                        nextTime={this.props.currentTime}
                         data={this.state.lrcEntity}
                         onLrcSelect={(selectLrcId) => {
                            this.selectLrcId = selectLrcId;
@@ -247,7 +230,7 @@ export default class Page2 extends Component {
                <ImgBtn drawable={{press: require("./img/adh.png"), src: require("./img/adg.png")}}/>
             </div>
             {/*进度条*/}
-            <SeekBar duration={this.state.duration} currentTime={this.state.currentTime}/>
+            <SeekBar progress={this.props.progress} duration={this.props.duration} currentTime={this.props.currentTime}/>
             {/*播放控制按钮组*/}
             <div className='flex-row-center controlMenu'>
                <ImgBtn drawable={{
@@ -260,7 +243,7 @@ export default class Page2 extends Component {
                   press: require('./img/ac8.png')
                }}/>
                <div style={{width: "3%"}}/>
-               <ImgBtn selected={!this.state.playing} drawable={{
+               <ImgBtn selected={!this.props.playing} drawable={{
                   src: [require('./img/ac3.png'), require('./img/ac5.png')],
                   press: [require('./img/ac4.png'), require('./img/ac6.png')],
                }}
@@ -281,3 +264,35 @@ export default class Page2 extends Component {
       )
    }
 }
+
+const mapStateToProps=(state)=>{
+   return{
+      progress:state.appState.progress,
+      playing:state.appState.playing,
+      loaded:state.appState.loaded,
+      duration:state.appState.duration,
+      currentTime:state.appState.currentTime,
+      item:state.appState.item
+   }
+};
+const mapDispatchToProps=(dispatch,ownProps)=>{
+   return {
+      setDuration:(duration)=>{
+         dispatch({type:actionType.SET_DURATION,duration})
+      },
+      setCurrentTime:(currentTime)=>{
+         dispatch({type:actionType.SET_CURRENT_TIME,currentTime})
+      },
+      setProgress:(progress)=>{
+         dispatch({type:actionType.SET_PROGRESS,progress})
+      },
+      setPlaying:(playing)=>{
+         dispatch({type:actionType.SET_PLAYING,playing})
+      },
+      setLoaded:(loaded)=>{
+         dispatch({type:actionType.SET_LOADED,loaded})
+      },
+   }
+};
+Page2=connect(mapStateToProps,mapDispatchToProps)(Page2);
+export default Page2;

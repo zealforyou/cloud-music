@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import ListView from "./ListView";
 import data from "./MusicList";
-
+import {actionType}from './reducer/appState';
+import {connect}from 'react-redux';
 require('./App.css');
 
 class App extends Component {
@@ -13,13 +14,7 @@ class App extends Component {
    }
 
    componentWillMount() {
-      this.setState({
-         progress: 0,
-         playing: false,
-         loaded: false,
-         currentMusic: -1,
-         item: {}
-      });
+      this.setState({dialog1:false});
       var _this = this;
       var onScroll = (e) => {
          var top = document.documentElement.scrollTop;
@@ -39,12 +34,9 @@ class App extends Component {
       // this._setTitleColor(1);
       this.refs.music = document.getElementById('music');
       this.playControl(this.refs.music);
-      let state = window.localStorage.getItem("state");
       let back = window.localStorage.getItem("back");
       if (back === '1') {
          window.localStorage.setItem('back', '0');
-         state = JSON.parse(state);
-         this.setState(state);
       } else {
          var _this = this;
          setTimeout(() => {
@@ -77,11 +69,11 @@ class App extends Component {
       let _this = this;
       if (this.num === -1) {
          this.num = setInterval(function () {
-            console.log("app:" + audio.currentTime / audio.duration * 100);
-            if (_this.state.playing) {
-               _this.setState({
-                  progress: audio.currentTime / audio.duration * 100
-               });
+            if (_this.props.playing) {
+               console.log("app:" + audio.currentTime / audio.duration * 100);
+               _this.props.setProgress(audio.currentTime / audio.duration * 100);
+               _this.props.setCurrentTime(audio.currentTime);
+               _this.props.setDuration( audio.duration);
             }
          }, 1000);
          console.log("app:68 start>" + this.num);
@@ -102,10 +94,8 @@ class App extends Component {
        * 播放控制
        */
       function loadeddata() {
-         _this.setState({
-            loaded: true,
-            playing: true
-         });
+         _this.props.setLoaded(true);
+         _this.props.setPlaying(true);
       }
 
       function pause() { //监听暂停
@@ -120,10 +110,8 @@ class App extends Component {
       }
 
       function ended() {
-         console.log("appended")
-         _this.setState({
-            playing: false
-         });
+         console.log("appended");
+         _this.props.setPlaying(false);
       }
       this.loadeddata=loadeddata;
       this.pause=pause;
@@ -144,15 +132,12 @@ class App extends Component {
    }
 
    itemClick(position, item) {
-      window.localStorage.setItem("state", JSON.stringify(this.state));
-      if (this.state.currentMusic !== position) {
-         this.setState({
-            currentMusic: position,
-            playing: false,
-            progress: 0,
-            item: item,
-            loaded: false
-         });
+      if (this.props.currentMusic !== position) {
+         this.props.setCurrentMusic(position);
+         this.props.setPlaying(false);
+         this.props.setProgress(0);
+         this.props.setItem(item);
+         this.props.setLoaded(false);
          this.refs.music.pause();
          this.refs.music.src = item.url;
          this.refs.music.play();
@@ -161,21 +146,17 @@ class App extends Component {
 
    clickPlay(e) {
       e.stopPropagation();
-      if (!this.state.item.url) {
+      if (!this.props.item.url) {
          this.itemClick(0, data[0]);
          return;
       }
       var player = this.refs.music;
-      if (this.state.playing) {
+      if (this.props.playing) {
          player.pause();
-         this.setState({
-            playing: false
-         });
+         this.props.setPlaying(false);
       } else {
-         if (this.state.loaded) {
-            this.setState({
-               playing: true
-            });
+         if (this.props.loaded) {
+            this.props.setPlaying(true);
          }
          player.play();
       }
@@ -294,19 +275,18 @@ class App extends Component {
             <footer className='play-footer flex-row-center' onClick={(e) => {
                var path = {
                   pathname: '/Page2',
-                  query: this.state
                };
                this.props.history.push(path);
             }}>
-               <img src={this.state.item.pic ? this.state.item.pic : require("./img/a20.9.png")} className='m-pic'/>
+               <img src={this.props.item.pic ? this.props.item.pic : require("./img/a20.9.png")} className='m-pic'/>
                <div className='flex-c' style={{marginLeft: "10px", flexGrow: 1}}>
-                  <span style={{fontSize: "15px"}}>{this.state.item.name}</span>
-                  <span style={{color: "#888888", fontSize: "11px"}}>{this.state.item.author}</span>
+                  <span style={{fontSize: "15px"}}>{this.props.item.name}</span>
+                  <span style={{color: "#888888", fontSize: "11px"}}>{this.props.item.author}</span>
                </div>
-               <img onClick={this.clickPlay.bind(this)} src={require(this.state.playing ? "./img/bzm.png" : "./img/q1.png")}
+               <img onClick={this.clickPlay.bind(this)} src={require(this.props.playing ? "./img/bzm.png" : "./img/q1.png")}
                     style={{width: '25px', marginRight: "15px"}}/>
                <img src={require("./img/p4.png")} style={{width: '35px'}}/>
-               <div className="progress" style={{width: this.state.progress + "%"}}>
+               <div className="progress" style={{width: this.props.progress + "%"}}>
 
                </div>
             </footer>
@@ -319,8 +299,41 @@ class App extends Component {
          </div>
       );
    }
-
-
 }
 
+const mapStateToProps=(state)=>{
+   return{
+      progress:state.appState.progress,
+      playing:state.appState.playing,
+      loaded:state.appState.loaded,
+      currentMusic:state.appState.currentMusic,
+      item:state.appState.item,
+   }
+};
+const mapDispatchToProps=(dispatch,ownProps)=>{
+   return {
+      setCurrentTime:(currentTime)=>{
+         dispatch({type:actionType.SET_CURRENT_TIME,currentTime})
+      },
+      setDuration:(duration)=>{
+         dispatch({type:actionType.SET_DURATION,duration})
+      },
+      setProgress:(progress)=>{
+         dispatch({type:actionType.SET_PROGRESS,progress})
+      },
+      setPlaying:(playing)=>{
+         dispatch({type:actionType.SET_PLAYING,playing})
+      },
+      setLoaded:(loaded)=>{
+         dispatch({type:actionType.SET_LOADED,loaded})
+      },
+      setCurrentMusic:(currentMusic)=>{
+         dispatch({type:actionType.SET_CURRENT_MUSIC,currentMusic})
+      },
+      setItem:(item)=>{
+         dispatch({type:actionType.SET_ITEM,item})
+      },
+   }
+};
+App=connect(mapStateToProps,mapDispatchToProps)(App);
 export default App;

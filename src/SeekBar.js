@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-
 export default class SeekBar extends Component {
    constructor() {
       super();
@@ -8,12 +7,10 @@ export default class SeekBar extends Component {
    componentWillMount() {
       this.setState({
          dx: 0,
-         duration: 0,
-         currentTime: 0
       });
    }
 
-   limit=1;
+   limit=255;
 
    componentDidMount() {
       this.limit = this.refs.bar.offsetWidth;
@@ -30,15 +27,14 @@ export default class SeekBar extends Component {
    }
 
    render() {
-      let {...other} = this.props;
-      let {duration, currentTime} = this.props;
-      let dx = currentTime / duration * this.limit;
+      let {duration, currentTime,progress,...other} = this.props;
+      let dx = progress/100 * this.limit;
       return (
          <div {...other} style={Style.seekBar}>
             <span style={{color: "#aaa", ...Style.time}}>
                {`${this.addPreZero(parseInt(currentTime / 60))}:${this.addPreZero(parseInt(currentTime % 60))}`}
                </span>
-            <div ref='bar' style={Style.bar}>
+            <div id='bar' ref='bar' style={Style.bar}>
                <div style={Style.grayLine}>
                   <div style={{...Style.redLine, width: `${dx}px`}}/>
                </div>
