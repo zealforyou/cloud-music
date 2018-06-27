@@ -172,3 +172,12 @@ header {
     height: 10%;
     object-fit: cover;
 }
+@keyframes loading-play {
+    from{
+        transform: rotate(360deg);
+    }
+
+    to{
+        transform: rotate(0deg);
+    }
+}
