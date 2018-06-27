@@ -174,15 +174,14 @@
             height: 30px;
             line-height: 36px;
             border: none;
-            border-bottom: 1px solid #DBDBDB;
             text-indent: 2em;
             font-size: 15px;
         }
         input:focus {
             outline:none;
-            border-bottom: 1px solid #DBDBDB;
         }
         span:first-child{
+            border-bottom: 1px solid #DBDBDB;
             img{
                 position: absolute;
                 margin-top: 3px;
