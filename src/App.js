@@ -199,7 +199,7 @@ class App extends Component {
                             )
                          }}/>
             </section>
-            <footer className='play-footer flex-row-center' onClick={(e) => {
+            <div className='play-footer flex-row-center' onClick={(e) => {
                this.props.history.push('/Page2');
             }}>
                <img src={this.props.item.pic ? this.props.item.pic : require("./img/a20.9.png")} className='m-pic'/>
@@ -213,7 +213,7 @@ class App extends Component {
                <div className="progress" style={{width: this.props.progress + "%"}}>
 
                </div>
-            </footer>
+            </div>
             <div className='dialog-center' style={{display: this.state.dialog1 ? 'flex' : 'none'}}>
                <img className='big' src={data.length>0?data[0].pic:require('./img/bt_girl.jpg')}/>
                <img className='close' src={require('./img/a_w.png')} onClick={() => {

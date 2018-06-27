@@ -10,22 +10,22 @@ export default class CommentPage extends Component {
 
    //组件即将挂载
    componentWillMount() {
-      var data=[
+      var data = [
          {
-            title: 'CITTE', likes: 520, time: '2017年4月16日',
+            title: 'CITTE', likes: 42310, time: '2017年4月16日',
             content: '即将达成网易云第一首没有资源的评论最快999+歌曲'
          },
          {
-            title: 'CITTE', likes: 520, time: '2017年4月16日',
+            title: '傻傻傻傻了', likes: 512320, time: '2017年4月16日',
             content: '即将达成网易云第一首没有资源的评论最快999+歌曲'
          },
          {
-            title: 'CITTE', likes: 520, time: '2017年4月16日',
+            title: '小小强King', likes: 134599, time: '2017年4月16日',
             content: '即将达成网易云第一首没有资源的评论最快999+歌曲'
          },
       ];
       this.setState({
-         likeId:[],
+         likeId: [],
          data
       });
    }
@@ -39,6 +39,7 @@ export default class CommentPage extends Component {
    componentWillUnmount() {
 
    }
+
    //渲染
    render() {
       return (
@@ -91,36 +92,42 @@ export default class CommentPage extends Component {
                                     <em>{item.title}</em>
                                     <em>{item.time}</em>
                                  </span>
-                                        <span className="comm_rigth">
-                                    <em style={{color:isInArray(this.state.likeId,position)?"red":'#98999A'}}>{item.likes}</em>
+                                        <span className="comm_rigth flex-row-center">
+                                    <em
+                                       style={{color: isInArray(this.state.likeId, position) ? "red" : '#98999A'}}>{item.likes}</em>
 
-                                    <ImgBtn  drawable={{
-                                       src: [require('../img/note_btn_praise_white.png'),
-                                          require('../img/note_btn_praised.png')],
-                                       press: [require('../img/note_btn_praise_white.png'),
-                                          require('../img/note_btn_praised.png')]
-                                    }} style={{display:'inline'}}
-                                       onCheckChanged={(selected)=>{
-                                             let likeId=this.state.likeId;
-                                             if(selected){
-                                                item.likes++;
-                                                likeId.push(likeId);
-                                                this.setState({
-                                                   likeId
-                                                });
-                                             }else {
-                                                item.likes--;
-                                                let id;
-                                                for(let i in likeId){
-                                                  if( likeId[i]===position){
-                                                     id=i;
-                                                  }
+                                    <ImgBtn
+                                       drawable={{
+                                          src: [require('../img/aar.png'),
+                                             require('../img/note_btn_praised.png')],
+                                          press: [require('../img/aar.png'),
+                                             require('../img/note_btn_praised.png')]
+                                       }} style={{
+                                       display: 'inline',
+                                       animation: isInArray(this.state.likeId, position) ? this.state.animation : 'none'
+                                    }}
+                                       onCheckChanged={(selected) => {
+                                          let likeId = this.state.likeId;
+                                          if (selected) {
+                                             item.likes++;
+                                             likeId.push(position);
+                                             this.setState({
+                                                likeId,
+                                                animation: `${selected ? "btnBig" : "btnBig1"} 0.5s`
+                                             });
+                                          } else {
+                                             item.likes--;
+                                             let id;
+                                             for (let i in likeId) {
+                                                if (likeId[i] === position) {
+                                                   id = i;
                                                 }
-                                                delete likeId[id];
-                                                this.setState({
-                                                   likeId
-                                                });
                                              }
+                                             delete likeId[id];
+                                             this.setState({
+                                                likeId,
+                                             });
+                                          }
                                        }}
                                     />
                                  </span>
@@ -134,10 +141,25 @@ export default class CommentPage extends Component {
                <div className="comm_footer flex-row" style={{justifyContent: "space-between"}}>
                   <span style={{flexGrow: 1}}>
                      <img src={require('../img/pen.png')} alt=""/>
-                     <input type="text" placeholder="随乐而起，有感而发"/>
+                     <input type="text" value={this.state.content} placeholder="随乐而起，有感而发" onInput={(res) => {
+                        var content = res.currentTarget.value;
+                        this.setState({
+                           content: content
+                        });
+                     }}/>
                      <img src={require('../img/a9r.png')} alt="" style={{marginLeft: '-26px'}}/>
                   </span>
-                  <span>发送</span>
+                  <span onClick={() => {
+                     if (!this.state.content) {
+                        return;
+                     }
+                     let ct = new Date();
+                     ct = `${ct.getFullYear()}年${ct.getMonth() + 1}月${ct.getDate()}日`;
+
+                     let newObj = Object.assign({}, this.state.data[0], {content: this.state.content, time: ct});
+                     this.state.data.unshift(newObj);
+                     this.setState({data: this.state.data, content: ''});
+                  }}>发送</span>
                </div>
             </div>
 
@@ -146,9 +168,10 @@ export default class CommentPage extends Component {
       )
    }
 }
-function isInArray(arr,value){
-   for(let i = 0; i < arr.length; i++){
-      if(value === arr[i]){
+
+function isInArray(arr, value) {
+   for (let i = 0; i < arr.length; i++) {
+      if (value === arr[i]) {
          return true;
       }
    }
