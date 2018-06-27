@@ -33,25 +33,20 @@ class App extends Component {
    componentDidMount() {
       // this._setTitleColor(1);
       this.refs.music = document.getElementById('music');
-      this.playControl(this.refs.music);
       let back = window.localStorage.getItem("back");
       if (back === '1') {
          window.localStorage.setItem('back', '0');
       } else {
          var _this = this;
-         setTimeout(() => {
-            _this.itemClick(0, data[0]);
-         }, 1500);
+         // setTimeout(() => {
+         //    _this.itemClick(0, data[0]);
+         // }, 1500);
 
       }
-      this.dragMove(this.refs.music);
    }
 
    componentWillUnmount() {
       window.removeEventListener("scroll", this.onScroll);
-      var player = this.refs.music;
-      this.removeControl(player);
-      this.removeDragMove();
    }
 
    _setTitleColor(jd) {
@@ -61,75 +56,7 @@ class App extends Component {
 
    num = -1;
 
-   /**
-    * 进度条控制
-    * @param audio
-    */
-   dragMove(audio) {
-      let _this = this;
-      if (this.num === -1) {
-         this.num = setInterval(function () {
-            if (_this.props.playing) {
-               console.log("app:" + audio.currentTime / audio.duration * 100);
-               _this.props.setProgress(audio.currentTime / audio.duration * 100);
-               _this.props.setCurrentTime(audio.currentTime);
-               _this.props.setDuration( audio.duration);
-            }
-         }, 1000);
-         console.log("app:68 start>" + this.num);
-      }
 
-   }
-
-   removeDragMove() {
-      console.log("app:71 stop>" + this.num);
-      clearInterval(this.num);
-      this.num = -1;
-   }
-
-
-   playControl(audio) {
-      let _this=this;
-      /**
-       * 播放控制
-       */
-      function loadeddata() {
-         _this.props.setLoaded(true);
-         _this.props.setPlaying(true);
-      }
-
-      function pause() { //监听暂停
-         let audio = _this.refs.music;
-         if (audio.currentTime === audio.duration) {
-            audio.currentTime = 0;
-         }
-      }
-
-      function play() {
-         console.log("appplay")
-      }
-
-      function ended() {
-         console.log("appended");
-         _this.props.setPlaying(false);
-      }
-      this.loadeddata=loadeddata;
-      this.pause=pause;
-      this.play=play;
-      this.ended=ended;
-      //歌曲一经完整的加载完毕( 也可以写成上面提到的那些事件类型)
-      audio.addEventListener("loadeddata", loadeddata, false);
-      audio.addEventListener("pause",pause, false);
-      audio.addEventListener("play", play, false);
-      audio.addEventListener("ended", ended, false);
-   }
-
-   removeControl(audio) {
-      audio.removeEventListener("laodeddata", this.loadeddata, false);
-      audio.removeEventListener("pause", this.pause, false);
-      audio.removeEventListener("play", this.play, false);
-      audio.removeEventListener("ended", this.ended, false);
-   }
 
    itemClick(position, item) {
       if (this.props.currentMusic !== position) {
@@ -273,10 +200,7 @@ class App extends Component {
                          }}/>
             </section>
             <footer className='play-footer flex-row-center' onClick={(e) => {
-               var path = {
-                  pathname: '/Page2',
-               };
-               this.props.history.push(path);
+               this.props.history.push('/Page2');
             }}>
                <img src={this.props.item.pic ? this.props.item.pic : require("./img/a20.9.png")} className='m-pic'/>
                <div className='flex-c' style={{marginLeft: "10px", flexGrow: 1}}>
@@ -312,12 +236,6 @@ const mapStateToProps=(state)=>{
 };
 const mapDispatchToProps=(dispatch,ownProps)=>{
    return {
-      setCurrentTime:(currentTime)=>{
-         dispatch({type:actionType.SET_CURRENT_TIME,currentTime})
-      },
-      setDuration:(duration)=>{
-         dispatch({type:actionType.SET_DURATION,duration})
-      },
       setProgress:(progress)=>{
          dispatch({type:actionType.SET_PROGRESS,progress})
       },

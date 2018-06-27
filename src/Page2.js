@@ -20,15 +20,10 @@ const lrcParse = require('./LrcManager');
 
    componentDidMount() {
       this.music = document.getElementById('music');
-      this.playControl(this.music);
-      var query = this.props.location.query;
-      this.dragMove(this.music);
    }
 
    componentWillUnmount() {
       var player = this.music;
-      this.removeDragMove();
-      this.removeControl(player);
       this.state.dialog = false;
       window.localStorage.setItem("back", '1');
    }
@@ -63,84 +58,7 @@ const lrcParse = require('./LrcManager');
       });
    }
 
-   _showLrcText(res) {
-      res = res.replace(/"/g, '').replace(/[\n]/g, '<br/>');
-      $(".dialog-lrc").html(`<p id='lrc'>${res}</p>`);
-   }
 
-
-   num = -1;
-
-   /**
-    * 进度条控制
-    * @param audio
-    */
-   dragMove(audio) {
-      let _this = this;
-      if (this.num === -1)
-         this.num = setInterval(function () {
-            if (_this.props.playing) {
-               _this.props.setCurrentTime(audio.currentTime);
-               _this.props.setDuration( audio.duration);
-               _this.props.setProgress(audio.currentTime / audio.duration * 100);
-            }
-         }, 1000);
-   }
-
-   removeDragMove() {
-      clearInterval(this.num);
-      this.num = -1;
-   }
-
-
-   /**
-    * 播放控制
-    */
-   playControl(audio) {
-      let _this = this;
-
-      /**
-       * 播放控制
-       */
-      function loadeddata() {
-         _this.props.setLoaded(true);
-         _this.props.setPlaying(true);
-      }
-
-      function pause() { //监听暂停
-         let audio = _this.music;
-         if (audio.currentTime === audio.duration) {
-            audio.currentTime = 0;
-         }
-      }
-
-      function play() {
-         console.log("page2play");
-      }
-
-      function ended() {
-         console.log("page2ended");
-         _this.props.setPlaying(false);
-      }
-
-      this.loadeddata = loadeddata;
-      this.pause = pause;
-      this.play = play;
-      this.ended = ended;
-
-      //歌曲一经完整的加载完毕( 也可以写成上面提到的那些事件类型)
-      audio.addEventListener("loadeddata", loadeddata, false);
-      audio.addEventListener("pause", pause, false);
-      audio.addEventListener("play", play, false);
-      audio.addEventListener("ended", ended, false);
-   }
-
-   removeControl(audio) {
-      audio.removeEventListener("laodeddata", this.loadeddata);
-      audio.removeEventListener("pause", this.pause);
-      audio.removeEventListener("play", this.play);
-      audio.removeEventListener("ended", this.ended);
-   }
 
    clickPlay(e) {
       var player = this.music;
@@ -277,21 +195,9 @@ const mapStateToProps=(state)=>{
 };
 const mapDispatchToProps=(dispatch,ownProps)=>{
    return {
-      setDuration:(duration)=>{
-         dispatch({type:actionType.SET_DURATION,duration})
-      },
-      setCurrentTime:(currentTime)=>{
-         dispatch({type:actionType.SET_CURRENT_TIME,currentTime})
-      },
-      setProgress:(progress)=>{
-         dispatch({type:actionType.SET_PROGRESS,progress})
-      },
       setPlaying:(playing)=>{
          dispatch({type:actionType.SET_PLAYING,playing})
-      },
-      setLoaded:(loaded)=>{
-         dispatch({type:actionType.SET_LOADED,loaded})
-      },
+      }
    }
 };
 Page2=connect(mapStateToProps,mapDispatchToProps)(Page2);
