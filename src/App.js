@@ -100,7 +100,9 @@ class App extends Component {
                      <span>歌单</span>
                   </div>
                   <div className='flex-row-center'>
-                     <img src={require("./img/pf.png")}/>
+                     <img src={require("./img/pf.png")} onClick={()=>{
+                        this.props.history.push('/SearchPage');
+                     }}/>
                      <img src={require("./img/p9.png")}/>
                   </div>
                </div>
