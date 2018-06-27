@@ -2,6 +2,13 @@
 //http://www.kugou.com/yy/index.php?r=play/getdata&hash=25a8a5ee71898435f99bdfdd21f3f6e3
 const data = [
    {
+      name: "Here She Comes Again",
+      author: "抓包",
+      url: "http://fs.w.kugou.com/201806271312/0ffd75595fe8bb4223e015503a3fd3c3/G031/M04/13/05/v4YBAFXseXeAJ2xPAEnRa_-AZu8382.mp3",
+      pic: "http://singerimg.kugou.com/uploadpic/softhead/400/20140526/20140526173803192057.jpg",
+   }
+   ,
+   {
       name: "Solo Dance)",
       author: "抓包",
       url: "http://fs.w.kugou.com/201806261009/8c2a8ab79e816e8da6e0640529736bbb/G080/M04/19/1D/8IYBAFgeWYSAAr36ACq5lbsvexo309.mp3",

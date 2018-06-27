@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
+import App from "./App";
+import CommentPage from "./page/CommentPage";
+import Page2 from "./Page2";
 import {Switch, Route} from 'react-router-dom';
-import App from './App';
-import Page2 from './Page2';
-import CommentPage from './page/CommentPage';
+import MusicPage from "./MusicPage";
 
-export default class SwitchPage extends Component {
+export default class RouterPage extends Component {
    constructor() {
       super();
    }
@@ -12,15 +13,14 @@ export default class SwitchPage extends Component {
    render() {
       return (
          <div>
-            <audio id="music">
-               亲 您的浏览器不支持html5的audio标签
-            </audio>
             <Switch>
                <Route exact path="/" component={App}/>
                <Route exact path="/Page2" component={Page2}/>
-                <Route exact path="/CommentPage" component={CommentPage}/>
+               <Route exact path="/CommentPage" component={CommentPage}/>
             </Switch>
+            <MusicPage/>
          </div>
+
       )
    }
 }
