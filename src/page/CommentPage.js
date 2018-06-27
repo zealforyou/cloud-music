@@ -56,7 +56,7 @@ export default class CommentPage extends Component {
             <div className="comm_conter">
                <div className="box">
                   <ul className="clearfix">
-                     <li><img src={require('../img/aj7.png')}/></li>
+                     <li><img src={require('../img/comm_hear.png')}/></li>
                      <li>
                         <p>The Cure</p>
                         <p>Lady Gaga</p>
