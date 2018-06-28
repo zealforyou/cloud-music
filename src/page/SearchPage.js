@@ -1,11 +1,19 @@
 import React, {Component} from 'react';
 import './css/SearchPage.scss'
-
-export default class SearchPage extends Component {
+import {connect} from 'react-redux';
+import {actionType} from "../reducer/globalState";
+class SearchPage extends Component {
    constructor() {
       super();
    }
 
+   componentDidMount() {
+      this.props.setShowPlay(true);
+   }
+
+   componentWillUnmount() {
+      this.props.setShowPlay(false);
+   }
    render() {
       return (
          <div className='SearchPage'>
@@ -46,3 +54,13 @@ export default class SearchPage extends Component {
       )
    }
 }
+
+const mapDispatchToProps=(dispatch)=>{
+   return {
+      setShowPlay:(showPlay)=>{
+         dispatch({type:actionType.ACTION_SHOW_PLAY_CONTROLLER,showPlay});
+      }
+   }
+};
+SearchPage=connect(null,mapDispatchToProps)(SearchPage);
+export default SearchPage

@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 
 import {connect} from 'react-redux';
 import {actionType} from "./reducer/appState";
+import {actionType as globalType} from "./reducer/globalState";
+import data from "./MusicList";
 
 class MusicPage extends Component {
    constructor() {
@@ -95,17 +97,55 @@ class MusicPage extends Component {
       audio.removeEventListener("ended", this.ended, false);
    }
 
+   clickPlay(e) {
+      e.stopPropagation();
+      if (!this.props.item.url) {
+         this.itemClick(0, data[0]);
+         return;
+      }
+      var player = this.refs.music;
+      if (this.props.playing) {
+         player.pause();
+         this.props.setPlaying(false);
+      } else {
+         if (this.props.loaded) {
+            this.props.setPlaying(true);
+         }
+         player.play();
+      }
+   }
+
    render() {
       return (
-         <audio ref='music' id="music">
-            亲 您的浏览器不支持html5的audio标签
-         </audio>
+         <div>
+            <audio ref='music' id="music">
+               亲 您的浏览器不支持html5的audio标签
+            </audio>
+            <footer className='play-footer flex-row-center' onClick={(e) => {
+               this.props.history.push('/Page2');
+            }} style={{display:this.props.showPlay?"flex":"none"}}>
+               <img src={this.props.item.pic ? this.props.item.pic : require("./img/a20.9.png")} className='m-pic'/>
+               <div className='flex-c' style={{marginLeft: "10px", flexGrow: 1}}>
+                  <span style={{fontSize: "15px"}}>{this.props.item.name}</span>
+                  <span style={{color: "#888888", fontSize: "11px"}}>{this.props.item.author}</span>
+               </div>
+               <img onClick={this.clickPlay.bind(this)} src={require(this.props.playing ? "./img/bzm.png" : "./img/q1.png")}
+                    style={{width: '25px', marginRight: "15px",
+                       animation:!this.props.loaded&&this.props.currentMusic!==-1?'loading-play 3s linear infinite ':'none'}}/>
+               <img src={require("./img/p4.png")} style={{width: '35px'}}/>
+               <div className="progress" style={{width: this.props.progress + "%"}}>
+
+               </div>
+            </footer>
+         </div>
+
       )
    }
 }
 
 const mapStateToProps = (state) => {
    return {
+      showPlay: state.globalState.showPlay,
       currentTime: state.appState.currentTime,
       duration: state.appState.duration,
       progress: state.appState.progress,
@@ -132,6 +172,12 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       setLoaded: (loaded) => {
          dispatch({type: actionType.SET_LOADED, loaded})
       },
+      setItem:(item)=>{
+         dispatch({type:actionType.SET_ITEM,item})
+      },
+      setShowPlay:(showPlay)=>{
+         dispatch({type:globalType.ACTION_SHOW_PLAY_CONTROLLER,showPlay})
+      }
    }
 };
 MusicPage = connect(mapStateToProps, mapDispatchToProps)(MusicPage);

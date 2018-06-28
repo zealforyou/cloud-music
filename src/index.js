@@ -22,7 +22,7 @@ const store = createStore(combReducer, applyMiddleware(middleware));
 ReactDOM.render((
    <Provider store={store}>
       <ConnectedRouter history={history}>
-        <RouterPage/>
+        <RouterPage history={history}/>
       </ConnectedRouter>
    </Provider>
 ), document.getElementById('root'));

@@ -1,12 +1,20 @@
 import React, {Component} from 'react';
 import data from "../MusicList";
 import ListView from "../ListView";
+import {connect} from "react-redux";
+import {actionType} from "../reducer/globalState";
 
-export default class SearchPageIner extends Component {
+ class SearchPageIner extends Component {
    constructor() {
       super();
    }
+    componentDidMount() {
+      this.props.setShowPlay(true);
+   }
 
+   componentWillUnmount() {
+      this.props.setShowPlay(false);
+   }
    render() {
       return (
          <div className='SearchPage'>
@@ -53,3 +61,13 @@ export default class SearchPageIner extends Component {
       )
    }
 }
+
+const mapDispatchToProps=(dispatch)=>{
+   return {
+      setShowPlay:(showPlay)=>{
+         dispatch({type:actionType.ACTION_SHOW_PLAY_CONTROLLER,showPlay});
+      }
+   }
+};
+SearchPageIner=connect(null,mapDispatchToProps)(SearchPageIner);
+export default SearchPageIner

@@ -22,7 +22,7 @@ export default class RouterPage extends Component {
                <Route exact path="/SearchPage" component={SearchPage}/>
                <Route exact path="/SearchPageIner" component={SearchPageIner}/>
             </Switch>
-            <MusicPage/>
+            <MusicPage history={this.props.history}/>
          </div>
 
       )
