@@ -6,6 +6,7 @@ import {Switch, Route} from 'react-router-dom';
 import MusicPage from "./MusicPage";
 import SearchPage from "./page/SearchPage";
 import SearchPageIner from "./page/SearchPageIner";
+import Mypage from "./page/Mypage";
 
 export default class RouterPage extends Component {
    constructor() {
@@ -21,6 +22,7 @@ export default class RouterPage extends Component {
                <Route exact path="/CommentPage" component={CommentPage}/>
                <Route exact path="/SearchPage" component={SearchPage}/>
                <Route exact path="/SearchPageIner" component={SearchPageIner}/>
+               <Route exact path="/Mypage" component={Mypage}/>
             </Switch>
             <MusicPage history={this.props.history}/>
          </div>
