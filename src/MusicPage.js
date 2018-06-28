@@ -79,6 +79,10 @@ class MusicPage extends Component {
          _this.props.setPlaying(false);
       }
 
+      function canplay () {
+         console.log("appcanplay");
+      }
+
       this.loadeddata = loadeddata;
       this.pause = pause;
       this.play = play;
@@ -88,6 +92,7 @@ class MusicPage extends Component {
       audio.addEventListener("pause", pause, false);
       audio.addEventListener("play", play, false);
       audio.addEventListener("ended", ended, false);
+      audio.addEventListener("canplay", canplay, false);
    }
 
    removeControl(audio) {
@@ -95,6 +100,7 @@ class MusicPage extends Component {
       audio.removeEventListener("pause", this.pause, false);
       audio.removeEventListener("play", this.play, false);
       audio.removeEventListener("ended", this.ended, false);
+      audio.removeEventListener("canplay", this.canplay, false);
    }
 
    clickPlay(e) {
@@ -153,6 +159,7 @@ const mapStateToProps = (state) => {
       loaded: state.appState.loaded,
       currentMusic: state.appState.currentMusic,
       item: state.appState.item,
+      canPlay: state.appState.canPlay,
    }
 };
 const mapDispatchToProps = (dispatch, ownProps) => {
@@ -171,6 +178,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       },
       setLoaded: (loaded) => {
          dispatch({type: actionType.SET_LOADED, loaded})
+      },
+      setCanPlay:(canPlay)=>{
+         dispatch({type:actionType.SET_CAN_PLAY,canPlay})
       },
       setItem:(item)=>{
          dispatch({type:actionType.SET_ITEM,item})

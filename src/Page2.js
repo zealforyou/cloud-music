@@ -4,10 +4,12 @@ import SeekBar from './SeekBar';
 import LrcView from "./LrcView";
 import {connect} from "react-redux";
 import {actionType} from "./reducer/appState";
+
 const Style = require('./Page2.css');
 const $ = require('jquery');
 const lrcParse = require('./LrcManager');
- class Page2 extends Component {
+
+class Page2 extends Component {
    constructor() {
       super();
    }
@@ -57,7 +59,6 @@ const lrcParse = require('./LrcManager');
          lrcEntity: data
       });
    }
-
 
 
    clickPlay(e) {
@@ -121,7 +122,7 @@ const lrcParse = require('./LrcManager');
                         selectLrcId={this.state.selectLrcId}
                         style={{
                            width: '100%', height: "100%",
-                           margin: 0, padding: 0,overflow:'scroll'
+                           margin: 0, padding: 0, overflow: 'scroll'
                         }}/>
                   ) : ''}
                </div>
@@ -148,7 +149,13 @@ const lrcParse = require('./LrcManager');
                <ImgBtn drawable={{press: require("./img/adh.png"), src: require("./img/adg.png")}}/>
             </div>
             {/*进度条*/}
-            <SeekBar progress={this.props.progress} duration={this.props.duration} currentTime={this.props.currentTime}/>
+            <SeekBar progress={this.props.progress} duration={this.props.duration} currentTime={this.props.currentTime}
+                     onSeek={(progress) => {
+                        var player = this.music;
+                        player.currentTime = player.duration * progress / 100;
+                        this.props.setProgress(progress);
+                        this.props.setCurrentTime(player.currentTime);
+                     }}/>
             {/*播放控制按钮组*/}
             <div className='flex-row-center controlMenu'>
                <ImgBtn drawable={{
@@ -159,6 +166,8 @@ const lrcParse = require('./LrcManager');
                <ImgBtn drawable={{
                   src: require('./img/ac7.png'),
                   press: require('./img/ac8.png')
+               }} onClick={() => {
+                  this.props.preMusic(this.music);
                }}/>
                <div style={{width: "3%"}}/>
                <ImgBtn selected={!this.props.playing} drawable={{
@@ -171,6 +180,8 @@ const lrcParse = require('./LrcManager');
                <ImgBtn drawable={{
                   src: require('./img/ac1.png'),
                   press: require('./img/ac2.png')
+               }} onClick={() => {
+                  this.props.nextMusic(this.music  );
                }}/>
                <div style={{width: "8%"}}/>
                <ImgBtn drawable={{
@@ -183,22 +194,34 @@ const lrcParse = require('./LrcManager');
    }
 }
 
-const mapStateToProps=(state)=>{
-   return{
-      progress:state.appState.progress,
-      playing:state.appState.playing,
-      loaded:state.appState.loaded,
-      duration:state.appState.duration,
-      currentTime:state.appState.currentTime,
-      item:state.appState.item
+const mapStateToProps = (state) => {
+   return {
+      progress: state.appState.progress,
+      playing: state.appState.playing,
+      loaded: state.appState.loaded,
+      duration: state.appState.duration,
+      currentTime: state.appState.currentTime,
+      item: state.appState.item
    }
 };
-const mapDispatchToProps=(dispatch,ownProps)=>{
+const mapDispatchToProps = (dispatch, ownProps) => {
    return {
-      setPlaying:(playing)=>{
-         dispatch({type:actionType.SET_PLAYING,playing})
+      setPlaying: (playing) => {
+         dispatch({type: actionType.SET_PLAYING, playing})
+      },
+      setProgress: (progress) => {
+         dispatch({type: actionType.SET_PROGRESS, progress})
+      },
+      setCurrentTime: (currentTime) => {
+         dispatch({type: actionType.SET_CURRENT_TIME, currentTime})
+      },
+      nextMusic: (player) => {
+         dispatch({type: actionType.ACTION_NEXT_MUSIC,player})
+      },
+      preMusic: (player) => {
+         dispatch({type: actionType.ACTION_PRE_MUSIC,player})
       }
    }
 };
-Page2=connect(mapStateToProps,mapDispatchToProps)(Page2);
+Page2 = connect(mapStateToProps, mapDispatchToProps)(Page2);
 export default Page2;
