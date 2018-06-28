@@ -34,10 +34,8 @@ class MusicPage extends Component {
       if (this.num === -1) {
          this.num = setInterval(function () {
             if (_this.props.playing) {
-               console.log("app:" + audio.currentTime / audio.duration * 100);
                _this.props.setProgress(audio.currentTime / audio.duration * 100);
                _this.props.setCurrentTime(audio.currentTime);
-               _this.props.setDuration(audio.duration);
             }
          }, 1000);
          console.log("app:68 start>" + this.num);
@@ -61,6 +59,7 @@ class MusicPage extends Component {
       function loadeddata() {
          _this.props.setLoaded(true);
          _this.props.setPlaying(true);
+         _this.props.setDuration(audio.duration);
       }
 
       function pause() { //监听暂停
@@ -77,6 +76,8 @@ class MusicPage extends Component {
       function ended() {
          console.log("appended");
          _this.props.setPlaying(false);
+         _this.props.setProgress(0);
+         _this.props.setCurrentTime(0);
       }
 
       function canplay () {

@@ -92,10 +92,6 @@
 
         .test_one{
             margin: 8px 0 8px 11px;
-            .flex-row-center{
-                background-color: #ffffff;
-                border: 1px solid #ECECEC;
-            }
             div:first-child{
                 font-size: 15px;
                 color: #6D6D6D;
@@ -165,7 +161,6 @@
         .comm_rigth .ImgBtn{
             width: 20px;
             height: 20px;
-            overflow: hidden;
         }
         .comm_rigth .ImgBtn img{
             width: 100%;

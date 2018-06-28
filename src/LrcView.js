@@ -12,15 +12,32 @@ export default class LrcView extends Component {
       this.setState({selectLrcId:-1});
    }
 
+   componentDidMount() {
+      this._caItemHeight();
+   }
+   _caItemHeight(){
+      // console.log($('#lrcView').children('li').length);
+
+   }
    componentWillReceiveProps(pre) {
       let {data, nextTime} = pre;
+      if (!data)return;
       if (!nextTime) nextTime = 0;
       let selectLrcId = this._selectLrcId(data, nextTime);
       this.setState({
          selectLrcId
+      },function () {
+
       });
    }
 
+   componentDidUpdate() {
+      if (this.canScroll){
+         this.canScroll=false;
+         this._scrollTo(this.state.selectLrcId)
+      }
+   }
+   canScroll=false;
    _selectLrcId(data, nextTime) {
       for (let i = 0; i < data.body.times.length; i++) {
          let time = data.body.times[i];
@@ -28,7 +45,7 @@ export default class LrcView extends Component {
             if (this.props.onLrcSelect){
                this.props.onLrcSelect(i);
             }
-            this._scrollTo(i);
+            this.canScroll=true;
             return i;
          }
       }
@@ -36,12 +53,15 @@ export default class LrcView extends Component {
    }
 
    _scrollTo(position) {
-      // var lrcView=this.refs.lrcView;
       let a = $('#lrcView');
-      let first=$('#lrcFirstChild');
-      console.log(first.scrollTop());
-      // a.scrollTop((position) * 30);
-      a.animate({"scrollTop":(position) * 30})
+      let scroll=0;
+      let childrens = a.children('li');
+      if (childrens.length<2)return;
+      for(let i=1;i<childrens.length;i++){
+         if (position===i-1)break;
+         scroll+=childrens[i].offsetHeight;
+      }
+      a.animate({"scrollTop":scroll})
    }
 
    render() {
@@ -51,19 +71,9 @@ export default class LrcView extends Component {
          <ul id='lrcView' ref='lrcView' {...others}>
             {<li id='lrcFirstChild' style={{height:'50%', display:'flex',flexDirection:'column',
                color:'white',justifyContent:'center',alignItems:'center'}}>
-               {/*<div style={{fontSize:'18px'}}>*/}
-                   {/*{data.header.ti}*/}
-               {/*</div>*/}
-               {/*<div style={{fontSize:'15px',marginTop:'10px'}}>*/}
-                   {/*{"演唱者："+data.header.ar}*/}
-               {/*</div>*/}
-               {/*<div style={{fontSize:'15px',marginTop:'10px'}}>*/}
-                   {/*{"专辑："+data.header.al}*/}
-               {/*</div>*/}
-
             </li>}
             {
-               data.body.times.map((item, index, array) => {
+               data?data.body.times.map((item, index, array) => {
                   let highLight = _this.state.selectLrcId === index;
                   return (
                      <li style={{
@@ -75,7 +85,7 @@ export default class LrcView extends Component {
                         ,padding:'0 15px'
                      }}>{item.lrc}</li>
                   )
-               })
+               }):''
             }
             {<li id='lrcLastChild' style={{height:'50%'}}>
 

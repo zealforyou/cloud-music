@@ -74,7 +74,10 @@ export default class CommentPage extends Component {
                   <div><img src={require('../img/yk.png')} alt=""/></div>
                   <div className="test_one flex-c">
                      <div>相关专栏文章</div>
-                     <div className='flex-row-center'>
+                     <div className='flex-row-center' style={{
+                        backgroundColor: '#ffffff',
+                        border: '1px solid #ECECEC'
+                     }}>
                         <img src={require('../img/bt_girl.jpg')} alt=""/>
                         <div className='test_two flex-c' style={{justifyContent: 'space-between'}}>
                            <span>Lady Gaga: 你如此爱她，绝不仅仅因为她的音乐</span>
