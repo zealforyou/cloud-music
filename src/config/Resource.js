@@ -4,6 +4,12 @@ const pics=[
    "https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=1710689230,770072986&fm=27&gp=0.jpg",
    "https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=1985563160,1914119214&fm=27&gp=0.jpg",
 ];
+const Title=[
+   "啊啊啊啊啊",
+   "去去去去去去",
+   "呃呃呃呃呃呃饿",
+   "呜呜呜呜呜呜"
+];
 const moment=[
    "我喜欢我望向别处时你落在我身上的目光",
    "你那么孤独，却说一个人真好",
@@ -63,4 +69,4 @@ const moment=[
    "你别皱眉，我走就好。",
    "马上就要结束一年的单身生活，开始新一年的单身生活啦"
 ];
-export {pics,moment}
+export {pics,Title,moment}

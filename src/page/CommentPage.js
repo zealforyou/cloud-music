@@ -3,6 +3,7 @@ import './css/CommentPage.scss';
 import ListView from "../ListView";
 import ImgBtn from "../ImgButton";
 import {pics}from '../config/Resource';
+import {Title}from '../config/Resource';
 export default class CommentPage extends Component {
    constructor() {
       super();
@@ -107,6 +108,7 @@ export default class CommentPage extends Component {
                                           press: [require('../img/aar.png'),
                                              require('../img/note_btn_praised.png')]
                                        }} style={{
+                                          flexGrow:'contain',
                                        display: 'inline',
                                        animation: isInArray(this.state.likeId, item.id) ? this.state.animation : 'none'
                                     }}
@@ -165,7 +167,8 @@ export default class CommentPage extends Component {
                         content: this.state.content,
                         time: ct,
                         likes: 0,
-                        pic:pics[parseInt(Math.random()*pics.length)]
+                        pic:pics[parseInt(Math.random()*pics.length)],
+                        title:Title[parseInt(Math.random()*Title.length)]
                      });
                      this.state.data.unshift(newObj);
                      this.setState({data: this.state.data, content: ''});
