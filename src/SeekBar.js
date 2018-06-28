@@ -57,6 +57,7 @@ export default class SeekBar extends Component {
                        this.current = touch.clientX;
                        this.setState({
                           startMove: true,
+                          dx:this.props.progress / 100 * this.limit
                        });
                     }}
                     onTouchMove={(e) => {
