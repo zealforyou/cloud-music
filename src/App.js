@@ -63,14 +63,7 @@ class App extends Component {
 
    itemClick(position, item) {
       if (this.props.currentMusic !== position) {
-         this.props.setCurrentMusic(position);
-         this.props.setPlaying(false);
-         this.props.setProgress(0);
-         this.props.setItem(item);
-         this.props.setLoaded(false);
-         this.refs.music.pause();
-         this.refs.music.src = item.url;
-         this.refs.music.play();
+         this.props.playCurrentMusic(this.refs.music,position,item);
       }
    }
 
@@ -211,23 +204,11 @@ const mapStateToProps=(state)=>{
 };
 const mapDispatchToProps=(dispatch,ownProps)=>{
    return {
-      setProgress:(progress)=>{
-         dispatch({type:actionType.SET_PROGRESS,progress})
-      },
-      setPlaying:(playing)=>{
-         dispatch({type:actionType.SET_PLAYING,playing})
-      },
-      setLoaded:(loaded)=>{
-         dispatch({type:actionType.SET_LOADED,loaded})
-      },
-      setCurrentMusic:(currentMusic)=>{
-         dispatch({type:actionType.SET_CURRENT_MUSIC,currentMusic})
-      },
-      setItem:(item)=>{
-         dispatch({type:actionType.SET_ITEM,item})
-      },
       setShowPlay:(showPlay)=>{
          dispatch({type:globalType.ACTION_SHOW_PLAY_CONTROLLER,showPlay})
+      },
+      playCurrentMusic(player,currentMusic,item){
+         dispatch({type:actionType.ACTION_PLAY_CURRENT_MUSIC,player,currentMusic,item})
       }
    }
 };

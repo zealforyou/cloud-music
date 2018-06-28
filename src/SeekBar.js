@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+
 export default class SeekBar extends Component {
    constructor() {
       super();
@@ -7,13 +8,16 @@ export default class SeekBar extends Component {
    componentWillMount() {
       this.setState({
          dx: 0,
+         currentProgress: 0,
+         startMove: false
       });
    }
 
-   limit=255;
+   limit = 255;
 
    componentDidMount() {
       this.limit = this.refs.bar.offsetWidth;
+      this.setState({dx:this.props.progress / 100 * this.limit});
    }
 
    current = 0;
@@ -27,8 +31,8 @@ export default class SeekBar extends Component {
    }
 
    render() {
-      let {duration, currentTime,progress,...other} = this.props;
-      let dx = progress/100 * this.limit;
+      let {duration, currentTime, progress, ...other} = this.props;
+      let dx = this.state.startMove ? this.state.dx : progress / 100 * this.limit;
       return (
          <div {...other} style={Style.seekBar}>
             <span style={{color: "#aaa", ...Style.time}}>
@@ -42,6 +46,10 @@ export default class SeekBar extends Component {
                     onTouchStart={(e) => {
                        let touch = e.touches[0];
                        this.current = touch.clientX;
+                       this.setState({
+                          startMove: true,
+                          currentProgress: progress
+                       });
                     }}
                     onTouchMove={(e) => {
                        let touch = e.touches[0];
@@ -51,6 +59,14 @@ export default class SeekBar extends Component {
                        let limit = this.refs.bar.offsetWidth;
                        this.setState({
                           dx: dx <= 0 ? 0 : dx >= limit ? limit : dx
+                       });
+                    }}
+                    onTouchEnd={() => {
+                       if(this.props.onSeek){
+                          this.props.onSeek(this.state.dx/this.limit*100);
+                       }
+                       this.setState({
+                          startMove: false
                        });
                     }}>
                   <img src={require('./img/agl.png')} style={Style.smallBall}/>

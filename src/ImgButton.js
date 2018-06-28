@@ -19,7 +19,8 @@ export default class ImgBtn extends Component {
          selected: this.props.selected ? this.props.selected : false
       });
    }
-   componentWillReceiveProps(nextProps){
+
+   componentWillReceiveProps(nextProps) {
       let drawable = nextProps.drawable;
       if (!(drawable.src instanceof Array)) {
          drawable.src = [drawable.src]
@@ -27,7 +28,7 @@ export default class ImgBtn extends Component {
       if (!(drawable.press instanceof Array)) {
          drawable.press = [drawable.press]
       }
-      if (typeof nextProps.selected!=='undefined'){
+      if (typeof nextProps.selected !== 'undefined') {
          this.setState({
             src: nextProps.selected ? drawable.src[1] : drawable.src[0],
             selected: nextProps.selected ? nextProps.selected : false
@@ -35,8 +36,12 @@ export default class ImgBtn extends Component {
       }
 
    }
+
    render() {
-      let {onCheckChanged, onClick, drawable, ...other} = this.props;
+      let {onCheckChanged, clickable, onClick, drawable, ...other} = this.props;
+      if ((typeof clickable) === 'undefined') {
+         clickable = true;
+      }
       if (!(drawable.src instanceof Array)) {
          drawable.src = [drawable.src]
       }
@@ -56,6 +61,7 @@ export default class ImgBtn extends Component {
                  });
               }}
               onClick={(e) => {
+                 if (!clickable) return;
                  if (onClick) {
                     onClick(e)
                  }
@@ -64,14 +70,14 @@ export default class ImgBtn extends Component {
                     this.setState({
                        src: drawable.src[0],
                        selected: false
-                    },function () {
+                    }, function () {
                        onCheckChanged ? onCheckChanged(false) : false;
                     });
                  } else {
                     this.setState({
                        src: drawable.src[1],
                        selected: true
-                    },function () {
+                    }, function () {
                        onCheckChanged ? onCheckChanged(true) : false;
                     });
 
