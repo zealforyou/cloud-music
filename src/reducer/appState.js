@@ -54,6 +54,8 @@ function appState(state = def, action) {
             playing: false,
             progress: 0,
             loaded: false,
+            duration:1,
+            currentTime:0
          };
 
          if (action.player) {
@@ -73,6 +75,8 @@ function appState(state = def, action) {
             playing: false,
             progress: 0,
             loaded: false,
+            duration:1,
+            currentTime:0
          };
 
          if (action.player) {
@@ -91,6 +95,8 @@ function appState(state = def, action) {
             playing: false,
             progress: 0,
             loaded: false,
+            duration:1,
+            currentTime:0
          };
          if (action.player) {
             action.player.pause();

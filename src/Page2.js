@@ -61,17 +61,6 @@ class Page2 extends Component {
    }
 
 
-   clickPlay(e) {
-      var player = this.music;
-      if (this.props.playing) {
-         this.props.setPlaying(false);
-         player.pause();
-      } else {
-         this.props.setPlaying(true);
-         player.play();
-      }
-   }
-
    render() {
       return (
          <div className='page'>
@@ -170,18 +159,26 @@ class Page2 extends Component {
                   this.props.preMusic(this.music);
                }}/>
                <div style={{width: "3%"}}/>
-               <ImgBtn selected={!this.props.playing} drawable={{
+               <ImgBtn clickable={this.props.loaded} selected={!this.props.playing} drawable={{
                   src: [require('./img/ac3.png'), require('./img/ac5.png')],
                   press: [require('./img/ac4.png'), require('./img/ac6.png')],
                }}
-                       onClick={this.clickPlay.bind(this)}
-               />
+                       onCheckChanged={(pause) => {
+                          var player = this.music;
+                          if (pause) {
+                             this.props.setPlaying(false);
+                             player.pause();
+                          } else {
+                             this.props.setPlaying(true);
+                             player.play();
+                          }
+                       }}/>
                <div style={{width: "3%"}}/>
                <ImgBtn drawable={{
                   src: require('./img/ac1.png'),
                   press: require('./img/ac2.png')
                }} onClick={() => {
-                  this.props.nextMusic(this.music  );
+                  this.props.nextMusic(this.music);
                }}/>
                <div style={{width: "8%"}}/>
                <ImgBtn drawable={{
@@ -216,10 +213,10 @@ const mapDispatchToProps = (dispatch, ownProps) => {
          dispatch({type: actionType.SET_CURRENT_TIME, currentTime})
       },
       nextMusic: (player) => {
-         dispatch({type: actionType.ACTION_NEXT_MUSIC,player})
+         dispatch({type: actionType.ACTION_NEXT_MUSIC, player})
       },
       preMusic: (player) => {
-         dispatch({type: actionType.ACTION_PRE_MUSIC,player})
+         dispatch({type: actionType.ACTION_PRE_MUSIC, player})
       }
    }
 };

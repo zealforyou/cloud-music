@@ -28,5 +28,6 @@
   "devDependencies": {
     "gh-pages": "^1.2.0",
     "sass-loader": "^7.0.3"
-  }
+  },
+  "proxy": "http://mobilecdn.kugou.com"
 }

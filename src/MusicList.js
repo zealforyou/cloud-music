@@ -2,6 +2,13 @@
 //http://www.kugou.com/yy/index.php?r=play/getdata&hash=25a8a5ee71898435f99bdfdd21f3f6e3
 const data = [
    {
+      name: "Me and My Guitar",
+      author: "Tep No",
+      url: "http://fs.w.kugou.com/201806281220/0dae43e17432a1de8edd95b8eb4c4ff3/G063/M05/10/0D/H5QEAFa0ueuADWjDADxYVTTuoqI097.mp3",
+      pic: "http://singerimg.kugou.com/uploadpic/softhead/400/20150716/20150716133215366556.jpg",
+   }
+   ,
+   {
       name: "Higher",
       author: "抓包",
       url: "http://fs.w.kugou.com/201806280024/23b868066993f170fb77f40ef3632f62/G041/M01/10/1F/yYYBAFYk1vqAZH6zADQgKSvEwxg992.mp3",
