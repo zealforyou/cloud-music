@@ -21,10 +21,15 @@ class Page2 extends Component {
    music;
 
    componentDidMount() {
+      var _this=this;
       this.music = document.getElementById('music');
-      let page=$('#page2');
-      console.log(page);
-      $('.page2-back-img').css('height',page.height());
+      setTimeout(function () {
+         let page=$('#page2');
+         page.css('background-image','none');
+         console.log(page.height());
+         $('.page2-back-img').css('height',page.height());
+      },50);
+
    }
 
    componentWillUnmount() {
@@ -73,7 +78,7 @@ class Page2 extends Component {
       return (
          <div className='page' id='page2'>
             <div className='page2-back-img'>
-               <img  src={this.props.item.pic?this.props.item.pic:'./img/www.jpg'}/>
+               <img  src={this.props.item.pic?'this.props.item.pic':require('./img/ww.jpg')}/>
                <div />
             </div>
 
