@@ -166,11 +166,12 @@ export default class CommentPage extends Component {
                         content: this.state.content,
                         time: ct,
                         likes: 0,
-                        pic:pics[parseInt(Math.random()*pics.length)],
+                        pic:pics[parseInt(this.state.data.length%Title.length)],
                         title:Title[parseInt(Math.random()*Title.length)]
                      });
                      this.state.data.unshift(newObj);
                      this.setState({data: this.state.data, content: ''});
+                     window.scrollTo(0,0);
                   }}>发送</span>
                </div>
             </div>

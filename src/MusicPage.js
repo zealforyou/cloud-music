@@ -105,11 +105,11 @@ class MusicPage extends Component {
 
    clickPlay(e) {
       e.stopPropagation();
+      var player = this.refs.music;
       if (!this.props.item.url) {
-         this.itemClick(0, data[0]);
+         this.props.playMusic(0,data[0],player);
          return;
       }
-      var player = this.refs.music;
       if (this.props.playing) {
          player.pause();
          this.props.setPlaying(false);
@@ -187,6 +187,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       },
       setShowPlay:(showPlay)=>{
          dispatch({type:globalType.ACTION_SHOW_PLAY_CONTROLLER,showPlay})
+      },
+      playMusic(currentMusic,item,player){
+         dispatch({type:actionType.ACTION_PLAY_CURRENT_MUSIC,currentMusic,item,player});
       }
    }
 };

@@ -76,7 +76,9 @@ class App extends Component {
                <div ref='title' className='title'
                     style={{backgroundColor: `rgba(${this.bgColor[0]},${this.bgColor[1]},${this.bgColor[2]},0.5)`}}>
                   <div className='flex-row-center'>
-                     <img src={require("./img/ic_left.png")}/>
+                     <img src={require("./img/ic_left.png")} onClick={()=>{
+                        this.props.history.goBack();
+                     }}/>
                      <span>歌单</span>
                   </div>
                   <div className='flex-row-center'>

@@ -2,7 +2,7 @@ body {
     margin: 0;
     padding: 0;
     font-family: sans-serif;
-    background-color: #f6f6f6;
+    background-color: #F0F4F3;
 }
 
 input {
@@ -11,4 +11,6 @@ input {
 
 input:focus {
     outline: none;
+}
+#root{
 }
