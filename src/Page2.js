@@ -22,6 +22,9 @@ class Page2 extends Component {
 
    componentDidMount() {
       this.music = document.getElementById('music');
+      let page=$('#page2');
+      console.log(page);
+      $('.page2-back-img').css('height',page.height());
    }
 
    componentWillUnmount() {
@@ -68,7 +71,12 @@ class Page2 extends Component {
 
    render() {
       return (
-         <div className='page'>
+         <div className='page' id='page2'>
+            <div className='page2-back-img'>
+               <img  src={this.props.item.pic?this.props.item.pic:'./img/www.jpg'}/>
+               <div />
+            </div>
+
             <div className='page2title flex-row-center'
                  style={{backgroundColor: `rgba(0,0,0,0)`}}>
                <div className='flex-row-center'>
