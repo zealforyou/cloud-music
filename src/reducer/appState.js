@@ -25,7 +25,11 @@ const actionType = {
 };
 
 function appState(state = def, action) {
-   console.log(action);
+  if (action.type!==actionType.SET_CURRENT_TIME
+     &&action.type!==actionType.SET_PROGRESS
+  ) {
+     console.log(action);
+  }
    let me;
    let cm;//计算音乐position
    switch (action.type) {
@@ -47,7 +51,8 @@ function appState(state = def, action) {
          return {...state, canPlay: action.canPlay};
       // 播放前一首
       case actionType.ACTION_PRE_MUSIC:
-         cm = state.currentMusic<= 0 ? data.length-1 : state.currentMusic - 1;
+         cm = (state.currentMusic<= 0 )? data.length-1 : state.currentMusic - 1;
+         console.log(cm);
          me = {
             currentMusic: cm,
             item: data[cm],
@@ -68,7 +73,8 @@ function appState(state = def, action) {
          return {...state, ...me};
       // 播放下一首
       case actionType.ACTION_NEXT_MUSIC:
-         cm = state.currentMusic >= data.length ? 0 : state.currentMusic + 1;
+         cm = (state.currentMusic >= data.length-1) ? 0 : state.currentMusic + 1;
+         console.log(data.length);
          me = {
             currentMusic: cm,
             item: data[cm],

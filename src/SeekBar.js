@@ -8,7 +8,7 @@ export default class SeekBar extends Component {
    componentWillMount() {
       this.setState({
          dx: 0,
-         currentProgress: 0,
+         time:0,
          startMove: false
       });
    }
@@ -17,7 +17,15 @@ export default class SeekBar extends Component {
 
    componentDidMount() {
       this.limit = this.refs.bar.offsetWidth;
-      this.setState({dx:this.props.progress / 100 * this.limit});
+      this.setState({dx:this.props.progress / 100 * this.limit,
+      time:this.props.currentTime});
+   }
+
+   componentWillReceiveProps() {
+      if (this.props.currentTime===0){
+         this.setState({dx:0,
+            time:this.props.currentTime});
+      }
    }
 
    current = 0;
@@ -33,10 +41,11 @@ export default class SeekBar extends Component {
    render() {
       let {duration, currentTime, progress, ...other} = this.props;
       let dx = this.state.startMove ? this.state.dx : progress / 100 * this.limit;
+      let time=this.state.startMove ? this.state.time:currentTime;
       return (
          <div {...other} style={Style.seekBar}>
             <span style={{color: "#aaa", ...Style.time}}>
-               {`${this.addPreZero(parseInt(currentTime / 60))}:${this.addPreZero(parseInt(currentTime % 60))}`}
+               {`${this.addPreZero(parseInt(time / 60))}:${this.addPreZero(parseInt(time % 60))}`}
                </span>
             <div id='bar' ref='bar' style={Style.bar}>
                <div style={Style.grayLine}>
@@ -48,7 +57,7 @@ export default class SeekBar extends Component {
                        this.current = touch.clientX;
                        this.setState({
                           startMove: true,
-                          currentProgress: progress
+                          dx:this.props.progress / 100 * this.limit
                        });
                     }}
                     onTouchMove={(e) => {
@@ -57,8 +66,11 @@ export default class SeekBar extends Component {
                        this.current = touch.clientX;
                        dx = this.state.dx + dx;
                        let limit = this.refs.bar.offsetWidth;
+                       dx=dx <= 0 ? 0 : dx >= limit ? limit : dx;
+                       let  time=dx/this.limit*duration;
                        this.setState({
-                          dx: dx <= 0 ? 0 : dx >= limit ? limit : dx
+                          dx,
+                          time
                        });
                     }}
                     onTouchEnd={() => {

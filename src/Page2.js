@@ -30,6 +30,11 @@ class Page2 extends Component {
       window.localStorage.setItem("back", '1');
    }
 
+   componentWillReceiveProps() {
+      if (this.changeLrc&&this.state.dialog){
+      }
+   }
+   changeLrc=false;
    _showLrc() {
       var _this = this;
       let lrc1 = this.props.item.lrc1;
@@ -108,7 +113,6 @@ class Page2 extends Component {
                         onLrcSelect={(selectLrcId) => {
                            this.selectLrcId = selectLrcId;
                         }}
-                        selectLrcId={this.state.selectLrcId}
                         style={{
                            width: '100%', height: "100%",
                            margin: 0, padding: 0, overflow: 'scroll'
@@ -141,7 +145,8 @@ class Page2 extends Component {
             <SeekBar progress={this.props.progress} duration={this.props.duration} currentTime={this.props.currentTime}
                      onSeek={(progress) => {
                         var player = this.music;
-                        player.currentTime = player.duration * progress / 100;
+                        let time=player.duration * progress / 100;
+                        player.currentTime =time.toFixed(3) ;
                         this.props.setProgress(progress);
                         this.props.setCurrentTime(player.currentTime);
                      }}/>
@@ -157,6 +162,11 @@ class Page2 extends Component {
                   press: require('./img/ac8.png')
                }} onClick={() => {
                   this.props.preMusic(this.music);
+                  this.changeLrc=true;
+                  this.setState({
+                     dialog:false,
+                     lrcEntity:null
+                  });
                }}/>
                <div style={{width: "3%"}}/>
                <ImgBtn clickable={this.props.loaded} selected={!this.props.playing} drawable={{
@@ -179,6 +189,11 @@ class Page2 extends Component {
                   press: require('./img/ac2.png')
                }} onClick={() => {
                   this.props.nextMusic(this.music);
+                  this.changeLrc=true;
+                  this.setState({
+                     dialog:false,
+                     lrcEntity:null
+                  });
                }}/>
                <div style={{width: "8%"}}/>
                <ImgBtn drawable={{
