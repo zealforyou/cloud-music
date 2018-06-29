@@ -2,6 +2,13 @@
 //http://www.kugou.com/yy/index.php?r=play/getdata&hash=25a8a5ee71898435f99bdfdd21f3f6e3
 const data = [
    {
+      name: "다시만난 너에게 (再次见到你)",
+      author: "匹诺曹电视剧",
+      url: "http://fs.w.kugou.com/201806290944/7337145c852f57b857f4200230369ee7/G013/M04/1C/10/rYYBAFUKKwiAXksNAENSiS8g0FY088.mp3",
+      pic: "http://singerimg.kugou.com/uploadpic/softhead/400/20150115/20150115110731240315.jpg",
+   }
+   ,
+   {
       name: "Me and My Guitar",
       author: "Tep No",
       url: "http://fs.w.kugou.com/201806281220/0dae43e17432a1de8edd95b8eb4c4ff3/G063/M05/10/0D/H5QEAFa0ueuADWjDADxYVTTuoqI097.mp3",
