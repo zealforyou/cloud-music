@@ -25,8 +25,8 @@ class Page2 extends Component {
       this.music = document.getElementById('music');
       setTimeout(function () {
          let page=$('#page2');
-         page.css('background-image','none');
          console.log(page.height());
+         page.css('background-image','none');
          $('.page2-back-img').css('height',page.height());
       },50);
 
@@ -78,7 +78,7 @@ class Page2 extends Component {
       return (
          <div className='page' id='page2'>
             <div className='page2-back-img'>
-               <img  src={this.props.item.pic?'this.props.item.pic':require('./img/ww.jpg')}/>
+               <img  src={this.props.item.pic?this.props.item.pic:require('./img/ww.jpg')}/>
                <div />
             </div>
 
