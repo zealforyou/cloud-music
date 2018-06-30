@@ -6,6 +6,7 @@ const data = [
       author: "匹诺曹电视剧",
       url: "http://fs.w.kugou.com/201806290944/7337145c852f57b857f4200230369ee7/G013/M04/1C/10/rYYBAFUKKwiAXksNAENSiS8g0FY088.mp3",
       pic: "http://singerimg.kugou.com/uploadpic/softhead/400/20150115/20150115110731240315.jpg",
+      lrc1:require('./lrcs/再次见到你.lrc')
    }
    ,
    {

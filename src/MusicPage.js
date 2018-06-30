@@ -129,7 +129,7 @@ class MusicPage extends Component {
                亲 您的浏览器不支持html5的audio标签
             </audio>
             <footer className='play-footer flex-row-center' onClick={(e) => {
-               this.props.history.push('/Page2');
+               this.props.history.push('/Page2/-1');
             }} style={{display:this.props.showPlay?"flex":"none"}}>
                <img src={this.props.item.pic ? this.props.item.pic : require("./img/a20.9.png")} className='m-pic'/>
                <div className='flex-c' style={{marginLeft: "10px", flexGrow: 1}}>

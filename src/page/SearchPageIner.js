@@ -3,6 +3,9 @@ import React, {Component} from 'react';
 import ListView from "../ListView";
 import {connect} from "react-redux";
 import {actionType} from "../reducer/globalState";
+import {actionType as actionType1} from "../reducer/appState";
+
+const parseLrc = require('../LrcManager');
 
 class SearchPageIner extends Component {
    constructor() {
@@ -30,20 +33,35 @@ class SearchPageIner extends Component {
 
    _fetchData() {
       var _this = this;
-      let url = `/api/v3/search/song?format=json&keyword=${this.state.inputValue}&page=1&pagesize=20&showtype=1`;
-      fetch(url,{
-         method: 'get',
-         dataType: "json",
-      }).then(function (res) {
-         console.log(res);
-         if (res && res.status === 1) {
-            _this.setState({
-               data: res.info
-            });
-         }
-      }).catch(function (err) {
+      let url = `http://mobilecdn.kugou.com/api/v3/search/song?format=json&keyword=${this.state.inputValue}&page=1&pagesize=20&showtype=1`;
+      window.jsCall = (value) => {
+         let result = JSON.parse(value);
+         _this.setState({
+            data: result.data.info
+         })
+      };
+      window.androidNet.request(url, "jsCall");
+   }
 
-      });
+   _fetchMusic(hash) {
+      var _this = this;
+      let url = `http://www.kugou.com/yy/index.php?r=play/getdata&hash=${hash}`;
+      window.jsCall = (value) => {
+         value=decodeURI(value);
+         value = value.replace(/\r\n/g, "<br>");
+         let result = JSON.parse(value);
+         let lrc = parseLrc(result.data.lyrics);
+         let player = document.getElementById("music");
+         _this.props.playMusic(0, {
+            name: result.data.song_name,
+            author: result.data.author_name,
+            url: result.data.play_url,
+            pic: result.data.img,
+            lrcEntity: lrc
+         }, player);
+      };
+
+      window.androidNet.request(url, "jsCall");
    }
 
    componentWillUnmount() {
@@ -79,7 +97,8 @@ class SearchPageIner extends Component {
             </div>
             <div style={{marginTop: '50px'}}></div>
             <ListView data={this.state.data}
-                      onItemClick={() => {
+                      onItemClick={(postion, item) => {
+                         this._fetchMusic(item.hash);
                       }}
                       style={{paddingBottom: "3rem", backgroundColor: "#f6f6f6"}}
                       renderItem={(position, item) => {
@@ -113,7 +132,11 @@ const mapDispatchToProps = (dispatch) => {
    return {
       setShowPlay: (showPlay) => {
          dispatch({type: actionType.ACTION_SHOW_PLAY_CONTROLLER, showPlay});
+      },
+      playMusic(currentMusic, item, player) {
+         dispatch({type: actionType1.ACTION_PLAY_CURRENT_MUSIC, currentMusic, item, player});
       }
+
    }
 };
 SearchPageIner = connect(null, mapDispatchToProps)(SearchPageIner);

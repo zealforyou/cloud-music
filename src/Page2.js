@@ -4,6 +4,7 @@ import SeekBar from './SeekBar';
 import LrcView from "./LrcView";
 import {connect} from "react-redux";
 import {actionType} from "./reducer/appState";
+import data from "./MusicList";
 
 const Style = require('./Page2.css');
 const $ = require('jquery');
@@ -18,18 +19,8 @@ class Page2 extends Component {
       this.setState({});
    }
 
-   music;
-
    componentDidMount() {
-      var _this=this;
-      this.music = document.getElementById('music');
-      setTimeout(function () {
-         let page=$('#page2');
-         console.log(page.height());
-         page.css('background-image','none');
-         $('.page2-back-img').css('height',page.height());
-      },50);
-
+      this._init();
    }
 
    componentWillUnmount() {
@@ -40,6 +31,32 @@ class Page2 extends Component {
 
    componentWillReceiveProps() {
       if (this.changeLrc&&this.state.dialog){
+      }
+   }
+
+   music;
+   _init(){
+      var _this=this;
+      this.music = document.getElementById('music');
+      setTimeout(function () {
+         let page=$('#page2');
+         console.log(page.height());
+         page.css('background-image','none');
+         $('.page2-back-img').css('height',page.height());
+         _this._findMusic();
+      },50);
+   }
+   _findMusic(){
+      let music=this.props.match.params.music;
+      if(music){
+         for(let i=0;i<data.length;i++){
+            let item=data[i];
+            if(item.name.toLowerCase().includes(music.toLowerCase())){
+               this.props.playMusic(i,item,this.music);
+               console.log(item);
+               break;
+            }
+         }
       }
    }
    changeLrc=false;
@@ -245,6 +262,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       },
       preMusic: (player) => {
          dispatch({type: actionType.ACTION_PRE_MUSIC, player})
+      },
+      playMusic: (currentMusic,item,player) => {
+         dispatch({type: actionType.ACTION_PLAY_CURRENT_MUSIC, player,currentMusic,item})
       }
    }
 };
