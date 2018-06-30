@@ -4,6 +4,7 @@ import data from "./MusicList";
 import {actionType}from './reducer/appState';
 import {connect}from 'react-redux';
 import {actionType as globalType} from "./reducer/globalState";
+import $ from 'jquery';
 require('./App.css');
 
 class App extends Component {
@@ -16,20 +17,6 @@ class App extends Component {
 
    componentWillMount() {
       this.setState({dialog1:false});
-      var _this = this;
-      var onScroll = (e) => {
-         var top = document.documentElement.scrollTop;
-         var min = 150;
-         var max = 201;
-         if (top >= min && top <= max) {
-            _this._setTitleColor(1);
-         } else if (top < min) {
-            _this._setTitleColor(0);
-         }
-      };
-      this.onScroll = onScroll;
-
-      window.addEventListener("scroll", onScroll);
    }
 
    componentDidMount() {
@@ -39,22 +26,37 @@ class App extends Component {
       if (back === '1') {
          window.localStorage.setItem('back', '0');
       } else {
-         var _this = this;
+         // var _this = this;
          // setTimeout(() => {
          //    _this.itemClick(0, data[0]);
          // }, 1500);
 
       }
+      var _this = this;
+      var AppDiv=$('#App');
+      var onScroll = (e) => {
+         var top = AppDiv.scrollTop();
+         var min = 150;
+         var max = 201;
+         if (top >= min && top <= max) {
+            _this._setTitleColor(((top-min)/(max-min)).toFixed(2));
+         } else if (top < min) {
+            _this._setTitleColor(0);
+         }else{
+            _this._setTitleColor(1);
+         }
+      }
+      ;
+      AppDiv.scroll(onScroll);
    }
 
    componentWillUnmount() {
       this.props.setShowPlay(false);
-      window.removeEventListener("scroll", this.onScroll);
+      $('#App').scroll(null);
    }
 
    _setTitleColor(jd) {
       this.refs.title.style.backgroundColor = `rgba(${this.bgColor[0]},${this.bgColor[1]},${this.bgColor[2]},${0.5 + jd * 0.5})`;
-      console.log(this.refs.title.style.backgroundColor)
    }
 
    num = -1;
@@ -71,7 +73,7 @@ class App extends Component {
 
    render() {
       return (
-         <div>
+         <div id='App'>
             <header className="top">
                <div ref='title' className='title'
                     style={{backgroundColor: `rgba(${this.bgColor[0]},${this.bgColor[1]},${this.bgColor[2]},0.5)`}}>

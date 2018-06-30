@@ -1,5 +1,6 @@
 import data from '../MusicList';
-
+import {PLAY_MODE,createPlayModer} from '../AppConfig';
+const playModer=createPlayModer();
 const def = {
    duration: 1,
    currentTime: 0,
@@ -8,6 +9,8 @@ const def = {
    loaded: false,
    canPlay: false,
    currentMusic: -1,
+   playModeIndex:0,
+   playMode:playModer[0],
    item: {}
 };
 const actionType = {
@@ -22,6 +25,7 @@ const actionType = {
    ACTION_PLAY_CURRENT_MUSIC: 'action_play_current_music',
    ACTION_PRE_MUSIC: 'action_pre_music',
    ACTION_NEXT_MUSIC: 'action_next_music',
+   ACTION_SWITCH_MODE: 'action_switch_mode',
 };
 
 function appState(state = def, action) {
@@ -33,6 +37,10 @@ function appState(state = def, action) {
    let me;
    let cm;//计算音乐position
    switch (action.type) {
+      case actionType.ACTION_SWITCH_MODE:
+         let indextemp=parseInt((state.playModeIndex+1)%playModer.length);
+         return {...state, playMode: playModer[indextemp],playModeIndex:indextemp};
+
       case actionType.SET_DURATION:
          return {...state, duration: action.duration};
       case actionType.SET_CURRENT_TIME:
@@ -51,7 +59,11 @@ function appState(state = def, action) {
          return {...state, canPlay: action.canPlay};
       // 播放前一首
       case actionType.ACTION_PRE_MUSIC:
-         cm = (state.currentMusic<= 0 )? data.length-1 : state.currentMusic - 1;
+         if (state.playMode===PLAY_MODE.SJ){
+            cm=parseInt(Math.random()*data.length);
+         } else {
+            cm = (state.currentMusic<= 0 )? data.length-1 : state.currentMusic - 1;
+         }
          console.log(cm);
          me = {
             currentMusic: cm,
@@ -72,7 +84,12 @@ function appState(state = def, action) {
          return {...state, ...me};
       // 播放下一首
       case actionType.ACTION_NEXT_MUSIC:
-         cm = (state.currentMusic >= data.length-1) ? 0 : state.currentMusic + 1;
+         if (state.playMode===PLAY_MODE.SJ){
+            cm=parseInt(Math.random()*data.length);
+         } else {
+            cm = (state.currentMusic >= data.length-1) ? 0 : state.currentMusic + 1;
+         }
+
          console.log(data.length);
          me = {
             currentMusic: cm,

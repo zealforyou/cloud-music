@@ -73,7 +73,7 @@ class SearchPageIner extends Component {
       var _this = this;
       return (
          <div className='SearchPage'>
-            <div className='title'>
+            <div className='title app-title'>
                <img className='first-child' src={require('../img/ic_left.png')} onClick={() => {
                   this.props.history.goBack();
                }}/>

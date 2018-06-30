@@ -1,0 +1,23 @@
+.Toast {
+  position: fixed;
+  bottom: 10vh;
+  margin: auto;
+  left: 0;
+  right: 0;
+  display: flex;
+  display: -webkit-flex;
+  justify-content: center;
+  align-items: center;
+
+
+  span{
+    background-color: rgba(0,0,0,0.6);
+    overflow: hidden;
+    color: white;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding: 8px 20px;
+    border-radius: 15px;
+    font-size: 15px;
+  }
+}
