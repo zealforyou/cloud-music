@@ -25,12 +25,6 @@ class Page2 extends Component {
       this._init();
       var _this = this;
       this.music = document.getElementById('music');
-      setTimeout(function () {
-         let page = $('#page2');
-         console.log(page.height());
-         page.css('background-image', 'none');
-         $('.page2-back-img').css('height', page.height());
-      }, 50);
       document.addEventListener("keydown", keydown);
 
       function keydown(event) {
@@ -69,12 +63,18 @@ class Page2 extends Component {
          console.log(page.height());
          page.css('background-image','none');
          $('.page2-back-img').css('height',page.height());
-         _this._findMusic();
       },50);
+      let music=this.props.match.params.music;
+      if(music&&music!=='-1'){
+         this.setState({
+            showAx:true,
+            showAxAnimation:false
+         });
+      }
    }
    _findMusic(){
       let music=this.props.match.params.music;
-      if(music){
+      if(music&&music!==-1){
          for(let i=0;i<data.length;i++){
             let item=data[i];
             if(item.name.toLowerCase().includes(music.toLowerCase())){
@@ -170,7 +170,8 @@ class Page2 extends Component {
                   <div className='g-pan'>
                      <img className="big" src={require('./img/aea.png')}/>
                      <img className="small" src={this.props.item.pic}
-                          style={{animationPlayState: this.props.playing ? "running" : "paused"}}/>
+                          style={{animationPlayState: this.props.playing ? "running" : "paused"}}
+                     />
                      <img className="big" src={require('./img/acg.png')}/>
                   </div>
                   <div className='div-img1'>
@@ -278,6 +279,26 @@ class Page2 extends Component {
                <ImgBtn drawable={{
                   src: require('./img/adz.png'),
                   press: require('./img/ae1.png')
+               }}/>
+            </div>
+            <div style={{height:'100%',width:'100%',display:this.state.showAx?'block':'none',
+            position:'absolute',left:0,top:0,backgroundColor:'rgba(0,0,0,0.8)'}}>
+               <img style={{width:'100vw', position:'absolute',left:0,top:0,right:0,bottom:0,
+               margin:'auto',objectFit:'contain',animation:this.state.showAxAnimation?"ax-animation 1.5s":"none",
+               transformOrigin:'50% 50%'}}
+               src={require('./img/aixintao.jpg')}
+               onClick={()=>{
+                  this.setState({
+                     showAxAnimation:true
+                  });
+                  let _this=this;
+                  _this._findMusic();
+                  setTimeout(()=>{
+                     _this.setState({
+                        showAx:false
+                     })
+                  },1500);
+
                }}/>
             </div>
          </div>
