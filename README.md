@@ -19,18 +19,16 @@
 ------
 ## 页面展示
 ### [应用链接](https://zealforyou.github.io/cloud-music/)
-<center>
+<figure class="third">
 <img src="show/page1.jpg" width="25%" height="25%" />
 <img src="show/page2.jpg" width="25%" height="25%" />
-</center>
-<center>
 <img src="show/page3.jpg" width="25%" height="25%" />
-<img src="show/page4.jpg" width="25%" height="25%" />
-</center>
-<center>
+</figure>
+<figure class="third">
 <img src="show/page5.jpg" width="25%" height="25%" />
 <img src="show/page6.jpg" width="25%" height="25%" />
-</center>
+<img src="show/page4.jpg" width="25%" height="25%" />
+</figure>
 ------
 
 
