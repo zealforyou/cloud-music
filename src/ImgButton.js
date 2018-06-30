@@ -27,9 +27,10 @@ export default class ImgBtn extends Component {
       } else {
          selectSrc = src = drawable.src;
       }
+      let selected=(typeof nextProps.selected)==='undefined'? this.state.selected :nextProps.selected;
       this.setState({
-         src: nextProps.selected ? selectSrc : src,
-         selected: nextProps.selected ? nextProps.selected : false
+         src: selected ? selectSrc : src,
+         selected:selected
       });
 
    }

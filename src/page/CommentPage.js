@@ -48,7 +48,7 @@ export default class CommentPage extends Component {
    render() {
       return (
          <div className='Comment'>
-            <div className="header">
+            <div className="header app-title">
                   <span onClick={() => {
                      this.props.history.goBack();
                   }}>

@@ -23,18 +23,19 @@ class Page2 extends Component {
    music;
 
    componentDidMount() {
-      var _this=this;
+      var _this = this;
       this.music = document.getElementById('music');
       setTimeout(function () {
-         let page=$('#page2');
+         let page = $('#page2');
          console.log(page.height());
-         page.css('background-image','none');
-         $('.page2-back-img').css('height',page.height());
-      },50);
-      document.addEventListener("keydown",keydown);
-      function keydown(event){
-         if (event.keyCode===32){
-            if (_this.props.playing){
+         page.css('background-image', 'none');
+         $('.page2-back-img').css('height', page.height());
+      }, 50);
+      document.addEventListener("keydown", keydown);
+
+      function keydown(event) {
+         if (event.keyCode === 32) {
+            if (_this.props.playing) {
                _this.props.setPlaying(false);
                _this.music.pause();
             } else {
@@ -43,21 +44,24 @@ class Page2 extends Component {
             }
          }
       }
-      this.keydown=keydown;
+
+      this.keydown = keydown;
    }
 
    componentWillUnmount() {
       var player = this.music;
       this.state.dialog = false;
       window.localStorage.setItem("back", '1');
-      document.removeEventListener("keydown",this.keydown)
+      document.removeEventListener("keydown", this.keydown)
    }
 
    componentWillReceiveProps() {
-      if (this.changeLrc&&this.state.dialog){
+      if (this.changeLrc && this.state.dialog) {
       }
    }
-   changeLrc=false;
+
+   changeLrc = false;
+
    _showLrc() {
       var _this = this;
       let lrc1 = this.props.item.lrc1;
@@ -90,30 +94,30 @@ class Page2 extends Component {
 
 
    render() {
-      let playModeImg=[];
-      switch (this.props.playMode){
+      let playModeImg = [];
+      switch (this.props.playMode) {
          case PLAY_MODE.XH:
-            playModeImg[0]=require('./img/xh.png');
-            playModeImg[1]=require('./img/xh_press.png');
+            playModeImg[0] = require('./img/xh.png');
+            playModeImg[1] = require('./img/xh_press.png');
             break;
          case PLAY_MODE.ONE_XH:
-            playModeImg[0]=require('./img/adi.png');
-            playModeImg[1]=require('./img/adj.png');
+            playModeImg[0] = require('./img/adi.png');
+            playModeImg[1] = require('./img/adj.png');
             break;
          case PLAY_MODE.ONE:
-            playModeImg[0]=require('./img/adi.png');
-            playModeImg[1]=require('./img/adj.png');
+            playModeImg[0] = require('./img/adi.png');
+            playModeImg[1] = require('./img/adj.png');
             break;
          case PLAY_MODE.SJ:
-            playModeImg[0]=require('./img/sj.png');
-            playModeImg[1]=require('./img/sj_press.png');
+            playModeImg[0] = require('./img/sj.png');
+            playModeImg[1] = require('./img/sj_press.png');
             break;
       }
       return (
          <div className='page' id='page2'>
             <div className='page2-back-img'>
-               <img  src={this.props.item.pic?this.props.item.pic:require('./img/ww.jpg')}/>
-               <div />
+               <img src={this.props.item.pic ? this.props.item.pic : require('./img/ww.jpg')}/>
+               <div/>
             </div>
 
             <div className='page2title flex-row-center'
@@ -169,11 +173,12 @@ class Page2 extends Component {
             </div>
             {/*点赞按钮等*/}
             <div className='page2Menu1'>
-               <ImgBtn style={{animation: this.state.animation ? this.state.animation : 'none'}} onCheckChanged={(checked) => {
-                  this.setState({
-                     animation: `${checked ? "btnBig" : "btnBig1"} 0.5s`
-                  });
-               }} drawable={{
+               <ImgBtn style={{animation: this.state.animation ? this.state.animation : 'none'}}
+                       onCheckChanged={(checked) => {
+                          this.setState({
+                             animation: `${checked ? "btnBig" : "btnBig1"} 0.5s`
+                          });
+                       }} drawable={{
                   press: [require("./img/add.png"), require('./img/adf.png')],
                   src: [require("./img/adc.png"), require('./img/ade.png')]
                }}/>
@@ -192,17 +197,17 @@ class Page2 extends Component {
             <SeekBar progress={this.props.progress} duration={this.props.duration} currentTime={this.props.currentTime}
                      onSeek={(progress) => {
                         var player = this.music;
-                        let time=player.duration * progress / 100;
-                        player.currentTime =time.toFixed(3) ;
+                        let time = player.duration * progress / 100;
+                        player.currentTime = time.toFixed(3);
                         this.props.setProgress(progress);
                         this.props.setCurrentTime(player.currentTime);
                      }}/>
             {/*播放控制按钮组*/}
             <div className='flex-row-center controlMenu'>
                <ImgBtn drawable={{
-                  src:playModeImg[0],
-                  press:playModeImg[1]
-               }} onClick={()=>{
+                  src: playModeImg[0],
+                  press: playModeImg[1]
+               }} onClick={() => {
                   this.props.switchPlayMode();
                }}/>
                <div style={{width: "8%"}}/>
@@ -211,10 +216,10 @@ class Page2 extends Component {
                   press: require('./img/ac8.png')
                }} onClick={() => {
                   this.props.preMusic(this.music);
-                  this.changeLrc=true;
+                  this.changeLrc = true;
                   this.setState({
-                     dialog:false,
-                     lrcEntity:null
+                     dialog: false,
+                     lrcEntity: null
                   });
                }}/>
                <div style={{width: "3%"}}/>
@@ -238,10 +243,10 @@ class Page2 extends Component {
                   press: require('./img/ac2.png')
                }} onClick={() => {
                   this.props.nextMusic(this.music);
-                  this.changeLrc=true;
+                  this.changeLrc = true;
                   this.setState({
-                     dialog:false,
-                     lrcEntity:null
+                     dialog: false,
+                     lrcEntity: null
                   });
                }}/>
                <div style={{width: "8%"}}/>
