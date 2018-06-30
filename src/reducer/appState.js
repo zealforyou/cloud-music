@@ -76,7 +76,6 @@ function appState(state = def, action) {
          };
 
          if (action.player) {
-            action.player.pause();
             action.player.src = me.item.url;
             action.player.play();
          } else {
@@ -103,7 +102,6 @@ function appState(state = def, action) {
          };
 
          if (action.player) {
-            action.player.pause();
             action.player.src = me.item.url;
             action.player.play();
          } else {
@@ -122,7 +120,6 @@ function appState(state = def, action) {
             currentTime:0
          };
          if (action.player) {
-            action.player.pause();
             action.player.src = action.item.url;
             action.player.play();
          } else {

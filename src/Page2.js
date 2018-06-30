@@ -4,6 +4,7 @@ import SeekBar from './SeekBar';
 import LrcView from "./LrcView";
 import {connect} from "react-redux";
 import {actionType} from "./reducer/appState";
+import data from "./MusicList";
 import {PLAY_MODE} from "./AppConfig";
 
 const Style = require('./Page2.css');
@@ -20,9 +21,8 @@ class Page2 extends Component {
 
    }
 
-   music;
-
    componentDidMount() {
+      this._init();
       var _this = this;
       this.music = document.getElementById('music');
       setTimeout(function () {
@@ -60,6 +60,31 @@ class Page2 extends Component {
       }
    }
 
+   music;
+   _init(){
+      var _this=this;
+      this.music = document.getElementById('music');
+      setTimeout(function () {
+         let page=$('#page2');
+         console.log(page.height());
+         page.css('background-image','none');
+         $('.page2-back-img').css('height',page.height());
+         _this._findMusic();
+      },50);
+   }
+   _findMusic(){
+      let music=this.props.match.params.music;
+      if(music){
+         for(let i=0;i<data.length;i++){
+            let item=data[i];
+            if(item.name.toLowerCase().includes(music.toLowerCase())){
+               this.props.playMusic(i,item,this.music);
+               console.log(item);
+               break;
+            }
+         }
+      }
+   }
    changeLrc = false;
 
    _showLrc() {
@@ -287,6 +312,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       },
       preMusic: (player) => {
          dispatch({type: actionType.ACTION_PRE_MUSIC, player})
+      },
+      playMusic: (currentMusic,item,player) => {
+         dispatch({type: actionType.ACTION_PLAY_CURRENT_MUSIC, player, currentMusic, item})
       },
       switchPlayMode: () => {
          dispatch({type: actionType.ACTION_SWITCH_MODE})

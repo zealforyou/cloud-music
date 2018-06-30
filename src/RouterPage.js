@@ -19,7 +19,7 @@ export default class RouterPage extends Component {
          <div>
             <Switch>
                <Route exact path="/" component={Mypage}/>
-               <Route exact path="/Page2" component={Page2}/>
+               <Route path="*/Page2/:music" component={Page2}/>
                <Route exact path="/CommentPage" component={CommentPage}/>
                <Route exact path="/SearchPage" component={SearchPage}/>
                <Route exact path="/SearchPageIner" component={SearchPageIner}/>
