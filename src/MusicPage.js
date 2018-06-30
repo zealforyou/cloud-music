@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import {actionType} from "./reducer/appState";
 import {actionType as globalType} from "./reducer/globalState";
 import data from "./MusicList";
+import {PLAY_MODE}from './AppConfig'
 
 class MusicPage extends Component {
    constructor() {
@@ -75,9 +76,22 @@ class MusicPage extends Component {
 
       function ended() {
          console.log("appended");
-         _this.props.setPlaying(false);
-         _this.props.setProgress(0);
-         _this.props.setCurrentTime(0);
+         switch (_this.props.playMode){
+            case PLAY_MODE.SJ:
+               _this.props.nextMusic(_this.refs.music);
+               break;
+            case PLAY_MODE.ONE_XH:
+               _this.props.playMusic(_this.props.currentTime,_this.props.item,_this.refs.music);
+               break;
+            case PLAY_MODE.XH:
+               _this.props.nextMusic(_this.refs.music);
+               break;
+            case PLAY_MODE.ONE:
+               _this.props.setPlaying(false);
+               _this.props.setProgress(0);
+               _this.props.setCurrentTime(0);
+               break;
+         }
       }
 
       function canplay () {
@@ -161,6 +175,7 @@ const mapStateToProps = (state) => {
       currentMusic: state.appState.currentMusic,
       item: state.appState.item,
       canPlay: state.appState.canPlay,
+      playMode:state.appState.playMode
    }
 };
 const mapDispatchToProps = (dispatch, ownProps) => {
@@ -191,6 +206,12 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       },
       playMusic(currentMusic,item,player){
          dispatch({type:actionType.ACTION_PLAY_CURRENT_MUSIC,currentMusic,item,player});
+      },
+      nextMusic(player){
+         dispatch({type:actionType.ACTION_NEXT_MUSIC,player});
+      },
+      preMusic(player){
+         dispatch({type:actionType.ACTION_PRE_MUSIC,player});
       }
    }
 };

@@ -4,6 +4,7 @@ import SeekBar from './SeekBar';
 import LrcView from "./LrcView";
 import {connect} from "react-redux";
 import {actionType} from "./reducer/appState";
+import {PLAY_MODE} from "./AppConfig";
 
 const Style = require('./Page2.css');
 const $ = require('jquery');
@@ -16,6 +17,7 @@ class Page2 extends Component {
 
    componentWillMount() {
       this.setState({});
+
    }
 
    music;
@@ -29,13 +31,26 @@ class Page2 extends Component {
          page.css('background-image','none');
          $('.page2-back-img').css('height',page.height());
       },50);
-
+      document.addEventListener("keydown",keydown);
+      function keydown(event){
+         if (event.keyCode===32){
+            if (_this.props.playing){
+               _this.props.setPlaying(false);
+               _this.music.pause();
+            } else {
+               _this.props.setPlaying(true);
+               _this.music.play();
+            }
+         }
+      }
+      this.keydown=keydown;
    }
 
    componentWillUnmount() {
       var player = this.music;
       this.state.dialog = false;
       window.localStorage.setItem("back", '1');
+      document.removeEventListener("keydown",this.keydown)
    }
 
    componentWillReceiveProps() {
@@ -75,6 +90,25 @@ class Page2 extends Component {
 
 
    render() {
+      let playModeImg=[];
+      switch (this.props.playMode){
+         case PLAY_MODE.XH:
+            playModeImg[0]=require('./img/xh.png');
+            playModeImg[1]=require('./img/xh_press.png');
+            break;
+         case PLAY_MODE.ONE_XH:
+            playModeImg[0]=require('./img/adi.png');
+            playModeImg[1]=require('./img/adj.png');
+            break;
+         case PLAY_MODE.ONE:
+            playModeImg[0]=require('./img/adi.png');
+            playModeImg[1]=require('./img/adj.png');
+            break;
+         case PLAY_MODE.SJ:
+            playModeImg[0]=require('./img/sj.png');
+            playModeImg[1]=require('./img/sj_press.png');
+            break;
+      }
       return (
          <div className='page' id='page2'>
             <div className='page2-back-img'>
@@ -166,8 +200,10 @@ class Page2 extends Component {
             {/*播放控制按钮组*/}
             <div className='flex-row-center controlMenu'>
                <ImgBtn drawable={{
-                  src: require('./img/adi.png'),
-                  press: require('./img/adj.png')
+                  src:playModeImg[0],
+                  press:playModeImg[1]
+               }} onClick={()=>{
+                  this.props.switchPlayMode();
                }}/>
                <div style={{width: "8%"}}/>
                <ImgBtn drawable={{
@@ -226,7 +262,8 @@ const mapStateToProps = (state) => {
       loaded: state.appState.loaded,
       duration: state.appState.duration,
       currentTime: state.appState.currentTime,
-      item: state.appState.item
+      item: state.appState.item,
+      playMode: state.appState.playMode
    }
 };
 const mapDispatchToProps = (dispatch, ownProps) => {
@@ -245,6 +282,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       },
       preMusic: (player) => {
          dispatch({type: actionType.ACTION_PRE_MUSIC, player})
+      },
+      switchPlayMode: () => {
+         dispatch({type: actionType.ACTION_SWITCH_MODE})
       }
    }
 };

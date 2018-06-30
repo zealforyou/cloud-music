@@ -55,7 +55,7 @@ export default class CommentPage extends Component {
                      <img src={require('../img/ic_left.png')} alt=""/>
 
                   </span>
-               <span>评论(67364753)</span>
+               <span>评论(5465)</span>
             </div>
 
             <div className="comm_conter">
