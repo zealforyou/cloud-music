@@ -147,7 +147,7 @@ class MusicPage extends Component {
             }} style={{display:this.props.showPlay?"flex":"none"}}>
                <img src={this.props.item.pic ? this.props.item.pic : require("./img/a20.9.png")} className='m-pic'/>
                <div className='flex-c' style={{marginLeft: "10px", flexGrow: 1}}>
-                  <span style={{fontSize: "15px"}}>{this.props.item.name}</span>
+                  <span className='text-single-line' style={{fontSize: "15px"}}>{this.props.item.name}</span>
                   <span style={{color: "#888888", fontSize: "11px"}}>{this.props.item.author}</span>
                </div>
                <img onClick={this.clickPlay.bind(this)} src={require(this.props.playing ? "./img/bzm.png" : "./img/q1.png")}

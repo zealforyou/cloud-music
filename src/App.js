@@ -5,12 +5,13 @@ import {actionType}from './reducer/appState';
 import {connect}from 'react-redux';
 import {actionType as globalType} from "./reducer/globalState";
 import $ from 'jquery';
+import 'rgbaster';
 require('./App.css');
 
 class App extends Component {
    constructor() {
       super();
-      this.bgColor = [230, 80, 130];
+      this.bgColor = [200, 200, 200];
       this.title="想唱就唱";
       this.username="唱的响亮";
    }
@@ -20,19 +21,29 @@ class App extends Component {
    }
 
    componentDidMount() {
+      var _this = this;
       this.props.setShowPlay(true);
       this.refs.music = document.getElementById('music');
       let back = window.localStorage.getItem("back");
       if (back === '1') {
          window.localStorage.setItem('back', '0');
-      } else {
-         // var _this = this;
-         // setTimeout(() => {
-         //    _this.itemClick(0, data[0]);
-         // }, 1500);
-
       }
-      var _this = this;
+      window.RGBaster.colors(document.getElementById('music_pic'), {
+         success: function(payload) {
+            // payload.dominant是主色，RGB形式表示
+            // payload.secondary是次色，RGB形式表示
+
+            // payload.palette是调色板，含多个主要颜色，数组
+            let rgb=payload.secondary;
+            console.log(payload.secondary);
+            if (rgb) {
+               rgb=rgb.substring(rgb.indexOf('(')+1,rgb.indexOf(')'));
+               rgb=rgb.split(',');
+               _this.bgColor=[parseInt(rgb[0]),parseInt(rgb[1]),parseInt(rgb[2])];
+              _this.setState({refresh:true});
+            }
+         }
+      });
       var AppDiv=$('#App');
       var onScroll = (e) => {
          var top = AppDiv.scrollTop();
@@ -96,6 +107,7 @@ class App extends Component {
                   <div className="flex-row" style={{paddingTop: '4em'}}>
                      <div className='big-img'>
                         <img
+                           id='music_pic'
                            onClick={() => {
                               this.setState({dialog1: true});
                            }}

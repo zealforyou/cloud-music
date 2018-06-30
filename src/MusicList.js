@@ -2,6 +2,46 @@
 //http://www.kugou.com/yy/index.php?r=play/getdata&hash=25a8a5ee71898435f99bdfdd21f3f6e3
 const data = [
    {
+      name: "阿楚姑娘",
+      author: "梁凡",
+      url: "http://fs.w.kugou.com/201807010210/d4a810c02b9a376c05fc4b8cdf98b3d0/G060/M09/18/03/3IYBAFb3JseADR7qADyQcFvqL_s275.mp3",
+      pic: "http://singerimg.kugou.com/uploadpic/softhead/400/20161229/20161229222159728.jpg",
+      lrc1:require('./lrcs/阿楚姑娘')
+   }
+   ,
+   {
+      name: "愿你安好",
+      author: "曹寅",
+      url: "http://fs.w.kugou.com/201807010224/a3efd33cb7e2930756969bf8a688b0dc/G077/M09/17/04/7YYBAFhLv8uANc2WAEcujAn9bQw766.mp3",
+      pic: "http://singerimg.kugou.com/uploadpic/softhead/400/20140704/20140704131920952639.jpg",
+      lrc1:require('./lrcs/愿你安好')
+   }
+   ,
+   {
+      name: "说散就散",
+      author: "前任3主题曲",
+      url: "http://fs.w.kugou.com/201807010221/85a42e7947a89b99b79fbae0397bfa5b/G118/M08/04/15/FocBAFovr0CALbDLADifZa9XM2s464.mp3",
+      pic: "http://singerimg.kugou.com/uploadpic/softhead/400/20180619/20180619155613194.jpg",
+      lrc1:require('./lrcs/说散就散')
+   }
+   ,
+   {
+      name: "Mad Clown、金娜英 - 다시 너를 (TV)",
+      author: "金娜英",
+      url: "http://fs.w.kugou.com/201807010149/e9895f484025b55baf94d4e87b99c7d5/G063/M02/1C/01/fw0DAFcshSuAOtF4ADBXGZxtp40747.mp3",
+      pic: "http://singerimg.kugou.com/uploadpic/softhead/400/20170204/20170204125005463.jpg",
+      lrc1:require('./lrcs/金娜英')
+   }
+   ,
+   {
+      name: "胡66 - 差一步",
+      author: "胡66",
+      url: "http://fs.w.kugou.com/201807010110/ab290f97acfa296dac304e2a1ec722ad/G126/M07/18/19/XpQEAFqyHDCAKxINADxEvsPc60k313.mp3",
+      pic: "http://singerimg.kugou.com/uploadpic/softhead/400/20171221/20171221210749388.jpg",
+      lrc1:require('./lrcs/差一步')
+   }
+   ,
+   {
       name: "다시만난 너에게 (再次见到你)",
       author: "匹诺曹电视剧",
       url: "http://fs.w.kugou.com/201806290944/7337145c852f57b857f4200230369ee7/G013/M04/1C/10/rYYBAFUKKwiAXksNAENSiS8g0FY088.mp3",
@@ -18,10 +58,19 @@ const data = [
    }
    ,
    {
-      name: "Higher",
+      name: "Solo Dance)",
       author: "抓包",
-      url: "http://fs.w.kugou.com/201806280024/23b868066993f170fb77f40ef3632f62/G041/M01/10/1F/yYYBAFYk1vqAZH6zADQgKSvEwxg992.mp3",
-      pic: "http://singerimg.kugou.com/uploadpic/softhead/400/20160330/20160330153616731532.jpg",
+      url: "http://fs.w.kugou.com/201806261009/8c2a8ab79e816e8da6e0640529736bbb/G080/M04/19/1D/8IYBAFgeWYSAAr36ACq5lbsvexo309.mp3",
+      pic: "http://singerimg.kugou.com/uploadpic/softhead/400/20160802/20160802172904831.jpg",
+   }
+   ,
+
+   {
+      name: "JULY",
+      author: "抓包",
+      url: "http:\\/\\/fs.w.kugou.com\\/201806252332\\/c87e4f0c659dfb77066df786c10cdbb3\\/G076\\/M05\\/10\\/19\\/LJQEAFgcRpWAcCWaAC2iwNYOB0w548.mp3",
+      pic: "http:\\/\\/singerimg.kugou.com\\/uploadpic\\/softhead\\/400\\/20180525\\/20180525225705340.jpg",
+      lrc1:require('./lrcs/JULY')
    }
    ,
    {
@@ -32,10 +81,10 @@ const data = [
    }
    ,
    {
-      name: "Solo Dance)",
+      name: "Higher",
       author: "抓包",
-      url: "http://fs.w.kugou.com/201806261009/8c2a8ab79e816e8da6e0640529736bbb/G080/M04/19/1D/8IYBAFgeWYSAAr36ACq5lbsvexo309.mp3",
-      pic: "http://singerimg.kugou.com/uploadpic/softhead/400/20160802/20160802172904831.jpg",
+      url: "http://fs.w.kugou.com/201806280024/23b868066993f170fb77f40ef3632f62/G041/M01/10/1F/yYYBAFYk1vqAZH6zADQgKSvEwxg992.mp3",
+      pic: "http://singerimg.kugou.com/uploadpic/softhead/400/20160330/20160330153616731532.jpg",
    }
    ,
    {
@@ -45,14 +94,7 @@ const data = [
       pic: "http://singerimg.kugou.com/uploadpic/softhead/400/20170603/20170603111817154.jpg",
    }
    ,
-   {
-      name: "JULY",
-      author: "抓包",
-      url: "http:\\/\\/fs.w.kugou.com\\/201806252332\\/c87e4f0c659dfb77066df786c10cdbb3\\/G076\\/M05\\/10\\/19\\/LJQEAFgcRpWAcCWaAC2iwNYOB0w548.mp3",
-      pic: "http:\\/\\/singerimg.kugou.com\\/uploadpic\\/softhead\\/400\\/20180525\\/20180525225705340.jpg",
-      lrc1:require('./lrcs/JULY')
-   }
-   ,
+
    {
       name: "123我爱你",
       author: "新乐尘符",
@@ -113,4 +155,5 @@ const data = [
    }
    ,
   ];
+
 export default data;

@@ -17,3 +17,9 @@ input:focus {
 }
 #root{
 }
+.text-single-line{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 60vw;
+}
