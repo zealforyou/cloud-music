@@ -1,5 +1,4 @@
-------
-<img src="show/appicon.png" width="10%" height="10%" />
+<img src="show/appicon.png" width="20%" height="20%" />
 ## 前言
 此项目是本人现学现做的Web App,并不是想班门弄斧,就是记录一下自己的学习过程。
 ## 从中学到的框架
@@ -19,16 +18,16 @@
 ------
 ## 页面展示
 ### [应用链接](https://zealforyou.github.io/cloud-music/)
-<figure class="third">
-<img src="show/page1.jpg" width="25%" height="25%" />
-<img src="show/page2.jpg" width="25%" height="25%" />
-<img src="show/page3.jpg" width="25%" height="25%" />
-</figure>
-<figure class="third">
-<img src="show/page5.jpg" width="25%" height="25%" />
-<img src="show/page6.jpg" width="25%" height="25%" />
-<img src="show/page4.jpg" width="25%" height="25%" />
-</figure>
+<div>
+<img style="float:left;margin:3" src="show/page1.jpg" width="25%" height="25%" />
+<img style="float:left;margin:3" src="show/page2.jpg" width="25%" height="25%" />
+<img style="float:left;margin:3" src="show/page3.jpg" width="25%" height="25%" />
+</div>
+<div>
+<img style="float:left;margin:3" src="show/page5.jpg" width="25%" height="25%" />
+<img style="float:left;margin:3" src="show/page6.jpg" width="25%" height="25%" />
+<img style="float:left;margin:3" src="show/page4.jpg" width="25%" height="25%" />
+</div>
 ------
 
 
