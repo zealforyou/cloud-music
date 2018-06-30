@@ -4,6 +4,8 @@
 
 此项目是本人现学现做的Web App,并不是想班门弄斧,就是记录一下自己的学习过程。
 
+此外非常感谢我们小组成员，:princes:<span style={color:#ff55aa}>huangtaining<span>美女的参与，是她帮助我完成了首页和评论页面的搭建
+
 ## 从中学到的框架
 
 > * 视图框架：create-react-app、react、react-dom、react-router、react-router-dom
