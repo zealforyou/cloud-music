@@ -10,6 +10,23 @@ const data = [
    }
    ,
    {
+      name: "亲人",
+      author: "亲人",
+      // url: "http://fs.w.kugou.com/201807011623/3e39bb105dea585368dee96708ceb6ce/G007/M02/01/17/p4YBAFS6TXaAbdrmAD_3ge0bKO4769.mp3",
+      url: require('./愿你安好.mp3'),
+      pic: require('./img/qingren.jpg'),
+      lrc1:require('./lrcs/祝福.txt')
+   }
+   ,
+   {
+      name: "回忆",
+      author: "回忆",
+      url: "http://fs.w.kugou.com/201807011559/f28232a89420adbe28a2eaa71cee6353/G008/M02/18/10/qIYBAFULdwaANYXLAHu2NDMRfNI115.mp3",
+      pic: "http://www.36588.com.cn:8080/ImageResourceMongo/UploadedFile/dimension/big/66d10429-8765-4d53-ac37-0b996427e933.png",
+      lrc1:require('./lrcs/回忆')
+   }
+   ,
+   {
       name: "愿你安好",
       author: "曹寅",
       url: "http://fs.w.kugou.com/201807010224/a3efd33cb7e2930756969bf8a688b0dc/G077/M09/17/04/7YYBAFhLv8uANc2WAEcujAn9bQw766.mp3",
