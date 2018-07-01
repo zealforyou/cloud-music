@@ -49,8 +49,13 @@ class Page2 extends Component {
       document.removeEventListener("keydown", this.keydown)
    }
 
-   componentWillReceiveProps() {
-      if (this.changeLrc && this.state.dialog) {
+   componentWillReceiveProps(props) {
+      if (1===props.duration){
+         this.changeLrc = true;
+         this.setState({
+            dialog: false,
+            lrcEntity: null
+         });
       }
    }
 
@@ -85,7 +90,6 @@ class Page2 extends Component {
          }
       }
    }
-   changeLrc = false;
 
    _showLrc() {
       var _this = this;
@@ -242,11 +246,6 @@ class Page2 extends Component {
                   press: require('./img/ac8.png')
                }} onClick={() => {
                   this.props.preMusic(this.music);
-                  this.changeLrc = true;
-                  this.setState({
-                     dialog: false,
-                     lrcEntity: null
-                  });
                }}/>
                <div style={{width: "3%"}}/>
                <ImgBtn clickable={this.props.loaded} selected={!this.props.playing} drawable={{
@@ -269,11 +268,6 @@ class Page2 extends Component {
                   press: require('./img/ac2.png')
                }} onClick={() => {
                   this.props.nextMusic(this.music);
-                  this.changeLrc = true;
-                  this.setState({
-                     dialog: false,
-                     lrcEntity: null
-                  });
                }}/>
                <div style={{width: "8%"}}/>
                <ImgBtn drawable={{
