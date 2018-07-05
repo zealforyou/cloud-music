@@ -35,7 +35,9 @@ class App extends Component {
 
             // payload.palette是调色板，含多个主要颜色，数组
             let rgb=payload.secondary;
+            console.log(payload.dominant);
             console.log(payload.secondary);
+            console.log(payload.palette);
             if (rgb) {
                rgb=rgb.substring(rgb.indexOf('(')+1,rgb.indexOf(')'));
                rgb=rgb.split(',');
