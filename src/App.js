@@ -91,7 +91,8 @@ class App extends Component {
    }
 
    itemClick(position, item) {
-      this.props.playCurrentMusic(this.refs.music, position, item);
+
+      this.props.playCurrentMusic(this.refs.music, position, item,this.state.data);
    }
 
 
@@ -238,8 +239,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       setShowPlay: (showPlay) => {
          dispatch({type: globalType.ACTION_SHOW_PLAY_CONTROLLER, showPlay})
       },
-      playCurrentMusic(player, currentMusic, item) {
-         dispatch({type: actionType.ACTION_PLAY_CURRENT_MUSIC, player, currentMusic, item})
+      playCurrentMusic(player, currentMusic, item,data) {
+         dispatch({type: actionType.ACTION_PLAY_CURRENT_MUSIC, player, currentMusic, item,data})
       },
       setAlbumId:(album_id)=>{
          console.log(actionType.SET_ALBUM_ID);

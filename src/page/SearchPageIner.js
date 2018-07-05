@@ -14,8 +14,10 @@ class SearchPageIner extends Component {
 
    componentWillMount() {
       this.setState({
-         inputValue: '',
+         inputValue: this.props.location.query?this.props.location.query.keyword:"",
          data: []
+      },function () {
+         this._fetchData();
       });
    }
 
@@ -32,6 +34,9 @@ class SearchPageIner extends Component {
    }
 
    _fetchData() {
+      if(!this.state.inputValue){
+         return ;
+      }
       var _this = this;
       let url = baseUrl.base+`music/list?keyword=${this.state.inputValue}&page=1&pagesize=20`;
       fetch(url,{})
@@ -142,8 +147,8 @@ const mapDispatchToProps = (dispatch) => {
       setShowPlay: (showPlay) => {
          dispatch({type: actionType.ACTION_SHOW_PLAY_CONTROLLER, showPlay});
       },
-      playMusic(currentMusic, item, player) {
-         dispatch({type: actionType1.ACTION_PLAY_CURRENT_MUSIC, currentMusic, item, player});
+      playMusic(currentMusic, item, player,data) {
+         dispatch({type: actionType1.ACTION_PLAY_CURRENT_MUSIC, currentMusic, item, player,data});
       }
 
    }

@@ -99,21 +99,24 @@ function appState(state = def, action) {
          }
 
          console.log(data.length);
-         me = {
-            currentMusic: cm,
-            item: data[cm],
-            playing: false,
-            progress: 0,
-            loaded: false,
-            duration: 1,
-            currentTime: 0
-         };
-
-         if (action.player) {
+         if (action.player&&data[cm]) {
+            me = {
+               currentMusic: cm,
+               item: data[cm],
+               playing: false,
+               progress: 0,
+               loaded: false,
+               duration: 1,
+               currentTime: 0
+            };
             action.player.src = me.item.url;
             action.player.play();
-         } else {
-            return state
+         }else {
+            me = {
+               playing: false,
+               progress: 0,
+               currentTime: 0
+            };
          }
          return {...state, ...me};
       // 播放指定位置音乐
@@ -122,6 +125,7 @@ function appState(state = def, action) {
             return state;
          }
          me = {
+            data:action.data?action.data:state.data,
             currentMusic: action.currentMusic,
             item: action.item,
             playing: false,

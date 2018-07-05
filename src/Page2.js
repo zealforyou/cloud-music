@@ -17,7 +17,6 @@ class Page2 extends Component {
 
    componentWillMount() {
       this.setState({});
-
    }
 
    componentDidMount() {
@@ -98,17 +97,22 @@ class Page2 extends Component {
             lrcEntity: this.props.item.lrcEntity,
          });
       } else {
-         let url = lrc1 ? lrc1 : require('./lrcs/empty');
-         $.ajax(url, {
-            success(res) {
-               console.log(res);
-               _this._showLrcView(res);
-               // _this._showLrcText(res);
-            },
-            error() {
+         if(lrc1){
+            _this._showLrcView(lrc1);
+         }else {
+            let url=require('./lrcs/empty');
+            console.log(url);
+            $.ajax(url, {
+               success(res) {
+                  console.log(res);
+                  _this._showLrcView(res);
+               },
+               error() {
 
-            }
-         })
+               }
+            })
+         }
+
       }
    }
 

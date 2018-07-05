@@ -52,7 +52,9 @@ class Mypage extends Component {
                      <img src={require('../img/friends.png')} alt=""/>
                   </div>
                   <span>
-                  <img src={require('../img/pf.png')} alt=""/>
+                  <img src={require('../img/pf.png')} alt="" onClick={()=>{
+                     this.props.history.push('/SearchPage');
+                  }}/>
                </span>
                </div>
                <MenuTab selectItem={1} menus={[{title: '发现'}, {title: '我的'}, {title: '电台'}]}/>
