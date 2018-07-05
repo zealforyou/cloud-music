@@ -4,7 +4,6 @@ import SeekBar from './SeekBar';
 import LrcView from "./LrcView";
 import {connect} from "react-redux";
 import {actionType} from "./reducer/appState";
-import data from "./MusicList";
 import {PLAY_MODE} from "./AppConfig";
 
 const Style = require('./Page2.css');
@@ -80,8 +79,8 @@ class Page2 extends Component {
    _findMusic(){
       let music=this.props.match.params.music;
       if(music&&music!==-1){
-         for(let i=0;i<data.length;i++){
-            let item=data[i];
+         for(let i=0;i<this.props.data.length;i++){
+            let item=this.props.data[i];
             if(item.name.toLowerCase().includes(music.toLowerCase())){
                this.props.playMusic(i,item,this.music);
                console.log(item);

@@ -3,7 +3,6 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {actionType} from "./reducer/appState";
 import {actionType as globalType} from "./reducer/globalState";
-import data from "./MusicList";
 import {PLAY_MODE}from './AppConfig'
 
 class MusicPage extends Component {
@@ -122,7 +121,7 @@ class MusicPage extends Component {
       e.stopPropagation();
       var player = this.refs.music;
       if (!this.props.item.url) {
-         this.props.playMusic(0,data[0],player);
+         this.props.playMusic(0,this.props.data[0],player);
          return;
       }
       if (this.props.playing) {
@@ -166,6 +165,7 @@ class MusicPage extends Component {
 
 const mapStateToProps = (state) => {
    return {
+      data:state.appState.data,
       showPlay: state.globalState.showPlay,
       currentTime: state.appState.currentTime,
       duration: state.appState.duration,

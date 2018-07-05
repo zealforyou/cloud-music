@@ -6,7 +6,7 @@ import SongSheet from "../view/SongSheet";
 import "../view/SongSheet.scss";
 import {connect} from "react-redux";
 import {actionType} from "../reducer/globalState";
-
+var baseUrl=require('../config/BaseUrl');
 class Mypage extends Component {
    constructor() {
       super();
@@ -14,7 +14,8 @@ class Mypage extends Component {
 
    //组件即将挂载
    componentWillMount() {
-
+      this.setState({data:[]});
+      this._getAlbumList();
    }
 
    componentDidMount() {
@@ -23,6 +24,17 @@ class Mypage extends Component {
 
    componentWillUnmount() {
       this.props.setShowPlay(false);
+   }
+
+   _getAlbumList() {
+      var _this = this;
+      let url = baseUrl.base+"album/getList";
+      fetch(url).then((res) => {
+         return res.json();
+      }).then((res) => {
+         _this.setState({data: res});
+      }).catch(() => {
+      })
    }
 
    //渲染
@@ -86,9 +98,17 @@ class Mypage extends Component {
 
 
                </div>
-               <SongSheet onItemClick={() => {
-                  this.props.history.push('/App');
-               }}/>
+               <SongSheet
+                  data={this.state.data}
+                  onItemClick={(position, item) => {
+                     let path={
+                       pathname:'/App',
+                       query:{
+                          album_id:item.id
+                       }
+                     };
+                     this.props.history.push(path);
+                  }}/>
             </div>
          </div>
       )
