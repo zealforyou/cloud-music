@@ -2,19 +2,19 @@
 //http://www.kugou.com/yy/index.php?r=play/getdata&hash=25a8a5ee71898435f99bdfdd21f3f6e3
 const data = [
    {
+      name: "愿你安好",
+      author: "曹寅",
+      url: "http://fs.w.kugou.com/201807010224/a3efd33cb7e2930756969bf8a688b0dc/G077/M09/17/04/7YYBAFhLv8uANc2WAEcujAn9bQw766.mp3",
+      pic: "https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3008501656,3677226868&fm=27&gp=0.jpg",
+      lrc1:require('./lrcs/愿你安好')
+   }
+   ,
+   {
       name: "阿楚姑娘",
       author: "梁凡",
       url: "http://fs.w.kugou.com/201807010210/d4a810c02b9a376c05fc4b8cdf98b3d0/G060/M09/18/03/3IYBAFb3JseADR7qADyQcFvqL_s275.mp3",
       pic: "http://singerimg.kugou.com/uploadpic/softhead/400/20161229/20161229222159728.jpg",
       lrc1:require('./lrcs/阿楚姑娘')
-   }
-   ,
-   {
-      name: "愿你安好",
-      author: "曹寅",
-      url: "http://fs.w.kugou.com/201807010224/a3efd33cb7e2930756969bf8a688b0dc/G077/M09/17/04/7YYBAFhLv8uANc2WAEcujAn9bQw766.mp3",
-      pic: "http://singerimg.kugou.com/uploadpic/softhead/400/20140704/20140704131920952639.jpg",
-      lrc1:require('./lrcs/愿你安好')
    }
    ,
    {
