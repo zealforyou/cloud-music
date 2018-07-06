@@ -8,6 +8,7 @@ import SearchPage from "./page/SearchPage";
 import SearchPageIner from "./page/SearchPageIner";
 import Mypage from "./page/Mypage";
 import Toast from "./view/Toast";
+import Collection from "./view/Collection";
 
 export default class RouterPage extends Component {
    constructor() {
@@ -24,6 +25,7 @@ export default class RouterPage extends Component {
                <Route exact path="/SearchPage" component={SearchPage}/>
                <Route exact path="/SearchPageIner" component={SearchPageIner}/>
                <Route exact path="/App" component={App}/>
+               {/*<Route exact path="/App" component={Collection}/>*/}
             </Switch>
             <MusicPage history={this.props.history}/>
             <Toast/>

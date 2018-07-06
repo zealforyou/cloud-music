@@ -24,7 +24,7 @@ export default class Collection extends Component {
    render() {
       return (
          <div>
-的谁更适合
+
          </div>
       )
    }
