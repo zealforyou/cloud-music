@@ -64,22 +64,38 @@ export default class ImgBtn extends Component {
                     onClick(e)
                  }
                  if (drawable.src.length < 2) return;
-                 if (this.state.selected) {
-                    this.setState({
-                       src: drawable.src[0],
-                       selected: false
-                    }, function () {
+                 if((typeof this.props.selected)==='undefined'){
+                    if (this.state.selected) {
+                       this.setState({
+                          src: drawable.src[0],
+                          selected: false
+                       }, function () {
+                          onCheckChanged ? onCheckChanged(false) : false;
+                       });
+                    } else {
+                       this.setState({
+                          src: drawable.src[1],
+                          selected: true
+                       }, function () {
+                          onCheckChanged ? onCheckChanged(true) : false;
+                       });
+                    }
+                 }else{
+                    if (this.state.selected) {
+                       this.setState({
+                          src: drawable.src[1],
+                          selected: true
+                       });
+                       onCheckChanged ? onCheckChanged(true) : true;
+                    } else {
+                       this.setState({
+                          src: drawable.src[0],
+                          selected: false
+                       });
                        onCheckChanged ? onCheckChanged(false) : false;
-                    });
-                 } else {
-                    this.setState({
-                       src: drawable.src[1],
-                       selected: true
-                    }, function () {
-                       onCheckChanged ? onCheckChanged(true) : false;
-                    });
-
+                    }
                  }
+
               }}>
             <img src={this.state.src} style={Style.img}/>
             {this.props.children ? this.props.children : ''}

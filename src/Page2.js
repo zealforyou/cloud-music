@@ -9,7 +9,7 @@ import {PLAY_MODE} from "./AppConfig";
 const Style = require('./Page2.css');
 const $ = require('jquery');
 const lrcParse = require('./LrcManager');
-
+const baseUrl=require('./config/BaseUrl');
 class Page2 extends Component {
    constructor() {
       super();
@@ -17,6 +17,7 @@ class Page2 extends Component {
 
    componentWillMount() {
       this.setState({});
+      this._isLiked();
    }
 
    componentDidMount() {
@@ -88,7 +89,40 @@ class Page2 extends Component {
          }
       }
    }
+   _isLiked(){
+      var _this=this;
+      let url=baseUrl.base+'album/isLike?music_id='+this.props.item.id;
+      fetch(url).then((res)=>{
+         return res.json();
+      }).then((res)=>{
+         _this.setState({
+            liked:res.result
+         });
+      }).catch((e)=>{
 
+      });
+   }
+   _setLike(){
+      var _this=this;
+      let item=this.props.item;
+      let url=baseUrl.base+`album/setLike?music_id=${item.id}&name=${item.name}&author=${item.author}&url=${item.url}
+      &pic=${item.pic}&lrc1=${item.lrc1}`;
+      fetch(url).then((res)=>{
+         return res.json();
+      }).then((res)=>{
+         if(res.error_code===0){
+            _this.setState({
+               animation: `${res.liked ? "btnBig" : "btnBig1"} 0.5s`,
+               liked:res.liked
+            });
+         }else {
+            console.log(res.error_msg);
+         }
+
+      }).catch((e)=>{
+
+      });
+   }
    _showLrc() {
       var _this = this;
       let lrc1 = this.props.item.lrc1;
@@ -206,11 +240,10 @@ class Page2 extends Component {
             </div>
             {/*点赞按钮等*/}
             <div className='page2Menu1'>
-               <ImgBtn style={{animation: this.state.animation ? this.state.animation : 'none'}}
+               <ImgBtn selected={!!this.state.liked}
+                       style={{animation: this.state.animation ? this.state.animation : 'none'}}
                        onCheckChanged={(checked) => {
-                          this.setState({
-                             animation: `${checked ? "btnBig" : "btnBig1"} 0.5s`
-                          });
+                           this._setLike();
                        }} drawable={{
                   press: [require("./img/add.png"), require('./img/adf.png')],
                   src: [require("./img/adc.png"), require('./img/ade.png')]
@@ -257,7 +290,7 @@ class Page2 extends Component {
                }}
                        onCheckChanged={(pause) => {
                           var player = this.music;
-                          if (pause) {
+                          if (!pause) {
                              this.props.setPlaying(false);
                              player.pause();
                           } else {

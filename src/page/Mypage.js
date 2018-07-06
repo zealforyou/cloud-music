@@ -6,6 +6,7 @@ import SongSheet from "../view/SongSheet";
 import "../view/SongSheet.scss";
 import {connect} from "react-redux";
 import {actionType} from "../reducer/globalState";
+import {albumActionType} from "../reducer/AlbumState";
 var baseUrl=require('../config/BaseUrl');
 class Mypage extends Component {
    constructor() {
@@ -14,7 +15,7 @@ class Mypage extends Component {
 
    //组件即将挂载
    componentWillMount() {
-      this.setState({data:[]});
+      this.setState({});
       this._getAlbumList();
    }
 
@@ -32,7 +33,8 @@ class Mypage extends Component {
       fetch(url).then((res) => {
          return res.json();
       }).then((res) => {
-         _this.setState({data: res});
+         console.log(res);
+         _this.props.setAlbumData(res);
       }).catch(() => {
       })
    }
@@ -101,7 +103,7 @@ class Mypage extends Component {
 
                </div>
                <SongSheet
-                  data={this.state.data}
+                  data={this.props.data}
                   onItemClick={(position, item) => {
                      let path={
                        pathname:'/App',
@@ -116,13 +118,20 @@ class Mypage extends Component {
       )
    }
 }
-
+const mapStateToProps=(state)=>{
+   return {
+      data:state.albumState.data
+   }
+};
 const mapDispatchToProps = (dispatch) => {
    return {
       setShowPlay: (showPlay) => {
          dispatch({type: actionType.ACTION_SHOW_PLAY_CONTROLLER, showPlay});
+      },
+      setAlbumData(data){
+         dispatch({type: albumActionType.SET_DATA, data});
       }
    }
 };
-Mypage = connect(null, mapDispatchToProps)(Mypage);
+Mypage = connect(mapStateToProps, mapDispatchToProps)(Mypage);
 export default Mypage
