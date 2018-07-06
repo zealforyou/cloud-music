@@ -6,14 +6,14 @@ var router = express.Router();
 
 
 router.get('/getList', async function (req, res) {
-   var  sql = 'SELECT a.*,COUNT(b.id) as count,b.pic from tb_album a left join tb_music b on a.id = b.album_id where 1=1 GROUP BY a.id  ORDER BY a.id,b.create_time';
+   var  sql = 'SELECT a.*,COUNT(b.id) as count,b.pic from tb_album a left join tb_music b on a.id = b.album_id where 1=1 GROUP BY a.id  ORDER BY a.id,b.create_time desc';
    let rows=await query(sql);
    //把搜索值输出
    res.send(rows);
 });
 
 router.get('/getMusic', async function (req, res) {
-   let sql_get_music="SELECT * from tb_music t where t.album_id="+req.query.album_id;
+   let sql_get_music="SELECT * from tb_music t where t.album_id="+req.query.album_id+' ORDER BY t.create_time desc';
    let rows=await query(sql_get_music);
    res.send(rows);
 });

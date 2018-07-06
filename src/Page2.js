@@ -106,7 +106,7 @@ class Page2 extends Component {
       var _this=this;
       let item=this.props.item;
       let url=baseUrl.base+`album/setLike?music_id=${item.id}&name=${item.name}&author=${item.author}&url=${item.url}
-      &pic=${item.pic}&lrc1=${item.lrc1}`;
+      &pic=${item.pic}&lrc1=${encodeURI(item.lrc1)}`;
       fetch(url).then((res)=>{
          return res.json();
       }).then((res)=>{
