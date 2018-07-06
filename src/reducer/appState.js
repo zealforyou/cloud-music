@@ -125,7 +125,7 @@ function appState(state = def, action) {
             return state;
          }
          me = {
-            data:action.data?action.data:state.data,
+            data:action.data?action.data:state.data,//播放列表
             currentMusic: action.currentMusic,
             item: action.item,
             playing: false,

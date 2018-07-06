@@ -1,41 +1,77 @@
+const query= require('../dao/InitDao');
 var express = require('express');
 var router = express.Router();
-var mysql = require('mysql');
-//创建连接
-var connection = mysql.createConnection({
-   host: '172.22.203.99',
-   port: '3306',
-   user: 'root',
-   password: '123456',
-   database: 'zhangzhuo'
-});
-//执行创建连接
-connection.connect();
+
 //SQL语句
-var  sql = 'SELECT a.*,COUNT(b.id) as count,b.pic from tb_album a,tb_music b WHERE a.id = b.album_id GROUP BY a.id  ORDER BY a.id,b.id';
 
-router.get('/getList', function (req, res) {
-   connection.query(sql,function (err, result) {
-      if(err){
-         console.log('[SELECT ERROR] - ',err.message);
-         res.end();
-         return;
-      }
-      //把搜索值输出
-      res.send(result);
-   });
+
+router.get('/getList', async function (req, res) {
+   var  sql = 'SELECT a.*,COUNT(b.id) as count,b.pic from tb_album a left join tb_music b on a.id = b.album_id where 1=1 GROUP BY a.id  ORDER BY a.id,b.create_time';
+   let rows=await query(sql);
+   //把搜索值输出
+   res.send(rows);
 });
 
-router.get('/getMusic', function (req, res) {
+router.get('/getMusic', async function (req, res) {
    let sql_get_music="SELECT * from tb_music t where t.album_id="+req.query.album_id;
-   connection.query(sql_get_music,function (err, result) {
-      if(err){
-         console.log('[SELECT ERROR] - ',err.message);
-         res.end();
-         return;
-      }
-      //把搜索值输出
-      res.send(result);
-   });
+   let rows=await query(sql_get_music);
+   res.send(rows);
 });
+router.get('/isLike',async function (req, res) {
+   let music_id=req.query.music_id;
+   if(!music_id) res.end();
+   let sql=`SELECT * from tb_music t where t.id='${music_id}' and t.album_id=0`;
+   let rows=await query(sql);
+   res.send({result: rows && rows.length > 0});
+});
+router.get('/setLike',async function (req, res) {
+   let id=req.query.music_id;
+   let name=req.query.name;
+   let author=req.query.author;
+   let url=req.query.url;
+   let pic=req.query.pic;
+   let lrc1=req.query.lrc1;
+   if(!id) res.end();
+   let sql=`SELECT * from tb_music t where t.id='${id}' and t.album_id=0`;
+
+   let rows;
+   try{
+      rows=await query(sql);
+   }catch (e){
+      res.end();
+      console.log(e);
+      return;
+   }
+   let result;
+   let error_code=0;
+   let error_msg="";
+   let liked=null;
+   if(rows&&rows.length>0){
+       sql=`DELETE FROM tb_music WHERE id='${id}' AND album_id=0`;
+       try{
+          await query(sql);
+          liked=false;
+       }catch (e){
+          error_code=1;
+          error_msg=e;
+       }
+
+   }else {
+       sql=`INSERT INTO tb_music  (id,name,author,url,pic,lrc1,album_id) VALUES (?,?,?,?,?,?,?)`;
+      try{
+         result=await query(sql,[id,name,author,url,pic,lrc1,0]);
+         liked=true;
+      }catch (e){
+         error_code=1;
+         error_msg=e;
+      }
+   }
+   result={
+      error_code,
+      error_msg,
+      liked
+   };
+   res.send(result);
+});
+
 module.exports = router;

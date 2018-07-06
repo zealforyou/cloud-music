@@ -29,24 +29,6 @@ class App extends Component {
       if (back === '1') {
          window.localStorage.setItem('back', '0');
       }
-      window.RGBaster.colors(document.getElementById('music_pic'), {
-         success: function (payload) {
-            // payload.dominant是主色，RGB形式表示
-            // payload.secondary是次色，RGB形式表示
-
-            // payload.palette是调色板，含多个主要颜色，数组
-            let rgb = payload.secondary;
-            console.log(payload.dominant);
-            console.log(payload.secondary);
-            console.log(payload.palette);
-            if (rgb) {
-               rgb = rgb.substring(rgb.indexOf('(') + 1, rgb.indexOf(')'));
-               rgb = rgb.split(',');
-               _this.bgColor = [parseInt(rgb[0]), parseInt(rgb[1]), parseInt(rgb[2])];
-               _this.setState({refresh: true});
-            }
-         }
-      });
       var AppDiv = $('#App');
       var onScroll = (e) => {
             var top = AppDiv.scrollTop();
@@ -68,7 +50,28 @@ class App extends Component {
       this.props.setShowPlay(false);
       $('#App').scroll(null);
    }
+   _setBgColor(data){
+      var _this = this;
+      if(data[0])
+         window.RGBaster.colors(data[0].pic, {
+            success: function (payload) {
+               // payload.dominant是主色，RGB形式表示
+               // payload.secondary是次色，RGB形式表示
 
+               // payload.palette是调色板，含多个主要颜色，数组
+               let rgb = payload.secondary;
+               console.log(payload.dominant);
+               console.log(payload.secondary);
+               console.log(payload.palette);
+               if (rgb) {
+                  rgb = rgb.substring(rgb.indexOf('(') + 1, rgb.indexOf(')'));
+                  rgb = rgb.split(',');
+                  _this.bgColor = [parseInt(rgb[0]), parseInt(rgb[1]), parseInt(rgb[2])];
+                  _this.setState({refresh: true});
+               }
+            }
+         });
+   }
    _setTitleColor(jd) {
       this.refs.title.style.backgroundColor = `rgba(${this.bgColor[0]},${this.bgColor[1]},${this.bgColor[2]},${0.5 + jd * 0.5})`;
    }
@@ -84,6 +87,7 @@ class App extends Component {
       fetch(url).then((res) => {
          return res.json();
       }).then((res) => {
+         _this._setBgColor(res);
          _this.setState({data: res});
       }).catch((e) => {
 
@@ -92,7 +96,7 @@ class App extends Component {
 
    itemClick(position, item) {
 
-      this.props.playCurrentMusic(this.refs.music, position, item,this.state.data);
+      this.props.playCurrentMusic(this.refs.music, position, item,this.sate);
    }
 
 
