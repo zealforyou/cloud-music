@@ -1,88 +1,115 @@
 import React, {Component} from 'react';
 import ListView from "./ListView";
-import data from "./MusicList";
-import {actionType}from './reducer/appState';
-import {connect}from 'react-redux';
+import {actionType} from './reducer/appState';
+import {connect} from 'react-redux';
 import {actionType as globalType} from "./reducer/globalState";
-require('./App.css');
+import $ from 'jquery';
+import 'rgbaster';
 
+require('./App.css');
+var baseUrl=require('./config/BaseUrl');
 class App extends Component {
    constructor() {
       super();
-      this.bgColor = [230, 80, 130];
-      this.title="想唱就唱";
-      this.username="唱的响亮";
+      this.bgColor = [200, 200, 200];
+      this.title = "想唱就唱";
+      this.username = "唱的响亮";
    }
 
    componentWillMount() {
-      this.setState({dialog1:false});
-      var _this = this;
-      var onScroll = (e) => {
-         var top = document.documentElement.scrollTop;
-         var min = 150;
-         var max = 201;
-         if (top >= min && top <= max) {
-            _this._setTitleColor(1);
-         } else if (top < min) {
-            _this._setTitleColor(0);
-         }
-      };
-      this.onScroll = onScroll;
-
-      window.addEventListener("scroll", onScroll);
+      this.setState({dialog1: false, data: []});
+      this._getMusic();
    }
 
    componentDidMount() {
+      var _this = this;
       this.props.setShowPlay(true);
       this.refs.music = document.getElementById('music');
       let back = window.localStorage.getItem("back");
       if (back === '1') {
          window.localStorage.setItem('back', '0');
-      } else {
-         var _this = this;
-         // setTimeout(() => {
-         //    _this.itemClick(0, data[0]);
-         // }, 1500);
-
       }
+      window.RGBaster.colors(document.getElementById('music_pic'), {
+         success: function (payload) {
+            // payload.dominant是主色，RGB形式表示
+            // payload.secondary是次色，RGB形式表示
+
+            // payload.palette是调色板，含多个主要颜色，数组
+            let rgb = payload.secondary;
+            console.log(payload.dominant);
+            console.log(payload.secondary);
+            console.log(payload.palette);
+            if (rgb) {
+               rgb = rgb.substring(rgb.indexOf('(') + 1, rgb.indexOf(')'));
+               rgb = rgb.split(',');
+               _this.bgColor = [parseInt(rgb[0]), parseInt(rgb[1]), parseInt(rgb[2])];
+               _this.setState({refresh: true});
+            }
+         }
+      });
+      var AppDiv = $('#App');
+      var onScroll = (e) => {
+            var top = AppDiv.scrollTop();
+            var min = 150;
+            var max = 201;
+            if (top >= min && top <= max) {
+               _this._setTitleColor(((top - min) / (max - min)).toFixed(2));
+            } else if (top < min) {
+               _this._setTitleColor(0);
+            } else {
+               _this._setTitleColor(1);
+            }
+         }
+      ;
+      AppDiv.scroll(onScroll);
    }
 
    componentWillUnmount() {
       this.props.setShowPlay(false);
-      window.removeEventListener("scroll", this.onScroll);
+      $('#App').scroll(null);
    }
 
    _setTitleColor(jd) {
       this.refs.title.style.backgroundColor = `rgba(${this.bgColor[0]},${this.bgColor[1]},${this.bgColor[2]},${0.5 + jd * 0.5})`;
-      console.log(this.refs.title.style.backgroundColor)
    }
 
    num = -1;
 
 
+   _getMusic() {
+      var _this = this;
+      let album_id= this.props.location.query?this.props.location.query.album_id:this.props.album_id;
+      this.props.setAlbumId(album_id);
+      let url = baseUrl.base+"album/getMusic?album_id=" + album_id;
+      fetch(url).then((res) => {
+         return res.json();
+      }).then((res) => {
+         _this.setState({data: res});
+      }).catch((e) => {
 
-   itemClick(position, item) {
-      if (this.props.currentMusic !== position) {
-         this.props.playCurrentMusic(this.refs.music,position,item);
-      }
+      })
    }
 
+   itemClick(position, item) {
+
+      this.props.playCurrentMusic(this.refs.music, position, item,this.state.data);
+   }
 
 
    render() {
       return (
-         <div>
+         <div id='App'>
             <header className="top">
                <div ref='title' className='title'
                     style={{backgroundColor: `rgba(${this.bgColor[0]},${this.bgColor[1]},${this.bgColor[2]},0.5)`}}>
                   <div className='flex-row-center'>
-                     <img src={require("./img/ic_left.png")} onClick={()=>{
+                     <img src={require("./img/ic_left.png")} onClick={() => {
                         this.props.history.goBack();
                      }}/>
                      <span>歌单</span>
                   </div>
                   <div className='flex-row-center'>
-                     <img src={require("./img/pf.png")} onClick={()=>{
+                     <img src={require("./img/pf.png")} onClick={() => {
                         this.props.history.push('/SearchPage');
                      }}/>
                      <img src={require("./img/p9.png")}/>
@@ -94,10 +121,11 @@ class App extends Component {
                   <div className="flex-row" style={{paddingTop: '4em'}}>
                      <div className='big-img'>
                         <img
+                           id='music_pic'
                            onClick={() => {
                               this.setState({dialog1: true});
                            }}
-                           src={data.length>0?data[0].pic:require('./img/bt_girl.jpg')}
+                           src={this.state.data.length > 0 ? this.state.data[0].pic : require('./img/bt_girl.jpg')}
                            className='fm'/>
                         <span className='flex-row-center' style={{position: 'absolute', zIndex: 1000, right: '5px'}}>
                              <img src={require('./img/zh.png')} style={{width: "12px"}}/>
@@ -126,7 +154,7 @@ class App extends Component {
                         <span>收藏</span>
                      </div>
                      <div className='flex-c-center'
-                          onClick={()=>{
+                          onClick={() => {
                              this.props.history.push("/CommentPage");
                           }}>
                         <img src={require('./img/a2j.png')}/>
@@ -147,7 +175,8 @@ class App extends Component {
                <div className='flex-row-center list-top' style={{backgroundColor: "#f6f6f6"}}>
                   <div className='flex-row-center'>
                      <img src={require('./img/note_btn_play_white.png')} style={{width: '20px'}}/>
-                     <span style={{marginLeft: '10px'}}>播放全部<span style={{color: "#aaa"}}>(共{data.length}首)</span></span>
+                     <span style={{marginLeft: '10px'}}>播放全部<span
+                        style={{color: "#aaa"}}>(共{this.state.data.length}首)</span></span>
                   </div>
 
                   <div className='flex-row-center'>
@@ -156,7 +185,7 @@ class App extends Component {
                   </div>
                </div>
 
-               <ListView data={data}
+               <ListView data={this.state.data}
                          onItemClick={this.itemClick.bind(this)}
                          style={{paddingBottom: "3rem", backgroundColor: "#f6f6f6"}}
                          renderItem={(position, item) => {
@@ -185,7 +214,7 @@ class App extends Component {
             </section>
 
             <div className='dialog-center' style={{display: this.state.dialog1 ? 'flex' : 'none'}}>
-               <img className='big' src={data.length>0?data[0].pic:require('./img/bt_girl.jpg')}/>
+               <img className='big' src={this.state.data.length > 0 ? this.state.data[0].pic : require('./img/bt_girl.jpg')}/>
                <img className='close' src={require('./img/a_w.png')} onClick={() => {
                   this.setState({dialog1: false});
                }}/>
@@ -195,24 +224,29 @@ class App extends Component {
    }
 }
 
-const mapStateToProps=(state)=>{
-   return{
-      progress:state.appState.progress,
-      playing:state.appState.playing,
-      loaded:state.appState.loaded,
-      currentMusic:state.appState.currentMusic,
-      item:state.appState.item,
+const mapStateToProps = (state) => {
+   return {
+      progress: state.appState.progress,
+      playing: state.appState.playing,
+      loaded: state.appState.loaded,
+      currentMusic: state.appState.currentMusic,
+      item: state.appState.item,
+      album_id:state.appState.album_id
    }
 };
-const mapDispatchToProps=(dispatch,ownProps)=>{
+const mapDispatchToProps = (dispatch, ownProps) => {
    return {
-      setShowPlay:(showPlay)=>{
-         dispatch({type:globalType.ACTION_SHOW_PLAY_CONTROLLER,showPlay})
+      setShowPlay: (showPlay) => {
+         dispatch({type: globalType.ACTION_SHOW_PLAY_CONTROLLER, showPlay})
       },
-      playCurrentMusic(player,currentMusic,item){
-         dispatch({type:actionType.ACTION_PLAY_CURRENT_MUSIC,player,currentMusic,item})
+      playCurrentMusic(player, currentMusic, item,data) {
+         dispatch({type: actionType.ACTION_PLAY_CURRENT_MUSIC, player, currentMusic, item,data})
+      },
+      setAlbumId:(album_id)=>{
+         console.log(actionType.SET_ALBUM_ID);
+         dispatch({type:actionType.SET_ALBUM_ID,album_id});
       }
    }
 };
-App=connect(mapStateToProps,mapDispatchToProps)(App);
+App = connect(mapStateToProps, mapDispatchToProps)(App);
 export default App;

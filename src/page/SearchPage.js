@@ -6,8 +6,9 @@ class SearchPage extends Component {
    constructor() {
       super();
    }
-
+   defaultValue="全部都是你";
    componentDidMount() {
+      this.setState({});
       this.props.setShowPlay(true);
    }
 
@@ -17,15 +18,23 @@ class SearchPage extends Component {
    render() {
       return (
          <div className='SearchPage'>
-            <div className='title'>
+            <div className='title app-title'>
                <img className='first-child' src={require('../img/ic_left.png')} onClick={()=>{
                   this.props.history.goBack();
                }}/>
                <div className='input-div'>
-                  <input placeholder='给你推荐 暧昧'/>
+                  <input placeholder={'给你推荐 '+this.defaultValue} onInput={(e)=>{
+                     this.setState({keyword:e.currentTarget.value});
+                  }}/>
                   <img src={require('../img/pf.png')}
                   onClick={()=>{
-                     this.props.history.push('/SearchPageIner');
+                     let path={
+                        pathname:'/SearchPageIner',
+                        query:{
+                           keyword:this.state.keyword?this.state.keyword:this.defaultValue
+                        }
+                     };
+                     this.props.history.push(path);
                   }}/>
                </div>
             </div>

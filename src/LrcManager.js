@@ -48,7 +48,7 @@ function parseLrc(lrc) {
       result.body.times.push(...temp);
    }
 
-   let split = lrc.split(/\n/g);
+   let split = lrc.split(/\n|(<br>)/g);
    for (let i = 0; i < split.length; i++) {
       let line = split[i];
       if (/^\[(ti|ar|al|by).*/.test(line)) {

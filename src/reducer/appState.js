@@ -1,6 +1,9 @@
-import data from '../MusicList';
+import {PLAY_MODE, createPlayModer} from '../AppConfig';
 
+const playModer = createPlayModer();
 const def = {
+   data: [],
+   album_id:-1,
    duration: 1,
    currentTime: 0,
    progress: 0,
@@ -8,9 +11,13 @@ const def = {
    loaded: false,
    canPlay: false,
    currentMusic: -1,
+   playModeIndex: 0,
+   playMode: playModer[0],
    item: {}
 };
 const actionType = {
+   SET_ALBUM_ID: 'set_album_id',
+   SET_DATA: 'set_data',
    SET_PROGRESS: 'set_progress',
    SET_PLAYING: 'set_playing',
    SET_LOADED: 'set_loaded',
@@ -22,17 +29,26 @@ const actionType = {
    ACTION_PLAY_CURRENT_MUSIC: 'action_play_current_music',
    ACTION_PRE_MUSIC: 'action_pre_music',
    ACTION_NEXT_MUSIC: 'action_next_music',
+   ACTION_SWITCH_MODE: 'action_switch_mode',
 };
 
 function appState(state = def, action) {
-  if (action.type!==actionType.SET_CURRENT_TIME
-     &&action.type!==actionType.SET_PROGRESS
-  ) {
-     console.log(action);
-  }
+   if (action.type !== actionType.SET_CURRENT_TIME
+      && action.type !== actionType.SET_PROGRESS
+   ) {
+      console.log(action);
+   }
+   let data = state.data;
    let me;
    let cm;//计算音乐position
    switch (action.type) {
+      case actionType.ACTION_SWITCH_MODE:
+         let indextemp = parseInt((state.playModeIndex + 1) % playModer.length);
+         return {...state, playMode: playModer[indextemp], playModeIndex: indextemp};
+      case actionType.SET_ALBUM_ID:
+         return {...state, album_id: action.album_id};
+      case actionType.SET_DATA:
+         return {...state, data: action.data};
       case actionType.SET_DURATION:
          return {...state, duration: action.duration};
       case actionType.SET_CURRENT_TIME:
@@ -51,7 +67,11 @@ function appState(state = def, action) {
          return {...state, canPlay: action.canPlay};
       // 播放前一首
       case actionType.ACTION_PRE_MUSIC:
-         cm = (state.currentMusic<= 0 )? data.length-1 : state.currentMusic - 1;
+         if (state.playMode === PLAY_MODE.SJ) {
+            cm = parseInt(Math.random() * data.length);
+         } else {
+            cm = (state.currentMusic <= 0) ? data.length - 1 : state.currentMusic - 1;
+         }
          console.log(cm);
          me = {
             currentMusic: cm,
@@ -59,12 +79,11 @@ function appState(state = def, action) {
             playing: false,
             progress: 0,
             loaded: false,
-            duration:1,
-            currentTime:0
+            duration: 1,
+            currentTime: 0
          };
 
          if (action.player) {
-            action.player.pause();
             action.player.src = me.item.url;
             action.player.play();
          } else {
@@ -73,39 +92,49 @@ function appState(state = def, action) {
          return {...state, ...me};
       // 播放下一首
       case actionType.ACTION_NEXT_MUSIC:
-         cm = (state.currentMusic >= data.length-1) ? 0 : state.currentMusic + 1;
-         console.log(data.length);
-         me = {
-            currentMusic: cm,
-            item: data[cm],
-            playing: false,
-            progress: 0,
-            loaded: false,
-            duration:1,
-            currentTime:0
-         };
+         if (state.playMode === PLAY_MODE.SJ) {
+            cm = parseInt(Math.random() * data.length);
+         } else {
+            cm = (state.currentMusic >= data.length - 1) ? 0 : state.currentMusic + 1;
+         }
 
-         if (action.player) {
-            action.player.pause();
+         console.log(data.length);
+         if (action.player&&data[cm]) {
+            me = {
+               currentMusic: cm,
+               item: data[cm],
+               playing: false,
+               progress: 0,
+               loaded: false,
+               duration: 1,
+               currentTime: 0
+            };
             action.player.src = me.item.url;
             action.player.play();
-         } else {
-            return state
+         }else {
+            me = {
+               playing: false,
+               progress: 0,
+               currentTime: 0
+            };
          }
          return {...state, ...me};
       // 播放指定位置音乐
       case actionType.ACTION_PLAY_CURRENT_MUSIC:
+         if(state.item&&state.item.id===action.item.id){
+            return state;
+         }
          me = {
+            data:action.data?action.data:state.data,
             currentMusic: action.currentMusic,
             item: action.item,
             playing: false,
             progress: 0,
             loaded: false,
-            duration:1,
-            currentTime:0
+            duration: 1,
+            currentTime: 0
          };
          if (action.player) {
-            action.player.pause();
             action.player.src = action.item.url;
             action.player.play();
          } else {

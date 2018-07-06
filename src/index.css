@@ -4,7 +4,10 @@ body {
     font-family: sans-serif;
     background-color: #F0F4F3;
 }
-
+.app-title{
+    height: 65px;
+    line-height: 65px;
+}
 input {
     border: none;
 }
@@ -13,4 +16,10 @@ input:focus {
     outline: none;
 }
 #root{
+}
+.text-single-line{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 60vw;
 }

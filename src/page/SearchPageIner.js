@@ -3,6 +3,9 @@ import React, {Component} from 'react';
 import ListView from "../ListView";
 import {connect} from "react-redux";
 import {actionType} from "../reducer/globalState";
+import {actionType as actionType1} from "../reducer/appState";
+var baseUrl=require('../config/BaseUrl');
+const parseLrc = require('../LrcManager');
 
 class SearchPageIner extends Component {
    constructor() {
@@ -11,8 +14,10 @@ class SearchPageIner extends Component {
 
    componentWillMount() {
       this.setState({
-         inputValue: '',
+         inputValue: this.props.location.query?this.props.location.query.keyword:"",
          data: []
+      },function () {
+         this._fetchData();
       });
    }
 
@@ -29,21 +34,48 @@ class SearchPageIner extends Component {
    }
 
    _fetchData() {
+      if(!this.state.inputValue){
+         return ;
+      }
       var _this = this;
-      let url = `/api/v3/search/song?format=json&keyword=${this.state.inputValue}&page=1&pagesize=20&showtype=1`;
-      fetch(url,{
-         method: 'get',
-         dataType: "json",
-      }).then(function (res) {
-         console.log(res);
-         if (res && res.status === 1) {
+      let url = baseUrl.base+`music/list?keyword=${this.state.inputValue}&page=1&pagesize=20`;
+      fetch(url,{})
+         .then((res)=>{
+            return res.json();
+         })
+         .then((result)=>{
             _this.setState({
-               data: res.info
-            });
-         }
-      }).catch(function (err) {
-
+               data: result.data.info
+            })
+         })
+         .catch((e)=>{
+            console.log(e);
       });
+   }
+
+   _fetchMusic(hash) {
+      var _this = this;
+      let url = baseUrl.base+`music/item?hash=${hash}`;
+      fetch(url,{})
+         .then((res)=>{
+            return res.json();
+         })
+         .then((result)=>{
+            console.log(result);
+            let lrc = parseLrc(result.data.lyrics);
+            let player = document.getElementById("music");
+            _this.props.playMusic(0, {
+               id:result.data.hash,
+               name: result.data.song_name,
+               author: result.data.author_name,
+               url: result.data.play_url,
+               pic: result.data.img,
+               lrcEntity: lrc
+            }, player);
+         })
+         .catch((e)=>{
+            console.log(e);
+         });
    }
 
    componentWillUnmount() {
@@ -55,7 +87,7 @@ class SearchPageIner extends Component {
       var _this = this;
       return (
          <div className='SearchPage'>
-            <div className='title'>
+            <div className='title app-title'>
                <img className='first-child' src={require('../img/ic_left.png')} onClick={() => {
                   this.props.history.goBack();
                }}/>
@@ -77,9 +109,10 @@ class SearchPageIner extends Component {
                   />
                </div>
             </div>
-            <div style={{marginTop: '50px'}}></div>
+            <div style={{marginTop: '65px'}}></div>
             <ListView data={this.state.data}
-                      onItemClick={() => {
+                      onItemClick={(postion, item) => {
+                         this._fetchMusic(item.hash);
                       }}
                       style={{paddingBottom: "3rem", backgroundColor: "#f6f6f6"}}
                       renderItem={(position, item) => {
@@ -113,7 +146,11 @@ const mapDispatchToProps = (dispatch) => {
    return {
       setShowPlay: (showPlay) => {
          dispatch({type: actionType.ACTION_SHOW_PLAY_CONTROLLER, showPlay});
+      },
+      playMusic(currentMusic, item, player,data) {
+         dispatch({type: actionType1.ACTION_PLAY_CURRENT_MUSIC, currentMusic, item, player,data});
       }
+
    }
 };
 SearchPageIner = connect(null, mapDispatchToProps)(SearchPageIner);

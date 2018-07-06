@@ -4,6 +4,7 @@ import SeekBar from './SeekBar';
 import LrcView from "./LrcView";
 import {connect} from "react-redux";
 import {actionType} from "./reducer/appState";
+import {PLAY_MODE} from "./AppConfig";
 
 const Style = require('./Page2.css');
 const $ = require('jquery');
@@ -18,9 +19,46 @@ class Page2 extends Component {
       this.setState({});
    }
 
-   music;
-
    componentDidMount() {
+      this._init();
+      var _this = this;
+      this.music = document.getElementById('music');
+      document.addEventListener("keydown", keydown);
+
+      function keydown(event) {
+         if (event.keyCode === 32) {
+            if (_this.props.playing) {
+               _this.props.setPlaying(false);
+               _this.music.pause();
+            } else {
+               _this.props.setPlaying(true);
+               _this.music.play();
+            }
+         }
+      }
+
+      this.keydown = keydown;
+   }
+
+   componentWillUnmount() {
+      var player = this.music;
+      this.state.dialog = false;
+      window.localStorage.setItem("back", '1');
+      document.removeEventListener("keydown", this.keydown)
+   }
+
+   componentWillReceiveProps(props) {
+      if (1===props.duration){
+         this.changeLrc = true;
+         this.setState({
+            dialog: false,
+            lrcEntity: null
+         });
+      }
+   }
+
+   music;
+   _init(){
       var _this=this;
       this.music = document.getElementById('music');
       setTimeout(function () {
@@ -29,20 +67,28 @@ class Page2 extends Component {
          page.css('background-image','none');
          $('.page2-back-img').css('height',page.height());
       },50);
-
-   }
-
-   componentWillUnmount() {
-      var player = this.music;
-      this.state.dialog = false;
-      window.localStorage.setItem("back", '1');
-   }
-
-   componentWillReceiveProps() {
-      if (this.changeLrc&&this.state.dialog){
+      let music=this.props.match.params.music;
+      if(music&&music!=='-1'){
+         this.setState({
+            showAx:true,
+            showAxAnimation:false
+         });
       }
    }
-   changeLrc=false;
+   _findMusic(){
+      let music=this.props.match.params.music;
+      if(music&&music!==-1){
+         for(let i=0;i<this.props.data.length;i++){
+            let item=this.props.data[i];
+            if(item.name.toLowerCase().includes(music.toLowerCase())){
+               this.props.playMusic(i,item,this.music);
+               console.log(item);
+               break;
+            }
+         }
+      }
+   }
+
    _showLrc() {
       var _this = this;
       let lrc1 = this.props.item.lrc1;
@@ -51,17 +97,22 @@ class Page2 extends Component {
             lrcEntity: this.props.item.lrcEntity,
          });
       } else {
-         let url = lrc1 ? lrc1 : require('./lrcs/empty');
-         $.ajax(url, {
-            success(res) {
-               console.log(res);
-               _this._showLrcView(res);
-               // _this._showLrcText(res);
-            },
-            error() {
+         if(lrc1){
+            _this._showLrcView(lrc1);
+         }else {
+            let url=require('./lrcs/empty');
+            console.log(url);
+            $.ajax(url, {
+               success(res) {
+                  console.log(res);
+                  _this._showLrcView(res);
+               },
+               error() {
 
-            }
-         })
+               }
+            })
+         }
+
       }
    }
 
@@ -75,11 +126,30 @@ class Page2 extends Component {
 
 
    render() {
+      let playModeImg = [];
+      switch (this.props.playMode) {
+         case PLAY_MODE.XH:
+            playModeImg[0] = require('./img/xh.png');
+            playModeImg[1] = require('./img/xh_press.png');
+            break;
+         case PLAY_MODE.ONE_XH:
+            playModeImg[0] = require('./img/adi.png');
+            playModeImg[1] = require('./img/adj.png');
+            break;
+         case PLAY_MODE.ONE:
+            playModeImg[0] = require('./img/adi.png');
+            playModeImg[1] = require('./img/adj.png');
+            break;
+         case PLAY_MODE.SJ:
+            playModeImg[0] = require('./img/sj.png');
+            playModeImg[1] = require('./img/sj_press.png');
+            break;
+      }
       return (
          <div className='page' id='page2'>
             <div className='page2-back-img'>
-               <img  src={this.props.item.pic?this.props.item.pic:require('./img/ww.jpg')}/>
-               <div />
+               <img src={this.props.item.pic ? this.props.item.pic : require('./img/ww.jpg')}/>
+               <div/>
             </div>
 
             <div className='page2title flex-row-center'
@@ -107,7 +177,8 @@ class Page2 extends Component {
                   <div className='g-pan'>
                      <img className="big" src={require('./img/aea.png')}/>
                      <img className="small" src={this.props.item.pic}
-                          style={{animationPlayState: this.props.playing ? "running" : "paused"}}/>
+                          style={{animationPlayState: this.props.playing ? "running" : "paused"}}
+                     />
                      <img className="big" src={require('./img/acg.png')}/>
                   </div>
                   <div className='div-img1'>
@@ -135,11 +206,12 @@ class Page2 extends Component {
             </div>
             {/*点赞按钮等*/}
             <div className='page2Menu1'>
-               <ImgBtn style={{animation: this.state.animation ? this.state.animation : 'none'}} onCheckChanged={(checked) => {
-                  this.setState({
-                     animation: `${checked ? "btnBig" : "btnBig1"} 0.5s`
-                  });
-               }} drawable={{
+               <ImgBtn style={{animation: this.state.animation ? this.state.animation : 'none'}}
+                       onCheckChanged={(checked) => {
+                          this.setState({
+                             animation: `${checked ? "btnBig" : "btnBig1"} 0.5s`
+                          });
+                       }} drawable={{
                   press: [require("./img/add.png"), require('./img/adf.png')],
                   src: [require("./img/adc.png"), require('./img/ade.png')]
                }}/>
@@ -158,16 +230,18 @@ class Page2 extends Component {
             <SeekBar progress={this.props.progress} duration={this.props.duration} currentTime={this.props.currentTime}
                      onSeek={(progress) => {
                         var player = this.music;
-                        let time=player.duration * progress / 100;
-                        player.currentTime =time.toFixed(3) ;
+                        let time = player.duration * progress / 100;
+                        player.currentTime = time.toFixed(3);
                         this.props.setProgress(progress);
                         this.props.setCurrentTime(player.currentTime);
                      }}/>
             {/*播放控制按钮组*/}
             <div className='flex-row-center controlMenu'>
                <ImgBtn drawable={{
-                  src: require('./img/adi.png'),
-                  press: require('./img/adj.png')
+                  src: playModeImg[0],
+                  press: playModeImg[1]
+               }} onClick={() => {
+                  this.props.switchPlayMode();
                }}/>
                <div style={{width: "8%"}}/>
                <ImgBtn drawable={{
@@ -175,11 +249,6 @@ class Page2 extends Component {
                   press: require('./img/ac8.png')
                }} onClick={() => {
                   this.props.preMusic(this.music);
-                  this.changeLrc=true;
-                  this.setState({
-                     dialog:false,
-                     lrcEntity:null
-                  });
                }}/>
                <div style={{width: "3%"}}/>
                <ImgBtn clickable={this.props.loaded} selected={!this.props.playing} drawable={{
@@ -202,16 +271,31 @@ class Page2 extends Component {
                   press: require('./img/ac2.png')
                }} onClick={() => {
                   this.props.nextMusic(this.music);
-                  this.changeLrc=true;
-                  this.setState({
-                     dialog:false,
-                     lrcEntity:null
-                  });
                }}/>
                <div style={{width: "8%"}}/>
                <ImgBtn drawable={{
                   src: require('./img/adz.png'),
                   press: require('./img/ae1.png')
+               }}/>
+            </div>
+            <div style={{height:'100%',width:'100%',display:this.state.showAx?'block':'none',
+            position:'absolute',left:0,top:0,backgroundColor:'rgba(0,0,0,0.8)'}}>
+               <img style={{width:'100vw', position:'absolute',left:0,top:0,right:0,bottom:0,
+               margin:'auto',objectFit:'contain',animation:this.state.showAxAnimation?"ax-animation 1.5s":"none",
+               transformOrigin:'50% 50%'}}
+               src={require('./img/aixintao.jpg')}
+               onClick={()=>{
+                  this.setState({
+                     showAxAnimation:true
+                  });
+                  let _this=this;
+                  _this._findMusic();
+                  setTimeout(()=>{
+                     _this.setState({
+                        showAx:false
+                     })
+                  },1500);
+
                }}/>
             </div>
          </div>
@@ -226,7 +310,8 @@ const mapStateToProps = (state) => {
       loaded: state.appState.loaded,
       duration: state.appState.duration,
       currentTime: state.appState.currentTime,
-      item: state.appState.item
+      item: state.appState.item,
+      playMode: state.appState.playMode
    }
 };
 const mapDispatchToProps = (dispatch, ownProps) => {
@@ -245,6 +330,12 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       },
       preMusic: (player) => {
          dispatch({type: actionType.ACTION_PRE_MUSIC, player})
+      },
+      playMusic: (currentMusic,item,player) => {
+         dispatch({type: actionType.ACTION_PLAY_CURRENT_MUSIC, player, currentMusic, item})
+      },
+      switchPlayMode: () => {
+         dispatch({type: actionType.ACTION_SWITCH_MODE})
       }
    }
 };

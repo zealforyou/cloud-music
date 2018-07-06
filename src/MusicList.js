@@ -2,10 +2,104 @@
 //http://www.kugou.com/yy/index.php?r=play/getdata&hash=25a8a5ee71898435f99bdfdd21f3f6e3
 const data = [
    {
+      "name": "爱的就是你",
+      "author": "十二星宿 风之少年",
+      "url": "http://fs.w.kugou.com/201807020027/cf3ed5db66b29f3545078a7df6c5abe5/G112/M09/09/07/sA0DAFoJDCSAfWuZADkbZOeWA6c108.mp3",
+      "pic": "http://singerimg.kugou.com/uploadpic/softhead/400/20180411/20180411171219362.jpg",
+      "lrc1": require('./lrcs/爱的就是你')
+   },
+   {
+      "name": "BOOM",
+      "author": "Sevenn",
+      "url": "http://fs.w.kugou.com/201807020009/437a8600d804c721551bbef1a76d71e9/G094/M09/0B/01/_oYBAFj-I2iAICMiACWludCqtuQ899.mp3",
+      "pic": "http://singerimg.kugou.com/uploadpic/softhead/400/20170228/20170228170909162.jpg",
+      "lrc1": require('./lrcs/BOOM')
+   },
+   {
+      "name": "PDD洪荒之力",
+      "author": "小瑞",
+      "url": "http://fs.w.kugou.com/201807020012/ac04276e7c839cc978e333b8c8f6d1aa/G125/M09/09/19/vQ0DAFptSpyALEKwACaoEHdyrKQ334.mp3",
+      "pic": "http://singerimg.kugou.com/uploadpic/softhead/400/20180122/20180122173943744.jpg",
+      "lrc1": require('./lrcs/PDD洪荒之力')
+   },
+
+   {
+      "name": "Light (Crankdat Re-Crank)",
+      "author": "San Holo",
+      "url": "http://fs.w.kugou.com/201807012337/7dde5a83bf4ea697e653917ac016c24a/G094/M05/01/09/_oYBAFi4NhSAaWEEACzfV6OQGBk278.mp3",
+      "pic": "http://singerimg.kugou.com/uploadpic/softhead/400/20160414/20160414010225461568.jpg"
+   },
+   {
+      name: "Children Of A Miracle",
+      author: "Fled Out",
+      url: "http://fs.w.kugou.com/201807012307/e1cfb1d0a6e21467362b95309edb83a5/G088/M04/19/18/OJQEAFjSXIaATJoyADP77Y2G08c678.mp3",
+      pic: "http://singerimg.kugou.com/uploadpic/softhead/400/20170721/20170721143122692.jpg",
+      lrc1: require('./lrcs/ChildrenOfAMiracle')
+   }
+   ,
+   {
+      name: "阿楚姑娘",
+      author: "梁凡",
+      url: "http://fs.w.kugou.com/201807010210/d4a810c02b9a376c05fc4b8cdf98b3d0/G060/M09/18/03/3IYBAFb3JseADR7qADyQcFvqL_s275.mp3",
+      pic: "http://singerimg.kugou.com/uploadpic/softhead/400/20161229/20161229222159728.jpg",
+      lrc1: require('./lrcs/阿楚姑娘')
+   }
+   ,
+   {
+      name: "亲人",
+      author: "亲人",
+      // url: "http://fs.w.kugou.com/201807011623/3e39bb105dea585368dee96708ceb6ce/G007/M02/01/17/p4YBAFS6TXaAbdrmAD_3ge0bKO4769.mp3",
+      url: require('./愿你安好.mp3'),
+      pic: require('./img/qingren.jpg'),
+      lrc1: require('./lrcs/祝福.txt')
+   }
+   ,
+   {
+      name: "回忆",
+      author: "回忆",
+      url: "http://fs.w.kugou.com/201807010224/a3efd33cb7e2930756969bf8a688b0dc/G077/M09/17/04/7YYBAFhLv8uANc2WAEcujAn9bQw766.mp3",
+      pic: "http://www.36588.com.cn:8080/ImageResourceMongo/UploadedFile/dimension/big/66d10429-8765-4d53-ac37-0b996427e933.png",
+      lrc1: require('./lrcs/回忆')
+   }
+   ,
+   {
+      name: "愿你安好",
+      author: "曹寅",
+      url: "http://fs.w.kugou.com/201807010224/a3efd33cb7e2930756969bf8a688b0dc/G077/M09/17/04/7YYBAFhLv8uANc2WAEcujAn9bQw766.mp3",
+      pic: "http://singerimg.kugou.com/uploadpic/softhead/400/20140704/20140704131920952639.jpg",
+      lrc1: require('./lrcs/愿你安好')
+   }
+   ,
+   {
+      name: "说散就散",
+      author: "前任3主题曲",
+      url: "http://fs.w.kugou.com/201807010221/85a42e7947a89b99b79fbae0397bfa5b/G118/M08/04/15/FocBAFovr0CALbDLADifZa9XM2s464.mp3",
+      pic: "http://singerimg.kugou.com/uploadpic/softhead/400/20180619/20180619155613194.jpg",
+      lrc1: require('./lrcs/说散就散')
+   }
+   ,
+   {
+      name: "Mad Clown、金娜英 - 다시 너를 (TV)",
+      author: "金娜英",
+      url: "http://fs.w.kugou.com/201807010149/e9895f484025b55baf94d4e87b99c7d5/G063/M02/1C/01/fw0DAFcshSuAOtF4ADBXGZxtp40747.mp3",
+      pic: "http://singerimg.kugou.com/uploadpic/softhead/400/20170204/20170204125005463.jpg",
+      lrc1: require('./lrcs/金娜英')
+   }
+   ,
+   {
+      name: "胡66 - 差一步",
+      author: "胡66",
+      url: "http://fs.w.kugou.com/201807010110/ab290f97acfa296dac304e2a1ec722ad/G126/M07/18/19/XpQEAFqyHDCAKxINADxEvsPc60k313.mp3",
+      pic: "http://singerimg.kugou.com/uploadpic/softhead/400/20171221/20171221210749388.jpg",
+      lrc1: require('./lrcs/差一步')
+   }
+   ,
+   {
       name: "다시만난 너에게 (再次见到你)",
       author: "匹诺曹电视剧",
       url: "http://fs.w.kugou.com/201806290944/7337145c852f57b857f4200230369ee7/G013/M04/1C/10/rYYBAFUKKwiAXksNAENSiS8g0FY088.mp3",
       pic: "http://singerimg.kugou.com/uploadpic/softhead/400/20150115/20150115110731240315.jpg",
+      lrc1: require('./lrcs/再次见到你.lrc')
    }
    ,
    {
@@ -16,10 +110,19 @@ const data = [
    }
    ,
    {
-      name: "Higher",
+      name: "Solo Dance)",
       author: "抓包",
-      url: "http://fs.w.kugou.com/201806280024/23b868066993f170fb77f40ef3632f62/G041/M01/10/1F/yYYBAFYk1vqAZH6zADQgKSvEwxg992.mp3",
-      pic: "http://singerimg.kugou.com/uploadpic/softhead/400/20160330/20160330153616731532.jpg",
+      url: "http://fs.w.kugou.com/201806261009/8c2a8ab79e816e8da6e0640529736bbb/G080/M04/19/1D/8IYBAFgeWYSAAr36ACq5lbsvexo309.mp3",
+      pic: "http://singerimg.kugou.com/uploadpic/softhead/400/20160802/20160802172904831.jpg",
+   }
+   ,
+
+   {
+      name: "JULY",
+      author: "抓包",
+      url: "http:\\/\\/fs.w.kugou.com\\/201806252332\\/c87e4f0c659dfb77066df786c10cdbb3\\/G076\\/M05\\/10\\/19\\/LJQEAFgcRpWAcCWaAC2iwNYOB0w548.mp3",
+      pic: "http:\\/\\/singerimg.kugou.com\\/uploadpic\\/softhead\\/400\\/20180525\\/20180525225705340.jpg",
+      lrc1: require('./lrcs/JULY')
    }
    ,
    {
@@ -30,10 +133,10 @@ const data = [
    }
    ,
    {
-      name: "Solo Dance)",
+      name: "Higher",
       author: "抓包",
-      url: "http://fs.w.kugou.com/201806261009/8c2a8ab79e816e8da6e0640529736bbb/G080/M04/19/1D/8IYBAFgeWYSAAr36ACq5lbsvexo309.mp3",
-      pic: "http://singerimg.kugou.com/uploadpic/softhead/400/20160802/20160802172904831.jpg",
+      url: "http://fs.w.kugou.com/201806280024/23b868066993f170fb77f40ef3632f62/G041/M01/10/1F/yYYBAFYk1vqAZH6zADQgKSvEwxg992.mp3",
+      pic: "http://singerimg.kugou.com/uploadpic/softhead/400/20160330/20160330153616731532.jpg",
    }
    ,
    {
@@ -43,20 +146,13 @@ const data = [
       pic: "http://singerimg.kugou.com/uploadpic/softhead/400/20170603/20170603111817154.jpg",
    }
    ,
-   {
-      name: "JULY",
-      author: "抓包",
-      url: "http:\\/\\/fs.w.kugou.com\\/201806252332\\/c87e4f0c659dfb77066df786c10cdbb3\\/G076\\/M05\\/10\\/19\\/LJQEAFgcRpWAcCWaAC2iwNYOB0w548.mp3",
-      pic: "http:\\/\\/singerimg.kugou.com\\/uploadpic\\/softhead\\/400\\/20180525\\/20180525225705340.jpg",
-      lrc1:require('./lrcs/JULY')
-   }
-   ,
+
    {
       name: "123我爱你",
       author: "新乐尘符",
       url: "http://up.mcyt.net/?down/45965.mp3",
       pic: 'http://oeff2vktt.bkt.clouddn.com/image/76.jpg',
-      lrc1:require('./lrcs/123我爱你')
+      lrc1: require('./lrcs/123我爱你')
    }
    ,
    {
@@ -79,7 +175,7 @@ const data = [
       author: "The Chainsmokers",
       url: "http://up.mcyt.net/?down/45372.mp3",
       pic: "http://oeff2vktt.bkt.clouddn.com/image/34.jpg",
-      lrc1:require('./lrcs/人生谏言.txt')
+      lrc1: require('./lrcs/人生谏言.txt')
    }
    ,
    {
@@ -110,5 +206,6 @@ const data = [
       pic: "http:\\/\\/singerimg.kugou.com\\/uploadpic\\/softhead\\/400\\/20180525\\/20180525225705340.jpg"
    }
    ,
-  ];
+];
+
 export default data;

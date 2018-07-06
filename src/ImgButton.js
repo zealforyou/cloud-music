@@ -11,9 +11,6 @@ export default class ImgBtn extends Component {
       if (!(drawable.src instanceof Array)) {
          drawable.src = [drawable.src]
       }
-      if (!(drawable.press instanceof Array)) {
-         drawable.press = [drawable.press]
-      }
       this.setState({
          src: this.props.selected ? drawable.src[1] : drawable.src[0],
          selected: this.props.selected ? this.props.selected : false
@@ -22,18 +19,19 @@ export default class ImgBtn extends Component {
 
    componentWillReceiveProps(nextProps) {
       let drawable = nextProps.drawable;
-      if (!(drawable.src instanceof Array)) {
-         drawable.src = [drawable.src]
+      let src;
+      let selectSrc;
+      if (drawable.src instanceof Array) {
+         src = drawable.src[0];
+         selectSrc = drawable.src.length > 1 ? drawable.src[1] : src;
+      } else {
+         selectSrc = src = drawable.src;
       }
-      if (!(drawable.press instanceof Array)) {
-         drawable.press = [drawable.press]
-      }
-      if (typeof nextProps.selected !== 'undefined') {
-         this.setState({
-            src: nextProps.selected ? drawable.src[1] : drawable.src[0],
-            selected: nextProps.selected ? nextProps.selected : false
-         });
-      }
+      let selected=(typeof nextProps.selected)==='undefined'? this.state.selected :nextProps.selected;
+      this.setState({
+         src: selected ? selectSrc : src,
+         selected:selected
+      });
 
    }
 

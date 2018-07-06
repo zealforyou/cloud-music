@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {actionType} from "./reducer/appState";
 import {actionType as globalType} from "./reducer/globalState";
-import data from "./MusicList";
+import {PLAY_MODE}from './AppConfig'
 
 class MusicPage extends Component {
    constructor() {
@@ -75,9 +75,22 @@ class MusicPage extends Component {
 
       function ended() {
          console.log("appended");
-         _this.props.setPlaying(false);
-         _this.props.setProgress(0);
-         _this.props.setCurrentTime(0);
+         switch (_this.props.playMode){
+            case PLAY_MODE.SJ:
+               _this.props.nextMusic(_this.refs.music);
+               break;
+            case PLAY_MODE.ONE_XH:
+               _this.props.playMusic(_this.props.currentTime,_this.props.item,_this.refs.music);
+               break;
+            case PLAY_MODE.XH:
+               _this.props.nextMusic(_this.refs.music);
+               break;
+            case PLAY_MODE.ONE:
+               _this.props.setPlaying(false);
+               _this.props.setProgress(0);
+               _this.props.setCurrentTime(0);
+               break;
+         }
       }
 
       function canplay () {
@@ -108,7 +121,7 @@ class MusicPage extends Component {
       e.stopPropagation();
       var player = this.refs.music;
       if (!this.props.item.url) {
-         this.props.playMusic(0,data[0],player);
+         this.props.playMusic(0,this.props.data[0],player);
          return;
       }
       if (this.props.playing) {
@@ -129,11 +142,11 @@ class MusicPage extends Component {
                亲 您的浏览器不支持html5的audio标签
             </audio>
             <footer className='play-footer flex-row-center' onClick={(e) => {
-               this.props.history.push('/Page2');
+               this.props.history.push('/Page2/-1');
             }} style={{display:this.props.showPlay?"flex":"none"}}>
                <img src={this.props.item.pic ? this.props.item.pic : require("./img/a20.9.png")} className='m-pic'/>
                <div className='flex-c' style={{marginLeft: "10px", flexGrow: 1}}>
-                  <span style={{fontSize: "15px"}}>{this.props.item.name}</span>
+                  <span className='text-single-line' style={{fontSize: "15px"}}>{this.props.item.name}</span>
                   <span style={{color: "#888888", fontSize: "11px"}}>{this.props.item.author}</span>
                </div>
                <img onClick={this.clickPlay.bind(this)} src={require(this.props.playing ? "./img/bzm.png" : "./img/q1.png")}
@@ -152,6 +165,7 @@ class MusicPage extends Component {
 
 const mapStateToProps = (state) => {
    return {
+      data:state.appState.data,
       showPlay: state.globalState.showPlay,
       currentTime: state.appState.currentTime,
       duration: state.appState.duration,
@@ -161,6 +175,7 @@ const mapStateToProps = (state) => {
       currentMusic: state.appState.currentMusic,
       item: state.appState.item,
       canPlay: state.appState.canPlay,
+      playMode:state.appState.playMode
    }
 };
 const mapDispatchToProps = (dispatch, ownProps) => {
@@ -191,6 +206,12 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       },
       playMusic(currentMusic,item,player){
          dispatch({type:actionType.ACTION_PLAY_CURRENT_MUSIC,currentMusic,item,player});
+      },
+      nextMusic(player){
+         dispatch({type:actionType.ACTION_NEXT_MUSIC,player});
+      },
+      preMusic(player){
+         dispatch({type:actionType.ACTION_PRE_MUSIC,player});
       }
    }
 };

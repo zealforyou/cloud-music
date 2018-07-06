@@ -48,14 +48,14 @@ export default class CommentPage extends Component {
    render() {
       return (
          <div className='Comment'>
-            <div className="header">
+            <div className="header app-title">
                   <span onClick={() => {
                      this.props.history.goBack();
                   }}>
                      <img src={require('../img/ic_left.png')} alt=""/>
 
                   </span>
-               <span>评论(67364753)</span>
+               <span>评论(5465)</span>
             </div>
 
             <div className="comm_conter">
