@@ -4,6 +4,7 @@
   "homepage": "https://zealforyou.github.io/cloud-music/",
   "private": true,
   "dependencies": {
+    "body-parser": "^1.18.3",
     "express": "^4.16.3",
     "history": "^4.7.2",
     "jquery": "^3.3.1",

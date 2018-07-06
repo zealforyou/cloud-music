@@ -2,7 +2,7 @@ var express = require('express');
 var router_music_list=require('./router/router_music_list');
 var router_music_item=require('./router/router_music_item');
 var router_album=require('./router/router_album');
-
+var bodyParser=require('body-parser');
 var app = express();
 app.all("/*",function (req, res, next) {
    console.log("url:"+req.originalUrl);
@@ -13,6 +13,7 @@ app.all("/*",function (req, res, next) {
    res.header('Access-Control-Allow-Headers', 'Content-Type');
    next();
 });
+app.use(bodyParser.json());
 app.get("/music/list", router_music_list);
 app.get("/music/item",router_music_item);
 app.use("/album",router_album);
