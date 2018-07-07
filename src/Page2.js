@@ -105,9 +105,14 @@ class Page2 extends Component {
    _setLike(){
       var _this=this;
       let item=this.props.item;
-      let url=baseUrl.base+`album/setLike?music_id=${item.id}&name=${item.name}&author=${item.author}&url=${item.url}
-      &pic=${item.pic}&lrc1=${encodeURI(item.lrc1)}`;
-      fetch(url).then((res)=>{
+      let url=baseUrl.base+`album/setLike`;
+      fetch(url,{
+         method:'POST',
+         headers:{
+            "Content-Type":"application/json"
+         },
+         body:JSON.stringify(item)
+      }).then((res)=>{
          return res.json();
       }).then((res)=>{
          if(res.error_code===0){

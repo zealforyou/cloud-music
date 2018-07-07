@@ -25,12 +25,12 @@ router.get('/isLike',async function (req, res) {
    res.send({result: rows && rows.length > 0});
 });
 router.post('/setLike',async function (req, res) {
-   let id=req.body.data.music_id;
-   let name=req.body.data.name;
-   let author=req.body.data.author;
-   let url=req.body.data.url;
-   let pic=req.body.data.pic;
-   let lrc1=req.body.data.lrc1;
+   let id=req.body.id;
+   let name=req.body.name;
+   let author=req.body.author;
+   let url=req.body.url;
+   let pic=req.body.pic;
+   let lrc1=req.body.lrc1;
    if(!id) res.end();
    let sql=`SELECT * from tb_music t where t.id='${id}' and t.album_id=0`;
 
