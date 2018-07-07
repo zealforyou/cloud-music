@@ -5,9 +5,12 @@ import "./css/Mypage.scss";
 import SongSheet from "../view/SongSheet";
 import "../view/SongSheet.scss";
 import {connect} from "react-redux";
-import {actionType} from "../reducer/globalState";
+import {actionType as globalActionType, actionType} from "../reducer/globalState";
 import {albumActionType} from "../reducer/AlbumState";
-var baseUrl=require('../config/BaseUrl');
+import {localManager} from '../utils/LocalManager';
+
+var baseUrl = require('../config/BaseUrl');
+
 class Mypage extends Component {
    constructor() {
       super();
@@ -15,8 +18,11 @@ class Mypage extends Component {
 
    //组件即将挂载
    componentWillMount() {
-      this.setState({});
-      this._getAlbumList();
+      let phone = localManager.getPhone();
+      if (phone){
+         this._getAlbumList();
+      }
+      this.setState({loginDialog:!phone});
    }
 
    componentDidMount() {
@@ -27,16 +33,78 @@ class Mypage extends Component {
       this.props.setShowPlay(false);
    }
 
-   _getAlbumList() {
-      var _this = this;
-      let url = baseUrl.base+"album/getList";
+   loginClick(e) {
+      if (!this.state.phone || this.state.phone.length < 11) {
+         this.props.showToast("请输入正确的手机号");
+         return;
+      }
+      if (!this.state.name) {
+         this.props.showToast("请输入昵称");
+      }
+      this._register();
+   }
+
+   _getUser() {
+      var _this=this;
+      let url = baseUrl.base + "user/getUser?phone="+this.state.phone;
       fetch(url).then((res) => {
          return res.json();
       }).then((res) => {
-         console.log(res);
+            _this.setState({
+               name:res.user_name,
+               avatar:res.avatar
+            });
+      }).catch(() => {
+
+      })
+   }
+   _register(){
+      var _this=this;
+      let url = baseUrl.base + `user/register?phone=${this.state.phone}&name=${this.state.name}`;
+      fetch(url).then((res) => {
+         return res.json();
+      }).then((res) => {
+         if (res.error_code===0){
+            _this._go(res);
+         } else {
+            _this.props.showToast(res.error_msg)
+         }
+      }).catch((e) => {
+         _this.props.showToast("注册失败");
+      })
+   }
+   _go(user){
+      localManager.setName(user.user_name);
+      localManager.setPhone(user.user_id);
+      this.setState({loginDialog:false});
+      this._getAlbumList();
+   }
+   _getAlbumList() {
+      var _this = this;
+      let url = baseUrl.base + "album/getList?phone="+localManager.getPhone();
+      fetch(url).then((res) => {
+         return res.json();
+      }).then((res) => {
          _this.props.setAlbumData(res);
       }).catch(() => {
       })
+   }
+
+
+   phoneInput(e) {
+      var _this=this;
+      let phone = e.currentTarget.value;
+      this.setState({phone},function () {
+         if (phone.length===11){
+            _this._getUser();
+         }
+      });
+
+   }
+
+   nameInput(e) {
+    let name = e.currentTarget.value;
+    this.setState({name});
    }
 
    //渲染
@@ -54,7 +122,7 @@ class Mypage extends Component {
                      <img src={require('../img/friends.png')} alt=""/>
                   </div>
                   <span>
-                  <img src={require('../img/pf.png')} alt="" onClick={()=>{
+                  <img src={require('../img/pf.png')} alt="" onClick={() => {
                      this.props.history.push('/SearchPage');
                   }}/>
                </span>
@@ -105,22 +173,37 @@ class Mypage extends Component {
                <SongSheet
                   data={this.props.data}
                   onItemClick={(position, item) => {
-                     let path={
-                       pathname:'/App',
-                       query:{
-                          album_id:item.id
-                       }
+                     let path = {
+                        pathname: '/App',
+                        query: {
+                           album_id: item.id
+                        }
                      };
                      this.props.history.push(path);
                   }}/>
+            </div>
+            <div className='div_login' style={{display: this.state.loginDialog?'block':'none'}}>
+               <div className='center'>
+                  <img className='avatar' src={this.state.avatar?this.state.avatar:require('../img/bt_girl.jpg')}/>
+                  <div className='input flex-c-center'>
+                     <input placeholder='phone' type='tel' value={this.state.phone}
+                            maxLength='11' onInput={this.phoneInput.bind(this)}/>
+                     <input value={this.state.name} placeholder='name' style={{marginTop: '15px'}}
+                            onInput={this.nameInput.bind(this)}/>
+                  </div>
+                  <strong className='btn-enter' onClick={this.loginClick.bind(this)}>
+                     Go
+                  </strong>
+               </div>
             </div>
          </div>
       )
    }
 }
-const mapStateToProps=(state)=>{
+
+const mapStateToProps = (state) => {
    return {
-      data:state.albumState.data
+      data: state.albumState.data
    }
 };
 const mapDispatchToProps = (dispatch) => {
@@ -128,8 +211,11 @@ const mapDispatchToProps = (dispatch) => {
       setShowPlay: (showPlay) => {
          dispatch({type: actionType.ACTION_SHOW_PLAY_CONTROLLER, showPlay});
       },
-      setAlbumData(data){
+      setAlbumData(data) {
          dispatch({type: albumActionType.SET_DATA, data});
+      },
+      showToast(content) {
+         dispatch({type: globalActionType.ACTION_SHOW_TOAST, toast: {content}});
       }
    }
 };

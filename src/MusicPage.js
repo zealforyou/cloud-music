@@ -80,7 +80,7 @@ class MusicPage extends Component {
                _this.props.nextMusic(_this.refs.music);
                break;
             case PLAY_MODE.ONE_XH:
-               _this.props.playMusic(_this.props.currentTime,_this.props.item,_this.refs.music);
+               _this.props.playMusic(_this.props.currentTime,_this.props.item,_this.refs.music,true);
                break;
             case PLAY_MODE.XH:
                _this.props.nextMusic(_this.refs.music);
@@ -204,8 +204,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       setShowPlay:(showPlay)=>{
          dispatch({type:globalType.ACTION_SHOW_PLAY_CONTROLLER,showPlay})
       },
-      playMusic(currentMusic,item,player){
-         dispatch({type:actionType.ACTION_PLAY_CURRENT_MUSIC,currentMusic,item,player});
+      playMusic(currentMusic,item,player,repeat){
+         dispatch({type:actionType.ACTION_PLAY_CURRENT_MUSIC,repeat,currentMusic,item,player});
       },
       nextMusic(player){
          dispatch({type:actionType.ACTION_NEXT_MUSIC,player});

@@ -121,7 +121,7 @@ function appState(state = def, action) {
          return {...state, ...me};
       // 播放指定位置音乐
       case actionType.ACTION_PLAY_CURRENT_MUSIC:
-         if(state.item&&state.item.id===action.item.id){
+         if(state.item&&state.item.id===action.item.id&&!action.repeat){
             return state;
          }
          me = {

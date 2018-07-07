@@ -5,11 +5,12 @@ import LrcView from "./LrcView";
 import {connect} from "react-redux";
 import {actionType} from "./reducer/appState";
 import {PLAY_MODE} from "./AppConfig";
-
+import  {localManager} from "./utils/LocalManager";
 const Style = require('./Page2.css');
 const $ = require('jquery');
 const lrcParse = require('./LrcManager');
 const baseUrl=require('./config/BaseUrl');
+
 class Page2 extends Component {
    constructor() {
       super();
@@ -91,7 +92,7 @@ class Page2 extends Component {
    }
    _isLiked(){
       var _this=this;
-      let url=baseUrl.base+'album/isLike?music_id='+this.props.item.id;
+      let url=baseUrl.base+`album/isLike?music_id=${this.props.item.id}&phone=${localManager.getPhone()}`;
       fetch(url).then((res)=>{
          return res.json();
       }).then((res)=>{
@@ -111,7 +112,7 @@ class Page2 extends Component {
          headers:{
             "Content-Type":"application/json"
          },
-         body:JSON.stringify(item)
+         body:JSON.stringify({...item,phone:localManager.getPhone()})
       }).then((res)=>{
          return res.json();
       }).then((res)=>{
