@@ -1,6 +1,7 @@
 const data = {
    phone: "",
-   name: ""
+   name: "",
+   avatar:''
 };
 
 const localManager = {
@@ -11,6 +12,10 @@ const localManager = {
    setName(name) {
       data.name = name;
       window.localStorage.setItem("name",name);
+   },
+   setAvatar(avatar) {
+      data.avatar = avatar;
+      window.localStorage.setItem("avatar",avatar);
    },
    getPhone() {
       if (!data.phone){
@@ -23,6 +28,12 @@ const localManager = {
          data.name=  window.localStorage.getItem("name");
       }
       return data.name;
+   },
+   getAvatar() {
+      if (!data.avatar){
+         data.avatar=  window.localStorage.getItem("avatar");
+      }
+      return data.avatar;
    }
 };
 export {localManager}

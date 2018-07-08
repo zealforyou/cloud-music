@@ -5,11 +5,12 @@ import LrcView from "./LrcView";
 import {component} from "./utils/ZUtil";
 import {actionType} from "./reducer/appState";
 import {PLAY_MODE} from "./AppConfig";
-import  {localManager} from "./utils/LocalManager";
+import {localManager} from "./utils/LocalManager";
+
 const Style = require('./Page2.css');
 const $ = require('jquery');
 const lrcParse = require('./LrcManager');
-const baseUrl=require('./config/BaseUrl');
+const baseUrl = require('./config/BaseUrl');
 
 class Page2 extends Component {
    constructor() {
@@ -18,7 +19,7 @@ class Page2 extends Component {
 
    componentWillMount() {
       this.setState({});
-      this._isLiked();
+      this._isLiked(this.props.item.id);
    }
 
    componentDidMount() {
@@ -50,7 +51,7 @@ class Page2 extends Component {
    }
 
    componentWillReceiveProps(props) {
-      if (1===props.duration){
+      if (1 === props.duration) {
          this.changeLrc = true;
          this.setState({
             dialog: false,
@@ -60,77 +61,95 @@ class Page2 extends Component {
    }
 
    music;
-   _init(){
-      var _this=this;
+
+   _init() {
+      var _this = this;
       this.music = document.getElementById('music');
       setTimeout(function () {
-         let page=$('#page2');
+         let page = $('#page2');
          console.log(page.height());
-         page.css('background-image','none');
-         $('.page2-back-img').css('height',page.height());
-      },50);
-      let music=this.props.match.params.music;
-      if(music&&music!=='-1'){
+         page.css('background-image', 'none');
+         $('.page2-back-img').css('height', page.height());
+      }, 50);
+      let music = this.props.match.params.music;
+      if (music && music !== '-1') {
          this.setState({
-            showAx:true,
-            showAxAnimation:false
+            showAx: true,
+            showAxAnimation: false
          });
       }
    }
-   _findMusic(){
-      let music=this.props.match.params.music;
-      if(music&&music!==-1){
-         for(let i=0;i<this.props.data.length;i++){
-            let item=this.props.data[i];
-            if(item.name.toLowerCase().includes(music.toLowerCase())){
-               this.props.playMusic(i,item,this.music);
+
+   _findMusic() {
+      let music = this.props.match.params.music;
+      if (music && music !== -1) {
+         for (let i = 0; i < this.props.data.length; i++) {
+            let item = this.props.data[i];
+            if (item.name.toLowerCase().includes(music.toLowerCase())) {
+               this.props.playMusic(i, item, this.music);
                console.log(item);
                break;
             }
          }
       }
    }
-   _isLiked(){
-      var _this=this;
-      let url=baseUrl.base+`album/isLike?music_id=${this.props.item.id}&phone=${localManager.getPhone()}`;
-      fetch(url).then((res)=>{
-         return res.json();
-      }).then((res)=>{
-         _this.setState({
-            liked:res.result
-         });
-      }).catch((e)=>{
 
+   _isLiked(music_id, call) {
+      var _this = this;
+      let url = baseUrl.base + `album/isLike?music_id=${music_id}&phone=${localManager.getPhone()}`;
+      this.showLoading();
+      fetch(url).then((res) => {
+         return res.json();
+      }).then((res) => {
+         if (call) {
+            call.bind(_this);
+            call();
+         }
+         this.hideLoading();
+         _this.setState({
+            liked: res.result
+         });
+      }).catch((e) => {
+         _this.setState({
+            liked:false
+         });
+         if (call) {
+            call.bind(_this);
+            call();
+         }
+         this.hideLoading();
       });
    }
-   _setLike(){
-      var _this=this;
-      let item=this.props.item;
-      let url=baseUrl.base+`album/setLike`;
+
+   _setLike() {
+      var _this = this;
+      let item = this.props.item;
+      let url = baseUrl.base + `album/setLike`;
       this.showLoading();
-      fetch(url,{
-         method:'POST',
-         headers:{
-            "Content-Type":"application/json"
+      fetch(url, {
+         method: 'POST',
+         headers: {
+            "Content-Type": "application/json"
          },
-         body:JSON.stringify({...item,phone:localManager.getPhone()})
-      }).then((res)=>{
+         body: JSON.stringify({...item, phone: localManager.getPhone()})
+      }).then((res) => {
          return res.json();
-      }).then((res)=>{
+      }).then((res) => {
          this.hideLoading();
-         if(res.error_code===0){
+         if (res.error_code === 0) {
             _this.setState({
                animation: `${res.liked ? "btnBig" : "btnBig1"} 0.5s`,
-               liked:res.liked
+               liked: res.liked
             });
-         }else {
+         } else {
             this.showToast(res.error_msg);
          }
 
-      }).catch((e)=>{
+      }).catch((e) => {
          this.hideLoading();
       });
    }
+
    _showLrc() {
       var _this = this;
       let lrc1 = this.props.item.lrc1;
@@ -139,10 +158,10 @@ class Page2 extends Component {
             lrcEntity: this.props.item.lrcEntity,
          });
       } else {
-         if(lrc1){
+         if (lrc1) {
             _this._showLrcView(lrc1);
-         }else {
-            let url=require('./lrcs/empty');
+         } else {
+            let url = require('./lrcs/empty');
             console.log(url);
             $.ajax(url, {
                success(res) {
@@ -166,6 +185,26 @@ class Page2 extends Component {
       });
    }
 
+   onPreMusic(e) {
+      let data = this.props.data;
+      let index = this.props.currentMusic;
+      let cm = (index <= 0) ? data.length - 1 : index - 1;
+      let item = data[cm];
+      this._isLiked(item.id, () => {
+         this.props.preMusic(this.music);
+      });
+
+   }
+
+   onNextMusic(e) {
+      let data = this.props.data;
+      let index = this.props.currentMusic;
+      let cm = (index >= data.length - 1) ? 0 : index + 1;
+      let item = data[cm];
+      this._isLiked(item.id,() => {
+         this.props.nextMusic(this.music);
+      });
+   }
 
    render() {
       let playModeImg = [];
@@ -251,7 +290,7 @@ class Page2 extends Component {
                <ImgBtn selected={!!this.state.liked}
                        style={{animation: this.state.animation ? this.state.animation : 'none'}}
                        onCheckChanged={(checked) => {
-                           this._setLike();
+                          this._setLike();
                        }} drawable={{
                   press: [require("./img/add.png"), require('./img/adf.png')],
                   src: [require("./img/adc.png"), require('./img/ade.png')]
@@ -285,12 +324,11 @@ class Page2 extends Component {
                   this.props.switchPlayMode();
                }}/>
                <div style={{width: "8%"}}/>
+               {/*上一首*/}
                <ImgBtn drawable={{
                   src: require('./img/ac7.png'),
                   press: require('./img/ac8.png')
-               }} onClick={() => {
-                  this.props.preMusic(this.music);
-               }}/>
+               }} onClick={this.onPreMusic.bind(this)}/>
                <div style={{width: "3%"}}/>
                <ImgBtn clickable={this.props.loaded} selected={!this.props.playing} drawable={{
                   src: [require('./img/ac3.png'), require('./img/ac5.png')],
@@ -307,37 +345,40 @@ class Page2 extends Component {
                           }
                        }}/>
                <div style={{width: "3%"}}/>
+               {/*下一首*/}
                <ImgBtn drawable={{
                   src: require('./img/ac1.png'),
                   press: require('./img/ac2.png')
-               }} onClick={() => {
-                  this.props.nextMusic(this.music);
-               }}/>
+               }} onClick={this.onNextMusic.bind(this)}/>
                <div style={{width: "8%"}}/>
                <ImgBtn drawable={{
                   src: require('./img/adz.png'),
                   press: require('./img/ae1.png')
                }}/>
             </div>
-            <div style={{height:'100%',width:'100%',display:this.state.showAx?'block':'none',
-            position:'absolute',left:0,top:0,backgroundColor:'rgba(0,0,0,0.8)'}}>
-               <img style={{width:'100vw', position:'absolute',left:0,top:0,right:0,bottom:0,
-               margin:'auto',objectFit:'contain',animation:this.state.showAxAnimation?"ax-animation 1.5s":"none",
-               transformOrigin:'50% 50%'}}
-               src={require('./img/aixintao.jpg')}
-               onClick={()=>{
-                  this.setState({
-                     showAxAnimation:true
-                  });
-                  let _this=this;
-                  _this._findMusic();
-                  setTimeout(()=>{
-                     _this.setState({
-                        showAx:false
-                     })
-                  },1500);
+            <div style={{
+               height: '100%', width: '100%', display: this.state.showAx ? 'block' : 'none',
+               position: 'absolute', left: 0, top: 0, backgroundColor: 'rgba(0,0,0,0.8)'
+            }}>
+               <img style={{
+                  width: '100vw', position: 'absolute', left: 0, top: 0, right: 0, bottom: 0,
+                  margin: 'auto', objectFit: 'contain', animation: this.state.showAxAnimation ? "ax-animation 1.5s" : "none",
+                  transformOrigin: '50% 50%'
+               }}
+                    src={require('./img/aixintao.jpg')}
+                    onClick={() => {
+                       this.setState({
+                          showAxAnimation: true
+                       });
+                       let _this = this;
+                       _this._findMusic();
+                       setTimeout(() => {
+                          _this.setState({
+                             showAx: false
+                          })
+                       }, 1500);
 
-               }}/>
+                    }}/>
             </div>
          </div>
       )
@@ -346,6 +387,8 @@ class Page2 extends Component {
 
 const mapStateToProps = (state) => {
    return {
+      currentMusic: state.appState.currentMusic,
+      data: state.appState.data,
       progress: state.appState.progress,
       playing: state.appState.playing,
       loaded: state.appState.loaded,
@@ -372,7 +415,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       preMusic: (player) => {
          dispatch({type: actionType.ACTION_PRE_MUSIC, player})
       },
-      playMusic: (currentMusic,item,player) => {
+      playMusic: (currentMusic, item, player) => {
          dispatch({type: actionType.ACTION_PLAY_CURRENT_MUSIC, player, currentMusic, item})
       },
       switchPlayMode: () => {
@@ -380,5 +423,5 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       }
    }
 };
-Page2 = component(mapStateToProps, mapDispatchToProps,Page2);
+Page2 = component(mapStateToProps, mapDispatchToProps, Page2);
 export default Page2;

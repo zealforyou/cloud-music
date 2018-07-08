@@ -2,7 +2,7 @@ import {PLAY_MODE, createPlayModer} from '../AppConfig';
 
 const playModer = createPlayModer();
 const def = {
-   data: [],
+   data: [],//播放队列
    album_id:-1,
    duration: 1,
    currentTime: 0,
@@ -13,11 +13,13 @@ const def = {
    currentMusic: -1,
    playModeIndex: 0,
    playMode: playModer[0],
-   item: {}
+   item: {},
+   album_data:[]
 };
 const actionType = {
-   SET_ALBUM_ID: 'set_album_id',
+   SET_ALBUM_ID_AND_NAME: 'set_album_id_and_name',
    SET_DATA: 'set_data',
+   SET_ALBUM_DATA: 'set_album_data',
    SET_PROGRESS: 'set_progress',
    SET_PLAYING: 'set_playing',
    SET_LOADED: 'set_loaded',
@@ -45,9 +47,11 @@ function appState(state = def, action) {
       case actionType.ACTION_SWITCH_MODE:
          let indextemp = parseInt((state.playModeIndex + 1) % playModer.length);
          return {...state, playMode: playModer[indextemp], playModeIndex: indextemp};
-      case actionType.SET_ALBUM_ID:
-         return {...state, album_id: action.album_id};
-      case actionType.SET_DATA:
+      case actionType.SET_ALBUM_ID_AND_NAME:
+         return {...state, album_id: action.album_id,album_name:action.album_name};
+      case actionType.SET_ALBUM_DATA:
+         return {...state, album_data: action.album_data};
+      case actionType.SET_DATA://播放队列
          return {...state, data: action.data};
       case actionType.SET_DURATION:
          return {...state, duration: action.duration};

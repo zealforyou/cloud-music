@@ -48,15 +48,18 @@ class Mypage extends Component {
    _getUser() {
       var _this=this;
       let url = baseUrl.base + "user/getUser?phone="+this.state.phone;
+      this.showLoading();
       fetch(url).then((res) => {
          return res.json();
       }).then((res) => {
+         localManager.setAvatar(res.avatar?res.avatar:'');
+         this.hideLoading();
             _this.setState({
                name:res.user_name,
                avatar:res.avatar
             });
-      }).catch(() => {
-
+      }).catch((e) => {
+         this.hideLoading();
       })
    }
    _register(){
