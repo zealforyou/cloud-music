@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import ImgBtn from './ImgButton';
 import SeekBar from './SeekBar';
 import LrcView from "./LrcView";
-import {connect} from "react-redux";
+import {component} from "./utils/ZUtil";
 import {actionType} from "./reducer/appState";
 import {PLAY_MODE} from "./AppConfig";
 import  {localManager} from "./utils/LocalManager";
@@ -107,6 +107,7 @@ class Page2 extends Component {
       var _this=this;
       let item=this.props.item;
       let url=baseUrl.base+`album/setLike`;
+      this.showLoading();
       fetch(url,{
          method:'POST',
          headers:{
@@ -116,17 +117,18 @@ class Page2 extends Component {
       }).then((res)=>{
          return res.json();
       }).then((res)=>{
+         this.hideLoading();
          if(res.error_code===0){
             _this.setState({
                animation: `${res.liked ? "btnBig" : "btnBig1"} 0.5s`,
                liked:res.liked
             });
          }else {
-            console.log(res.error_msg);
+            this.showToast(res.error_msg);
          }
 
       }).catch((e)=>{
-
+         this.hideLoading();
       });
    }
    _showLrc() {
@@ -378,5 +380,5 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       }
    }
 };
-Page2 = connect(mapStateToProps, mapDispatchToProps)(Page2);
+Page2 = component(mapStateToProps, mapDispatchToProps,Page2);
 export default Page2;

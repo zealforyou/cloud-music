@@ -5,6 +5,7 @@ import {connect} from 'react-redux';
 import {actionType as globalType} from "./reducer/globalState";
 import $ from 'jquery';
 import 'rgbaster';
+import {localManager} from "./utils/LocalManager";
 
 require('./App.css');
 var baseUrl=require('./config/BaseUrl');
@@ -13,7 +14,7 @@ class App extends Component {
       super();
       this.bgColor = [200, 200, 200];
       this.title = "想唱就唱";
-      this.username = "唱的响亮";
+      this.username = localManager.getName();
    }
 
    componentWillMount() {
@@ -101,6 +102,7 @@ class App extends Component {
 
 
    render() {
+      let album_name= this.props.location.query?this.props.location.query.album_name:this.props.album_name;
       return (
          <div id='App'>
             <header className="top">
@@ -144,7 +146,7 @@ class App extends Component {
                         paddingLeft: '1rem',
                         paddingTop: '0.5rem'
                      }}>
-                        <span>{this.title}</span>
+                        <span>{album_name?album_name:this.title}</span>
                         <div className='flex-row-center' style={{height: '60%'}}>
                            <img src={require('./img/a20.9.png')} className='avatar'/>
                            <span style={{fontSize: '15px', padding: '0 8px'}}>{this.username} </span>

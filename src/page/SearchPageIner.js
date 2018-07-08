@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
 // import data from "../MusicList";
 import ListView from "../ListView";
-import {connect} from "react-redux";
+import {component} from "../utils/ZUtil";
 import {actionType} from "../reducer/globalState";
 import {actionType as actionType1} from "../reducer/appState";
 import {searchActionType} from "../reducer/searchState";
-var baseUrl=require('../config/BaseUrl');
+
+var baseUrl = require('../config/BaseUrl');
 const parseLrc = require('../LrcManager');
 
 class SearchPageIner extends Component {
@@ -15,8 +16,8 @@ class SearchPageIner extends Component {
 
    componentWillMount() {
       this.setState({
-         inputValue: this.props.location.query?this.props.location.query.keyword:""
-      },function () {
+         inputValue: this.props.location.query ? this.props.location.query.keyword : ""
+      }, function () {
          this._fetchData();
       });
    }
@@ -34,47 +35,51 @@ class SearchPageIner extends Component {
    }
 
    _fetchData() {
-      if(!this.state.inputValue){
-         return ;
+      if (!this.state.inputValue) {
+         return;
       }
       this.props.setData([]);
       var _this = this;
-      let url = baseUrl.base+`music/list?keyword=${this.state.inputValue}&page=1&pagesize=20`;
-      fetch(url,{})
-         .then((res)=>{
+      let url = baseUrl.base + `music/list?keyword=${this.state.inputValue}&page=1&pagesize=20`;
+      this.showLoading();
+      fetch(url, {})
+         .then((res) => {
             return res.json();
          })
-         .then((result)=>{
+         .then((result) => {
+            _this.hideLoading();
             _this.props.setData(result.data.info);
          })
-         .catch((e)=>{
-            console.log(e);
-      });
+         .catch((e) => {
+            _this.hideLoading();
+            _this.showToast("获取失败")
+         });
    }
 
    _fetchMusic(hash) {
       var _this = this;
-      let url = baseUrl.base+`music/item?hash=${hash}`;
-      fetch(url,{})
-         .then((res)=>{
+      let url = baseUrl.base + `music/item?hash=${hash}`;
+      this.showLoading();
+      fetch(url, {})
+         .then((res) => {
             return res.json();
          })
-         .then((result)=>{
-            console.log(result);
+         .then((result) => {
+            _this.hideLoading();
             let lrc = parseLrc(result.data.lyrics);
             let player = document.getElementById("music");
             _this.props.playMusic(0, {
-               id:result.data.hash,
+               id: result.data.hash,
                name: result.data.song_name,
                author: result.data.author_name,
                url: result.data.play_url,
                pic: result.data.img,
-               lrc1:result.data.lyrics,
+               lrc1: result.data.lyrics,
                lrcEntity: lrc
             }, player);
          })
-         .catch((e)=>{
-            console.log(e);
+         .catch((e) => {
+            _this.showToast("获取失败")
          });
    }
 
@@ -141,9 +146,10 @@ class SearchPageIner extends Component {
       )
    }
 }
-const mapStateToProps=(state)=>{
-   return{
-      data:state.searchState.data
+
+const mapStateToProps = (state) => {
+   return {
+      data: state.searchState.data
    }
 };
 const mapDispatchToProps = (dispatch) => {
@@ -151,14 +157,14 @@ const mapDispatchToProps = (dispatch) => {
       setShowPlay: (showPlay) => {
          dispatch({type: actionType.ACTION_SHOW_PLAY_CONTROLLER, showPlay});
       },
-      playMusic(currentMusic, item, player,data) {
-         dispatch({type: actionType1.ACTION_PLAY_CURRENT_MUSIC, currentMusic, item, player,data});
+      playMusic(currentMusic, item, player, data) {
+         dispatch({type: actionType1.ACTION_PLAY_CURRENT_MUSIC, currentMusic, item, player, data});
       },
-      setData(data){
-         dispatch({type: searchActionType.SET_DATA,data});
+      setData(data) {
+         dispatch({type: searchActionType.SET_DATA, data});
       }
 
    }
 };
-SearchPageIner = connect(mapStateToProps, mapDispatchToProps)(SearchPageIner);
+SearchPageIner = component(mapStateToProps, mapDispatchToProps, SearchPageIner);
 export default SearchPageIner

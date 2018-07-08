@@ -1,17 +1,18 @@
-.Toast {
+.Loading {
   position: fixed;
   width: 100vw;
   top: 0;
   left: 0;
   height: 100vh;
   z-index: 1200;
-  font-size: 16px;
+  font-size: 17px;
+
   .center {
     position: absolute;
     border-radius: 20px;
     margin: auto;
-    width: 80%;
-    height: 180px;
+    width: 50%;
+    height: 150px;
     bottom: 0;
     left: 0;
     right: 0;
@@ -19,24 +20,21 @@
     top: 0;
     display: flex;
     display: -webkit-flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     flex-direction: column;
-
-    .toast-title{
-      color: #333;
-      font-size: 20px;
-      margin-top: 20px;
-    }
     .toast-content{
-      color: #888;
+      margin-top: 10px;
+      color: #555;
     }
-    .toast-btn{
-      color:#00aaff;
-      flex-grow: 1;
-      text-align: center;
-      padding: 15px 0;
+
+  }
+  @keyframes  loading-animation{
+    from{
+      transform: rotate(0);
+    }
+    to{
+      transform: rotate(360deg);
     }
   }
-
 }

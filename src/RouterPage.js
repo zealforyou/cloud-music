@@ -8,6 +8,7 @@ import SearchPage from "./page/SearchPage";
 import SearchPageIner from "./page/SearchPageIner";
 import Mypage from "./page/Mypage";
 import Toast from "./view/Toast";
+import Loading from "./view/Loading";
 
 export default class RouterPage extends Component {
    constructor() {
@@ -27,6 +28,7 @@ export default class RouterPage extends Component {
             </Switch>
             <MusicPage history={this.props.history}/>
             <Toast/>
+            <Loading/>
          </div>
 
       )
