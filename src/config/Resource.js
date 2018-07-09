@@ -5,9 +5,9 @@ const pics=[
    "https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=1710689230,770072986&fm=27&gp=0.jpg",
    "https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=1985563160,1914119214&fm=27&gp=0.jpg",
    "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3462574826,2219711957&fm=27&gp=0.jpg",
-   "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=704358631,154252100&fm=27&gp=0.jpg",
-   "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530357456079&di=97a525f69ff8960f8e1b6a7e8b66740a&imgtype=0&src=http%3A%2F%2Fimg4.duitang.com%2Fuploads%2Fitem%2F201510%2F14%2F20151014001310_eTtVf.jpeg",
-   "https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3598505224,3850332601&fm=27&gp=0.jpg",
+   "http://img0.imgtn.bdimg.com/it/u=2418988982,3933915728&fm=27&gp=0.jpg",
+   "http://img3.imgtn.bdimg.com/it/u=1912113785,1587702892&fm=27&gp=0.jpg",
+   "http://img2.imgtn.bdimg.com/it/u=2784146309,152654913&fm=27&gp=0.jpg",
    "https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=559184297,1413956307&fm=27&gp=0.jpg",
    "https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2449159407,2537923406&fm=27&gp=0.jpg",
 ];

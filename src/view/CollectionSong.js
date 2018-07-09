@@ -9,9 +9,32 @@ export default class CollectionSong extends Component {
 
    //组件即将挂载
    componentWillMount() {
+      var data = [
+         {
+            id: 0, album_name: 'K歌', count:4,
+            pic:'http://img4.imgtn.bdimg.com/it/u=3036919756,557540970&fm=27&gp=0.jpg'
+         },
+         {
+            id: 0, album_name: '说唱', count:1,
+            pic:'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3462574826,2219711957&fm=27&gp=0.jpg'
+         },
+         {
+            id: 0, album_name: '柒个我 影视剧原声带', count:10,
+            pic:'https://ss2.baidu.com/6ONYsjip0QIZ8tyhnq/it/u=2136582533,387009032&fm=58&bpow=1060&bpoh=1484'
+         },
+         {
+            id: 0, album_name: '崩坏', count:10,
+            pic:'http://img0.imgtn.bdimg.com/it/u=2418988982,3933915728&fm=27&gp=0.jpg'
+         },
+         {
+            id: 0, album_name: '外文', count:10,
+            pic:'http://img4.imgtn.bdimg.com/it/u=3036919756,557540970&fm=27&gp=0.jpg'
+         },
+      ];
       this.setState({
          showSongSheet: true,
-         animation: 'none'
+         animation: 'none',
+         data
       });
    }
 
@@ -53,21 +76,31 @@ export default class CollectionSong extends Component {
             <div className="modal">
                <p>收藏到歌单</p>
                <div className="box">
-                  {/*<div className="song_sheet flex-row">
+                  <div className="song_sheet flex-row">
                      <span className="song_img">
-                         <img src={require('../img/akx.png')} alt=""/>
+                         <img src={require('../img/xinjian.png')} alt=""/>
+                     </span>
+                     <div className="song_right flex-row-center">
+                        <div className="text" style={{flexGrow: "1"}}>
+                           <span>新建歌单</span>
+                        </div>
+                     </div>
+                  </div>
+                  <div className="song_sheet flex-row">
+                     <span className="song_img">
+                         <img src={require('../img/zbc.jpg')} alt=""/>
                          <em className="mask"></em>
                          <img src={require('../img/akx.png')} alt="" className="maskimg"/>
                      </span>
                      <div className="song_right flex-row-center">
                         <div className="text flex-c" style={{flexGrow: "1"}}>
-                           <span>sad</span>
+                           <span>我喜欢的音乐</span>
                            <span>1首</span>
                         </div>
                      </div>
-                  </div>*/}
+                  </div>
 
-                  <ListView data={[{pic:'',id:'',album_name:'gd1',count:0}]}
+                  <ListView data={this.state.data}
                             renderItem={(position, item) => {
                                return (
                                   <div className="song_sheet flex-row"
@@ -77,8 +110,6 @@ export default class CollectionSong extends Component {
                                        }}>
                                  <span className="song_img">
                                     <img src={item.pic} alt=""/>
-                                    {item.id === 0 ? [<em className="mask"></em>,
-                                       <img src={require('../img/akx.png')} alt="" className="maskimg"/>] : ''}
                                  </span>
                                      <div className="song_right flex-row-center">
                                         <div className="text flex-c" style={{flexGrow: "1"}}>
