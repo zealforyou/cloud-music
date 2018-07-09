@@ -5,6 +5,7 @@ import {component} from "../utils/ZUtil";
 import {actionType} from "../reducer/globalState";
 import {actionType as actionType1} from "../reducer/appState";
 import {searchActionType} from "../reducer/searchState";
+import Collection from "../view/Collection";
 
 var baseUrl = require('../config/BaseUrl');
 const parseLrc = require('../LrcManager');
@@ -136,12 +137,19 @@ class SearchPageIner extends Component {
                                      </div>
                                   </div>
                                   <img src={require('../img/a_2.png')} style={{width: '20px', marginRight: '10px'}}/>
-                                  <img src={require('../img/a3c.png')} style={{width: '15px'}}/>
+                                  <img src={require('../img/a3c.png')} style={{width: '15px'}} onClick={(e) => {
+                                     e.stopPropagation();
+                                     this.setState({showCollection:true});
+
+                                  }}/>
                                </div>
 
                             </div>
                          )
                       }}/>
+            <Collection show={this.state.showCollection} onHidden={(show)=>{
+               this.setState({showCollection:show});
+            }}/>
          </div>
       )
    }
