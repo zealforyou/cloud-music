@@ -69,6 +69,7 @@ class SearchPageIner extends Component {
                author: result.data.author_name,
                url: result.data.play_url,
                pic: result.data.img,
+               lrc1:result.data.lyrics,
                lrcEntity: lrc
             }, player);
          })

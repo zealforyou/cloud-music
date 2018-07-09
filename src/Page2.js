@@ -5,11 +5,12 @@ import LrcView from "./LrcView";
 import {connect} from "react-redux";
 import {actionType} from "./reducer/appState";
 import {PLAY_MODE} from "./AppConfig";
-
+import  {localManager} from "./utils/LocalManager";
 const Style = require('./Page2.css');
 const $ = require('jquery');
 const lrcParse = require('./LrcManager');
 const baseUrl=require('./config/BaseUrl');
+
 class Page2 extends Component {
    constructor() {
       super();
@@ -91,7 +92,7 @@ class Page2 extends Component {
    }
    _isLiked(){
       var _this=this;
-      let url=baseUrl.base+'album/isLike?music_id='+this.props.item.id;
+      let url=baseUrl.base+`album/isLike?music_id=${this.props.item.id}&phone=${localManager.getPhone()}`;
       fetch(url).then((res)=>{
          return res.json();
       }).then((res)=>{
@@ -105,9 +106,14 @@ class Page2 extends Component {
    _setLike(){
       var _this=this;
       let item=this.props.item;
-      let url=baseUrl.base+`album/setLike?music_id=${item.id}&name=${item.name}&author=${item.author}&url=${item.url}
-      &pic=${item.pic}&lrc1=${item.lrc1}`;
-      fetch(url).then((res)=>{
+      let url=baseUrl.base+`album/setLike`;
+      fetch(url,{
+         method:'POST',
+         headers:{
+            "Content-Type":"application/json"
+         },
+         body:JSON.stringify({...item,phone:localManager.getPhone()})
+      }).then((res)=>{
          return res.json();
       }).then((res)=>{
          if(res.error_code===0){
