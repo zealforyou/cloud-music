@@ -102,7 +102,6 @@ export default class Collection extends Component {
                         </div>
                      </div>
 
-
                   </div>
             </div>
          </div>
