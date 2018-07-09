@@ -25,7 +25,7 @@ export default class RouterPage extends Component {
                <Route exact path="/SearchPage" component={SearchPage}/>
                <Route exact path="/SearchPageIner" component={SearchPageIner}/>
                <Route exact path="/App" component={App}/>
-               {/*<Route exact path="/App" component={Collection}/>*/}
+               <Route exact path="/Collection" component={Collection}/>
             </Switch>
             <MusicPage history={this.props.history}/>
             <Toast/>
