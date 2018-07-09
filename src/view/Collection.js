@@ -41,7 +41,7 @@ export default class Collection extends Component {
       this.animation = true;
       this.$scroll.css({animation: "collection_fade_in 0.5s forwards"});
       // this.$modal.css({animation: "collection_up 0.5s forwards"});
-      this.$scroll.animate({scrollTop: 1000}, 600, '', () => {
+      this.$scroll.animate({scrollTop: 400}, 600, '', () => {
          console.log('end');
          this.animation = false;
       });
@@ -88,7 +88,7 @@ export default class Collection extends Component {
    //渲染
    render() {
       return (
-         <div className="Collection" onScroll={this.onScroll.bind(this)} onTouchEnd={this.onTouch.bind(this)}>
+         <div className="Collection" onScroll={this.onScroll.bind(this)} onClick={this.onTouch.bind(this)}>
             <div className='scroll-div'
                  onClick={this.onHideDialog.bind(this)}>
 
