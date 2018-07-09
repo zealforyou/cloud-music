@@ -1,20 +1,11 @@
-.Collection{
+.Collection {
   height: 100vh;
   position: fixed;
   width: 100%;
-  background-color: #ffffff;
-  position: relative;
-
-  .mask{
-    width: 100%;
-    height: 100vh;
-    background-color: #000000;
-    opacity: 0.3;
-    position: absolute;
-    top: 0;
-    left: 0;
-  }
-  .modal{
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  .modal {
     width: 100%;
     height: 464px;
     position: absolute;
@@ -22,19 +13,19 @@
     left: 0;
     background-color: #F3F3F3;
     font-family: "微软雅黑";
-    overflow: overlay;
-    p{
+    overflow: scroll;
+    p {
       color: #6F6F6F;
       padding: 10px 0px 0px 15px;
       font-size: 15px;
-      margin:16px 0 10px 0;
+      margin: 16px 0 10px 0;
     }
     .page_list {
 
-      .item{
+      .item {
         height: 55px;
       }
-      .item>div{
+      .item > div {
         height: 55px;
         width: 100%;
         font-size: 16px;
@@ -54,4 +45,36 @@
     }
   }
 
+  @keyframes collection_fade_in {
+    from {
+     background-color: rgba(0,0,0,0);
+    }
+    to {
+      background-color: rgba(0,0,0,0.7);
+    }
+  }
+  @keyframes collection_fade_out{
+    from {
+      background-color: rgba(0,0,0,0.7);
+    }
+    to {
+      background-color: rgba(0,0,0,0);
+    }
+  }
+  @keyframes collection_up {
+    from {
+      transform: translate(0, 100%);
+    }
+    to {
+      transform: translate(0, 0);
+    }
+  }
+  @keyframes collection_down{
+    from {
+      transform: translate(0, 0);
+    }
+    to {
+      transform: translate(0, 100%);
+    }
+  }
 }

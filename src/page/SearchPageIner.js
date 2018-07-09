@@ -5,7 +5,9 @@ import {connect} from "react-redux";
 import {actionType} from "../reducer/globalState";
 import {actionType as actionType1} from "../reducer/appState";
 import {searchActionType} from "../reducer/searchState";
-var baseUrl=require('../config/BaseUrl');
+import Collection from "../view/Collection";
+
+var baseUrl = require('../config/BaseUrl');
 const parseLrc = require('../LrcManager');
 
 class SearchPageIner extends Component {
@@ -15,8 +17,8 @@ class SearchPageIner extends Component {
 
    componentWillMount() {
       this.setState({
-         inputValue: this.props.location.query?this.props.location.query.keyword:""
-      },function () {
+         inputValue: this.props.location.query ? this.props.location.query.keyword : ""
+      }, function () {
          this._fetchData();
       });
    }
@@ -34,46 +36,46 @@ class SearchPageIner extends Component {
    }
 
    _fetchData() {
-      if(!this.state.inputValue){
-         return ;
+      if (!this.state.inputValue) {
+         return;
       }
       this.props.setData([]);
       var _this = this;
-      let url = baseUrl.base+`music/list?keyword=${this.state.inputValue}&page=1&pagesize=20`;
-      fetch(url,{})
-         .then((res)=>{
+      let url = baseUrl.base + `music/list?keyword=${this.state.inputValue}&page=1&pagesize=20`;
+      fetch(url, {})
+         .then((res) => {
             return res.json();
          })
-         .then((result)=>{
+         .then((result) => {
             _this.props.setData(result.data.info);
          })
-         .catch((e)=>{
+         .catch((e) => {
             console.log(e);
-      });
+         });
    }
 
    _fetchMusic(hash) {
       var _this = this;
-      let url = baseUrl.base+`music/item?hash=${hash}`;
-      fetch(url,{})
-         .then((res)=>{
+      let url = baseUrl.base + `music/item?hash=${hash}`;
+      fetch(url, {})
+         .then((res) => {
             return res.json();
          })
-         .then((result)=>{
+         .then((result) => {
             console.log(result);
             let lrc = parseLrc(result.data.lyrics);
             let player = document.getElementById("music");
             _this.props.playMusic(0, {
-               id:result.data.hash,
+               id: result.data.hash,
                name: result.data.song_name,
                author: result.data.author_name,
                url: result.data.play_url,
                pic: result.data.img,
-               lrc1:result.data.lyrics,
+               lrc1: result.data.lyrics,
                lrcEntity: lrc
             }, player);
          })
-         .catch((e)=>{
+         .catch((e) => {
             console.log(e);
          });
    }
@@ -131,19 +133,27 @@ class SearchPageIner extends Component {
                                      </div>
                                   </div>
                                   <img src={require('../img/a_2.png')} style={{width: '20px', marginRight: '10px'}}/>
-                                  <img src={require('../img/a3c.png')} style={{width: '15px'}}/>
+                                  <img src={require('../img/a3c.png')} style={{width: '15px'}} onClick={(e) => {
+                                     e.stopPropagation();
+                                     this.setState({showCollection:true});
+
+                                  }}/>
                                </div>
 
                             </div>
                          )
                       }}/>
+            <Collection show={this.state.showCollection} onHidden={(show)=>{
+               this.setState({showCollection:show});
+            }}/>
          </div>
       )
    }
 }
-const mapStateToProps=(state)=>{
-   return{
-      data:state.searchState.data
+
+const mapStateToProps = (state) => {
+   return {
+      data: state.searchState.data
    }
 };
 const mapDispatchToProps = (dispatch) => {
@@ -151,11 +161,11 @@ const mapDispatchToProps = (dispatch) => {
       setShowPlay: (showPlay) => {
          dispatch({type: actionType.ACTION_SHOW_PLAY_CONTROLLER, showPlay});
       },
-      playMusic(currentMusic, item, player,data) {
-         dispatch({type: actionType1.ACTION_PLAY_CURRENT_MUSIC, currentMusic, item, player,data});
+      playMusic(currentMusic, item, player, data) {
+         dispatch({type: actionType1.ACTION_PLAY_CURRENT_MUSIC, currentMusic, item, player, data});
       },
-      setData(data){
-         dispatch({type: searchActionType.SET_DATA,data});
+      setData(data) {
+         dispatch({type: searchActionType.SET_DATA, data});
       }
 
    }
