@@ -6,6 +6,7 @@ import {actionType} from "../reducer/globalState";
 import {actionType as actionType1} from "../reducer/appState";
 import {searchActionType} from "../reducer/searchState";
 import Collection from "../view/Collection";
+import {localManager} from "../utils/LocalManager";
 
 var baseUrl = require('../config/BaseUrl');
 const parseLrc = require('../LrcManager');
@@ -41,7 +42,7 @@ class SearchPageIner extends Component {
       }
       this.props.setData([]);
       var _this = this;
-      let url = baseUrl.base + `music/list?keyword=${this.state.inputValue}&page=1&pagesize=20`;
+      let url = baseUrl.base + `music/list?keyword=${this.state.inputValue}&page=1&pagesize=20&user_id=${localManager.getPhone()}`;
       this.showLoading();
       fetch(url, {})
          .then((res) => {

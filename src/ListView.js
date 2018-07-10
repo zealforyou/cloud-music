@@ -7,7 +7,7 @@ export default class ListView extends Component {
    }
 
    _renderItem(position, item) {
-      return <li onClick={(e)=>{
+      return <li className="list-item-x" onClick={(e)=>{
          if(this.props.onItemClick){
          this.props.onItemClick(position,item);
       }
@@ -23,7 +23,7 @@ export default class ListView extends Component {
          views.push(this._renderItem(i,this.props.data[i]));
       }
       return (
-         <ul style={{margin:0,padding:0,...this.props.style}}>
+         <ul className={this.props.className} style={{margin:0,padding:0,...this.props.style}}>
             {views}
          </ul>
       )
