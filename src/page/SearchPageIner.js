@@ -76,6 +76,7 @@ class SearchPageIner extends Component {
                url: result.data.play_url,
                pic: result.data.img,
                lrc1: result.data.lyrics,
+               album_name: result.data.album_name,
                lrcEntity: lrc
             };
             if(collect){

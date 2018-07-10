@@ -84,7 +84,7 @@ class Collection extends Component {
 
             </div>
             <div id='collection_modal' className="modal">
-               <p>歌曲：Please Don't Go</p>
+               <p>歌曲：{this.props.data.name}</p>
                <div className="page_list">
                   <div className="flex-row-center item">
                      <img src={require('../img/next.png')} alt=""/>
@@ -111,7 +111,7 @@ class Collection extends Component {
                      <img src={require('../img/pinglun.png')} alt=""/>
                      <div className='flex-row-center'>
                         <span>评论</span>
-                        <em>(124922)</em>
+                        <em>(0)</em>
                      </div>
                   </div>
                   <div className="flex-row-center item">
@@ -124,14 +124,14 @@ class Collection extends Component {
                      <img src={require('../img/a0n.png')} alt=""/>
                      <div className='flex-row-center'>
                         <span>歌手：</span>
-                        <em>Joel Adams</em>
+                        <em>{this.props.data.author}</em>
                      </div>
                   </div>
                   <div className="flex-row-center item">
                      <img src={require('../img/a1l.png')} alt=""/>
                      <div className='flex-row-center'>
                         <span>专辑：</span>
-                        <em>Please Don't Go</em>
+                        <em>{this.props.data.album_name}</em>
                      </div>
                   </div>
                   <div className="flex-row-center item">
