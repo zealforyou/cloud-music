@@ -57,8 +57,10 @@ export default class Collection extends Component {
          this.props.onHidden && this.props.onHidden(false)
       })
    }
+   onTouchStart(e){
 
-   onTouch(e) {
+   }
+   onTouchEnd(e) {
       let top = this.$scroll.scrollTop();
       if (!this.animation) {
          console.log(top);
@@ -88,12 +90,12 @@ export default class Collection extends Component {
    //渲染
    render() {
       return (
-         <div className="Collection" onScroll={this.onScroll.bind(this)} onClick={this.onTouch.bind(this)}>
+         <div className="Collection" onScroll={this.onScroll.bind(this)} >
             <div className='scroll-div'
-                 onClick={this.onHideDialog.bind(this)}>
+                onClick={()=>{this.onHideDialog()}}>
 
             </div>
-            <div id='collection_modal' className="modal" >
+            <div id='collection_modal' className="modal" onTouchEnd={this.onTouchEnd.bind(this)}>
                <p>歌曲：Please Don't Go</p>
                <div className="page_list">
                   <div className="flex-row-center item">
