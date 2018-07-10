@@ -32,23 +32,23 @@
       width: 2.5%;
     }
   }
-  .recommend_song{
-    padding-left:5px;
+  .recommend_song {
+    padding-left: 5px;
     width: 100%;
     padding-top: 2px;
 
   }
   .recommend_song > div {
-    width: 34%;
+    width: 100%;
     padding-right: 5px;
     box-sizing: border-box;
     position: relative;
 
-    img{
+    img {
       width: 100%;
       height: 140px;
     }
-    span{
+    span {
       margin-top: 6px;
       display: inline-block;
       height: 40px;
@@ -58,17 +58,17 @@
       padding-bottom: 20px;
     }
 
-    .number{
-      position:absolute;
+    .number {
+      position: absolute;
       top: 5px;
       right: 10px;
-      em img{
+      em img {
         width: 13px;
         height: 13px;
         margin-right: 3px;
       }
     }
-    .number>em{
+    .number > em {
       float: left;
       font-style: normal;
       vertical-align: middle;
@@ -76,5 +76,12 @@
       color: #ffffff;
     }
   }
-
+  .list-view-x {
+    width: 100%;
+    overflow: hidden;
+    .list-item-x {
+      width: 33%;
+      float: left;
+    }
+  }
 }
