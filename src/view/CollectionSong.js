@@ -102,10 +102,10 @@ class CollectionSong extends Component {
    //渲染
    render() {
       return (
-         <div className="CollectionSong">
+         <div className="CollectionSong" onClick={(e)=>{e.stopPropagation()}}>
             <p>收藏到歌单</p>
             <div className="box">
-               <div className="song_sheet flex-row" onClick={() => {
+               <div className="song_sheet flex-row" onClick={(e) => {
                   this.setState({showCreateDialog: true})
                }}>
                      <span className="song_img">
@@ -122,7 +122,7 @@ class CollectionSong extends Component {
                             return (
                                <div className="song_sheet flex-row"
                                     style={{display: this.state.showSongSheet ? "flex" : 'none'}}
-                                    onClick={() => {
+                                    onClick={(e) => {
                                        this.onItemClick && this.onItemClick(position, item);
                                     }}>
                                      <span className="song_img">

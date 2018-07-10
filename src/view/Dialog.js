@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import "./dialog.scss";
-import {connect} from 'react-redux';
+import {component} from "../utils/ZUtil";
 
 class Dialog extends Component {
    constructor() {
@@ -12,7 +12,9 @@ class Dialog extends Component {
       let show = dialog.show;
       let MDialog = dialog.component;
       return (
-         <div className='Common-Dialog' style={{display:show?"block":'none'}}>
+         <div className='Common-Dialog' style={{display:show?"block":'none'}} onClick={()=>{
+            this.hideDialog();
+         }}>
             {MDialog && show ? <MDialog/> : ''}
          </div>
       )
@@ -27,5 +29,5 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
    return {}
 };
-Dialog = connect(mapStateToProps, mapDispatchToProps)(Dialog);
+Dialog = component(mapStateToProps, mapDispatchToProps,Dialog);
 export default Dialog

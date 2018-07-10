@@ -3,6 +3,7 @@ var router_music_list=require('./router/router_music_list');
 var router_music_item=require('./router/router_music_item');
 var router_album=require('./router/router_album');
 var router_user=require('./router/router_user');
+var router_system=require('./router/router_system');
 var bodyParser=require('body-parser');
 var app = express();
 app.all("/*",function (req, res, next) {
@@ -19,7 +20,8 @@ app.get("/music/list", router_music_list);
 app.get("/music/item",router_music_item);
 app.use("/album",router_album);
 app.use("/user",router_user);
-var server = app.listen(8081, function () {
+app.use("/system",router_system);
+var server = app.listen(80, function () {
    var host = server.address().address;
    var port = server.address().port;
    console.log('Example app listening at http://%s:%s', host, port);

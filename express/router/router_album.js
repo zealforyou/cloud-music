@@ -113,7 +113,13 @@ router.post('/collect', async function (req, res) {
    let pic = req.body.pic;
    let lrc1 = req.body.lrc1;
    try {
-      let sql="insert into tb_music (id,name,author,url,pic,lrc1,album_id) values(?,?,?,?,?,?,?)";
+      let sql="select * from tb_music where album_id=? and id=?";
+      let result=await query(sql,[album_id,id]);
+      if(result&&result.length>0){
+         res.send(baseResult(1,'改歌单已收藏了此歌曲'));
+         return;
+      }
+       sql="insert into tb_music (id,name,author,url,pic,lrc1,album_id) values(?,?,?,?,?,?,?)";
       await query(sql,[id,name,author,url,pic,lrc1,album_id]);
       res.send(baseResult(0,'收藏成功'));
    } catch (e) {
