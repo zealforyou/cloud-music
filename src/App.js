@@ -1,19 +1,21 @@
 import React, {Component} from 'react';
 import ListView from "./ListView";
 import {actionType} from './reducer/appState';
-import {connect} from 'react-redux';
+import {component} from './utils/ZUtil';
 import {actionType as globalType} from "./reducer/globalState";
 import $ from 'jquery';
 import 'rgbaster';
+import {localManager} from "./utils/LocalManager";
 
 require('./App.css');
-var baseUrl=require('./config/BaseUrl');
+var baseUrl = require('./config/BaseUrl');
+
 class App extends Component {
    constructor() {
       super();
       this.bgColor = [200, 200, 200];
       this.title = "想唱就唱";
-      this.username = "唱的响亮";
+      this.username = localManager.getName();
    }
 
    componentWillMount() {
@@ -50,9 +52,10 @@ class App extends Component {
       this.props.setShowPlay(false);
       $('#App').scroll(null);
    }
-   _setBgColor(data){
+
+   _setBgColor(data) {
       var _this = this;
-      if(data[0])
+      if (data[0])
          window.RGBaster.colors(data[0].pic, {
             success: function (payload) {
                // payload.dominant是主色，RGB形式表示
@@ -72,6 +75,7 @@ class App extends Component {
             }
          });
    }
+
    _setTitleColor(jd) {
       this.refs.title.style.backgroundColor = `rgba(${this.bgColor[0]},${this.bgColor[1]},${this.bgColor[2]},${0.5 + jd * 0.5})`;
    }
@@ -81,26 +85,39 @@ class App extends Component {
 
    _getMusic() {
       var _this = this;
-      let album_id= this.props.location.query?this.props.location.query.album_id:this.props.album_id;
-      this.props.setAlbumId(album_id);
-      let url = baseUrl.base+"album/getMusic?album_id=" + album_id;
+      let album_id = this.props.location.query ? this.props.location.query.album_id : this.props.album_id;
+      let album_name = this.props.location.query ? this.props.location.query.album_name : this.props.album_name;
+      this.props.setAlbumIdAndName(album_id,album_name);
+      let url = baseUrl.base + "album/getMusic?album_id=" + album_id;
+      if (!this.props.location.query){
+         _this._refresh(this.props.album_data);
+      }else {
+         this.showLoading();
+      }
       fetch(url).then((res) => {
          return res.json();
       }).then((res) => {
-         _this._setBgColor(res);
-         _this.setState({data: res});
+         _this.hideLoading();
+         _this.props.setAlbumData(res);
+         _this._refresh(res);
       }).catch((e) => {
+         _this.hideLoading();
+      });
 
-      })
    }
-
+   _refresh(data){
+      this._setBgColor(data);
+      this.setState({data});
+   }
    itemClick(position, item) {
 
-      this.props.playCurrentMusic(this.refs.music, position, item,this.sate);
+      this.props.playCurrentMusic(this.refs.music, position, item, this.state.data);
    }
 
 
    render() {
+
+      let user_avatar = localManager.getAvatar() ? localManager.getAvatar() : require('./img/a20.9.png');
       return (
          <div id='App'>
             <header className="top">
@@ -124,16 +141,19 @@ class App extends Component {
                     style={{backgroundColor: `rgb(${this.bgColor[0]},${this.bgColor[1]},${this.bgColor[2]})`}}>
                   <div className="flex-row" style={{paddingTop: '4em'}}>
                      <div className='big-img'>
+                        {/*专辑图片*/}
                         <img
                            id='music_pic'
                            onClick={() => {
                               this.setState({dialog1: true});
                            }}
-                           src={this.state.data.length > 0 ? this.state.data[0].pic : require('./img/bt_girl.jpg')}
+                           src={this.state.data.length > 0 ? this.state.data[0].pic : require('./img/album_default.png')}
                            className='fm'/>
                         <span className='flex-row-center' style={{position: 'absolute', zIndex: 1000, right: '5px'}}>
-                             <img src={require('./img/zh.png')} style={{width: "12px"}}/>
-                        <span style={{float: 'right', fontSize: "13px", marginLeft: "5px"}}>520</span></span>
+                           <img src={require('./img/zh.png')} style={{width: "12px"}}/>
+                           {/*播放次数*/}
+                           <span style={{float: 'right', fontSize: "13px", marginLeft: "5px"}}>520</span>
+                        </span>
                         <img style={{
                            position: 'absolute', right: '5px', bottom: '5px',
                            width: '20px',
@@ -144,9 +164,12 @@ class App extends Component {
                         paddingLeft: '1rem',
                         paddingTop: '0.5rem'
                      }}>
-                        <span>{this.title}</span>
+                        {/*专辑名称*/}
+                        <span>{this.props.album_name ? this.props.album_name : this.title}</span>
                         <div className='flex-row-center' style={{height: '60%'}}>
-                           <img src={require('./img/a20.9.png')} className='avatar'/>
+                           {/*用户头像*/}
+                           <img src={user_avatar} className='avatar'/>
+                           {/*用户昵称*/}
                            <span style={{fontSize: '15px', padding: '0 8px'}}>{this.username} </span>
                            <img style={{width: '7px'}} src={require('./img/po.png')}/>
                         </div>
@@ -235,7 +258,9 @@ const mapStateToProps = (state) => {
       loaded: state.appState.loaded,
       currentMusic: state.appState.currentMusic,
       item: state.appState.item,
-      album_id:state.appState.album_id
+      album_id: state.appState.album_id,
+      album_name: state.appState.album_name,
+      album_data:state.appState.album_data
    }
 };
 const mapDispatchToProps = (dispatch, ownProps) => {
@@ -243,14 +268,16 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       setShowPlay: (showPlay) => {
          dispatch({type: globalType.ACTION_SHOW_PLAY_CONTROLLER, showPlay})
       },
-      playCurrentMusic(player, currentMusic, item,data) {
-         dispatch({type: actionType.ACTION_PLAY_CURRENT_MUSIC, player, currentMusic, item,data})
+      playCurrentMusic(player, currentMusic, item, data) {
+         dispatch({type: actionType.ACTION_PLAY_CURRENT_MUSIC, player, currentMusic, item, data})
       },
-      setAlbumId:(album_id)=>{
-         console.log(actionType.SET_ALBUM_ID);
-         dispatch({type:actionType.SET_ALBUM_ID,album_id});
+      setAlbumIdAndName: (album_id,album_name) => {
+         dispatch({type: actionType.SET_ALBUM_ID_AND_NAME, album_id,album_name});
+      },
+      setAlbumData: (album_data) => {
+         dispatch({type: actionType.SET_ALBUM_DATA, album_data});
       }
    }
 };
-App = connect(mapStateToProps, mapDispatchToProps)(App);
+App = component(mapStateToProps, mapDispatchToProps,App);
 export default App;

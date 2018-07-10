@@ -56,7 +56,7 @@ export default class SongSheet extends Component {
                                     this.props.onItemClick ? this.props.onItemClick(position,item) :""
                                  }}>
                                  <span className="song_img">
-                                    <img src={item.pic} alt=""/>
+                                    <img src={item.pic?item.pic:require('../img/album_default.png')} alt=""/>
                                     {item.id===0?[<em className="mask"></em>,
                                        <img src={require('../img/akx.png')} alt="" className="maskimg"/>]:''}
                                  </span>

@@ -4,8 +4,8 @@ import "../view/MenuTab.scss";
 import "./css/Mypage.scss";
 import SongSheet from "../view/SongSheet";
 import "../view/SongSheet.scss";
-import {connect} from "react-redux";
-import {actionType as globalActionType, actionType} from "../reducer/globalState";
+import {component} from "../utils/ZUtil";
+import {actionType as globalType, actionType as globalActionType, actionType} from "../reducer/globalState";
 import {albumActionType} from "../reducer/AlbumState";
 import {localManager} from '../utils/LocalManager';
 
@@ -35,11 +35,12 @@ class Mypage extends Component {
 
    loginClick(e) {
       if (!this.state.phone || this.state.phone.length < 11) {
-         this.props.showToast("请输入正确的手机号");
+         this.showToast("请输入正确的手机号");
          return;
       }
       if (!this.state.name) {
-         this.props.showToast("请输入昵称");
+         this.showToast("请输入昵称");
+         return;
       }
       this._register();
    }
@@ -47,29 +48,35 @@ class Mypage extends Component {
    _getUser() {
       var _this=this;
       let url = baseUrl.base + "user/getUser?phone="+this.state.phone;
+      this.showLoading();
       fetch(url).then((res) => {
          return res.json();
       }).then((res) => {
+         localManager.setAvatar(res.avatar?res.avatar:'');
+         this.hideLoading();
             _this.setState({
                name:res.user_name,
                avatar:res.avatar
             });
-      }).catch(() => {
-
+      }).catch((e) => {
+         this.hideLoading();
       })
    }
    _register(){
       var _this=this;
       let url = baseUrl.base + `user/register?phone=${this.state.phone}&name=${this.state.name}`;
+      this.showLoading();
       fetch(url).then((res) => {
          return res.json();
       }).then((res) => {
+         _this.hideLoading();
          if (res.error_code===0){
             _this._go(res);
          } else {
             _this.props.showToast(res.error_msg)
          }
       }).catch((e) => {
+         _this.hideLoading();
          _this.props.showToast("注册失败");
       })
    }
@@ -114,7 +121,13 @@ class Mypage extends Component {
             <div style={{position: 'fixed', width: '100%'}}>
                <div className="mypage app-title flex-row-center">
                <span>
-                  <img src={require('../img/ov.png')} alt=""/>
+                  <img src={require('../img/ov.png')} alt="" onClick={()=>{
+                     this.props.showToast("是否切换账号",function (e) {
+                        localManager.setPhone('');
+                        localManager.setName('');
+                        window.location.reload(true);
+                     }.bind(this))
+                  }}/>
                </span>
                   <div className="center flex-row" style={{justifyContent: 'center'}}>
                      <img src={require('../img/video.png')} alt=""/>
@@ -176,7 +189,8 @@ class Mypage extends Component {
                      let path = {
                         pathname: '/App',
                         query: {
-                           album_id: item.id
+                           album_id: item.id,
+                           album_name:item.album_name
                         }
                      };
                      this.props.history.push(path);
@@ -214,10 +228,10 @@ const mapDispatchToProps = (dispatch) => {
       setAlbumData(data) {
          dispatch({type: albumActionType.SET_DATA, data});
       },
-      showToast(content) {
-         dispatch({type: globalActionType.ACTION_SHOW_TOAST, toast: {content}});
+      showToast(content,onClick){
+         dispatch({type: globalType.ACTION_SHOW_TOAST, toast:{left:"取消",content,onClick}});
       }
    }
 };
-Mypage = connect(mapStateToProps, mapDispatchToProps)(Mypage);
+Mypage = component(mapStateToProps, mapDispatchToProps,Mypage);
 export default Mypage
