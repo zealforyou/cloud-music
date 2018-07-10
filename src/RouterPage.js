@@ -12,6 +12,7 @@ import Loading from "./view/Loading";
 import Collection from "./view/Collection";
 import CollectionSong from "./view/CollectionSong";
 import FindPage from "./page/FindPage";
+import Dialog from "./view/Dialog";
 
 export default class RouterPage extends Component {
    constructor() {
@@ -35,6 +36,7 @@ export default class RouterPage extends Component {
             <MusicPage history={this.props.history}/>
             <Toast/>
             <Loading/>
+            <Dialog/>
          </div>
 
       )

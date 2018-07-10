@@ -9,7 +9,7 @@ router.get('/getList', async function (req, res) {
    let user_id = req.query.phone;
    var sql = 'select t1.*,\n' +
       'SUBSTRING_INDEX(GROUP_CONCAT(t2.pic ORDER BY t2.create_time desc),\',\',1) as pic,\n' +
-      't2.album_id,count(t2.id) as count\n' +
+      't1.id as album_id,count(t2.id) as count\n' +
       'from tb_album t1 \n' +
       'left JOIN tb_music t2 on t1.id=t2.album_id where t1.user_id=?\n' +
       'GROUP BY t1.id\n' +
