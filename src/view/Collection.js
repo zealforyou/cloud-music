@@ -3,7 +3,11 @@ import './Collection.scss';
 import '../page/css/SearchPage.scss'
 import PropTypes from 'prop-types'
 import $ from 'jquery'
-export default class Collection extends Component {
+import {component} from "../utils/ZUtil"
+import {actionType as globalType} from "../reducer/globalState";
+import CollectionSong from "./CollectionSong";
+
+class Collection extends Component {
    constructor() {
       super();
    }
@@ -39,9 +43,8 @@ export default class Collection extends Component {
    onShowDialog() {
       this.animationName = 'in';
       this.animation = true;
-      this.$scroll.css({animation: "collection_fade_in 0.5s forwards"});
-      // this.$modal.css({animation: "collection_up 0.5s forwards"});
-      this.$scroll.animate({scrollTop: 400}, 600, '', () => {
+      this.$scroll.css({animation: "collection_fade_in 0.4s forwards"});
+      this.$scroll.animate({scrollTop: 400}, 400, '', () => {
          console.log('end');
          this.animation = false;
       });
@@ -50,16 +53,13 @@ export default class Collection extends Component {
    onHideDialog(e) {
       this.animationName = 'out';
       this.animation = true;
-      this.$scroll.css({animation: "collection_fade_out 0.5s forwards"});
-      // this.$modal.css({animation: "collection_down 0.5s forwards"});
-      this.$scroll.animate({scrollTop: 0}, 600, '', () => {
+      this.$scroll.css({animation: "collection_fade_out 0.4s forwards"});
+      this.$scroll.animate({scrollTop: 0}, 400, '', () => {
          this.animation = false;
          this.props.onHidden && this.props.onHidden(false)
       })
    }
-   onTouchStart(e){
 
-   }
    onTouchEnd(e) {
       let top = this.$scroll.scrollTop();
       if (!this.animation) {
@@ -72,30 +72,18 @@ export default class Collection extends Component {
       }
    }
 
-   onScroll(e) {
-      // let top = e.target.scrollTop;
-      // if (!this.animation && this.touched) {
-      //    console.log(top);
-      //    this.touched = false;
-      //    if (top < this.$modal.height() / 1.8) {
-      //       this.onHideDialog();
-      //    } else {
-      //       this.onShowDialog();
-      //    }
-      // }
-
-   }
-
 
    //渲染
    render() {
       return (
-         <div className="Collection" onScroll={this.onScroll.bind(this)} >
+         <div className="Collection">
             <div className='scroll-div'
-                onClick={()=>{this.onHideDialog()}}>
+                 onClick={() => {
+                    this.onHideDialog()
+                 }}>
 
             </div>
-            <div id='collection_modal' className="modal" onTouchEnd={this.onTouchEnd.bind(this)}>
+            <div id='collection_modal' className="modal">
                <p>歌曲：Please Don't Go</p>
                <div className="page_list">
                   <div className="flex-row-center item">
@@ -104,7 +92,10 @@ export default class Collection extends Component {
                         <span>下一首播放</span>
                      </div>
                   </div>
-                  <div className="flex-row-center item">
+                  <div className="flex-row-center item" onClick={() => {
+                     this.props.showCreateAlbum();
+                     this.onHideDialog()
+                  }}>
                      <img src={require('../img/shoucang.png')} alt=""/>
                      <div className='flex-row-center'>
                         <span>收藏到歌单</span>
@@ -156,7 +147,20 @@ export default class Collection extends Component {
       )
    }
 }
+
 Collection.propTypes = {
    show: PropTypes.bool,
    onHidden: PropTypes.func
 };
+let mapState = (state) => {
+   return {}
+};
+let mapDispatch = (dispatch) => {
+   return {
+      showCreateAlbum() {
+         dispatch({type: globalType.ACTION_SHOW_DIALOG, dialog: {component: CollectionSong}})
+      }
+   }
+};
+Collection = component(mapState, mapDispatch, Collection);
+export default Collection;

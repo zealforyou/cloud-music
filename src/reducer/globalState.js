@@ -1,3 +1,5 @@
+import CollectionSong from "../view/CollectionSong";
+
 const def = {
    showPlay: false,
    toast: {
@@ -9,9 +11,12 @@ const def = {
       onClick: null
    },
    loading: {
-      show: false
-      ,
+      show: false,
       content: "加载中..."
+   },
+   dialog: {
+      component: null,
+      show: false
    }
 };
 const actionType = {
@@ -19,7 +24,9 @@ const actionType = {
    ACTION_SHOW_TOAST: 'action_show_toast',
    ACTION_HIDE_TOAST: 'action_hide_toast',
    ACTION_SHOW_LOADING: 'action_show_loading',
-   ACTION_HIDE_LOADING: ' action_hide_loading'
+   ACTION_HIDE_LOADING: ' action_hide_loading',
+   ACTION_SHOW_DIALOG: ' action_show_dialog',
+   ACTION_HIDE_DIALOG: ' action_hide_dialog',
 };
 
 function globalState(state = def, action) {
@@ -45,7 +52,15 @@ function globalState(state = def, action) {
             }
          };
       case actionType.ACTION_HIDE_LOADING:
-         return {...state, loading: {...state.loading, ...action.loading, show: false}}
+         return {...state, loading: {...state.loading, ...action.loading, show: false}};
+      case actionType.ACTION_SHOW_DIALOG:
+         return {
+            ...state, dialog: {
+               ...action.dialog, show: true
+            }
+         };
+      case actionType.ACTION_HIDE_DIALOG:
+         return {...state, dialog: {...state.dialog, component: null, show: false}}
    }
    return state;
 }
