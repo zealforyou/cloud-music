@@ -57,7 +57,7 @@ class SearchPageIner extends Component {
          });
    }
 
-   _fetchMusic(hash) {
+   _fetchMusic(hash,collect) {
       var _this = this;
       let url = baseUrl.base + `music/item?hash=${hash}`;
       this.showLoading();
@@ -68,8 +68,7 @@ class SearchPageIner extends Component {
          .then((result) => {
             _this.hideLoading();
             let lrc = parseLrc(result.data.lyrics);
-            let player = document.getElementById("music");
-            _this.props.playMusic(0, {
+            let music={
                id: result.data.hash,
                name: result.data.song_name,
                author: result.data.author_name,
@@ -77,7 +76,15 @@ class SearchPageIner extends Component {
                pic: result.data.img,
                lrc1: result.data.lyrics,
                lrcEntity: lrc
-            }, player);
+            };
+            if(collect){
+               _this.setState({
+                  showCollection: true, musicItem:{...music,lrcEntity:''}
+               });
+            }else {
+               let player = document.getElementById("music");
+               _this.props.playMusic(0, music, player);
+            }
          })
          .catch((e) => {
             _this.showToast("获取失败")
@@ -87,6 +94,10 @@ class SearchPageIner extends Component {
    componentWillUnmount() {
       this.props.setShowPlay(false);
       document.onkeydown = null;
+   }
+
+   openCollection(hash) {
+      this._fetchMusic(hash,true);
    }
 
    render() {
@@ -139,16 +150,17 @@ class SearchPageIner extends Component {
                                   <img src={require('../img/a_2.png')} style={{width: '20px', marginRight: '10px'}}/>
                                   <img src={require('../img/a3c.png')} style={{width: '15px'}} onClick={(e) => {
                                      e.stopPropagation();
-                                     this.setState({showCollection: true});
+                                     this.openCollection(item.hash);
                                   }}/>
                                </div>
 
                             </div>
                          )
                       }}/>
-            {this.state.showCollection ? <Collection onHidden={(show)=>{
-               this.setState({showCollection: show});
-            }}/> : ''}
+            {this.state.showCollection ? <Collection data={this.state.musicItem}
+                                                     onHidden={(show) => {
+                                                        this.setState({showCollection: show});
+                                                     }}/> : ''}
          </div>
       )
    }
