@@ -2,40 +2,77 @@ import React, {Component} from 'react';
 import './css/SearchPage.scss'
 import {connect} from 'react-redux';
 import {actionType} from "../reducer/globalState";
+import * as baseUrl from "../config/BaseUrl";
+
 class SearchPage extends Component {
    constructor() {
       super();
    }
-   defaultValue="全部都是你";
+
+   defaultValue = "全部都是你";
+
+   componentWillMount() {
+      this.setState({keywords: []});
+   }
+
    componentDidMount() {
-      this.setState({});
       this.props.setShowPlay(true);
+      this._fetchKeywords();
    }
 
    componentWillUnmount() {
       this.props.setShowPlay(false);
    }
+
+   _fetchKeywords() {
+      let url = baseUrl.base + "system/getHostSearch";
+      let _this = this;
+      fetch(url).then((res) => {
+         return res.json();
+      }).then((res) => {
+         if (res.error_code !== 1) {
+            _this.setState({keywords: res});
+         }
+      }).catch((e) => {
+
+      })
+   }
+
    render() {
+      let _this=this;
+      let items = this.state.keywords.map(function (item) {
+         return (<div className='flow-item' onClick={() => {
+            let path = {
+               pathname: '/SearchPageIner',
+               query: {
+                  keyword: item.keyword
+               }
+            };
+            _this.props.history.push(path);
+         }}>
+            {item.keyword}
+         </div>)
+      });
       return (
          <div className='SearchPage'>
             <div className='title app-title'>
-               <img className='first-child' src={require('../img/ic_left.png')} onClick={()=>{
+               <img className='first-child' src={require('../img/ic_left.png')} onClick={() => {
                   this.props.history.goBack();
                }}/>
                <div className='input-div'>
-                  <input placeholder={'给你推荐 '+this.defaultValue} onInput={(e)=>{
-                     this.setState({keyword:e.currentTarget.value});
+                  <input placeholder={'给你推荐 ' + this.defaultValue} onInput={(e) => {
+                     this.setState({keyword: e.currentTarget.value});
                   }}/>
                   <img src={require('../img/pf.png')}
-                  onClick={()=>{
-                     let path={
-                        pathname:'/SearchPageIner',
-                        query:{
-                           keyword:this.state.keyword?this.state.keyword:this.defaultValue
-                        }
-                     };
-                     this.props.history.push(path);
-                  }}/>
+                       onClick={() => {
+                          let path = {
+                             pathname: '/SearchPageIner',
+                             query: {
+                                keyword: this.state.keyword ? this.state.keyword : this.defaultValue
+                             }
+                          };
+                          this.props.history.push(path);
+                       }}/>
                </div>
             </div>
             <div className='flex-row-center singer'>
@@ -46,16 +83,7 @@ class SearchPage extends Component {
             <div style={{paddingLeft: '15px'}}>
                <div style={{fontSize: '12px', color: '#aaa', marginTop: '40px'}}>热门搜索</div>
                <div className='flow-contain'>
-                  <div className='flow-item'>123我爱你</div>
-                  <div className='flow-item'>心跳</div>
-                  <div className='flow-item'>Closer</div>
-                  <div className='flow-item'>爸爸妈妈</div>
-                  <div className='flow-item'>那就这样吧</div>
-                  <div className='flow-item'>Something just like this</div>
-                  <div className='flow-item'>全部都是你</div>
-                  <div className='flow-item'>野子</div>
-                  <div className='flow-item'>Starry Starry Night</div>
-                  <div className='flow-item'>你就不要想起我</div>
+                  {items}
                </div>
             </div>
 
@@ -64,12 +92,12 @@ class SearchPage extends Component {
    }
 }
 
-const mapDispatchToProps=(dispatch)=>{
+const mapDispatchToProps = (dispatch) => {
    return {
-      setShowPlay:(showPlay)=>{
-         dispatch({type:actionType.ACTION_SHOW_PLAY_CONTROLLER,showPlay});
+      setShowPlay: (showPlay) => {
+         dispatch({type: actionType.ACTION_SHOW_PLAY_CONTROLLER, showPlay});
       }
    }
 };
-SearchPage=connect(null,mapDispatchToProps)(SearchPage);
+SearchPage = connect(null, mapDispatchToProps)(SearchPage);
 export default SearchPage
