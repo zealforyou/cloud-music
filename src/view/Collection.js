@@ -93,7 +93,7 @@ class Collection extends Component {
                      </div>
                   </div>
                   <div className="flex-row-center item" onClick={() => {
-                     this.props.showCreateAlbum();
+                     this.props.showCreateAlbum(this.props.data);
                      this.onHideDialog()
                   }}>
                      <img src={require('../img/shoucang.png')} alt=""/>
@@ -157,8 +157,8 @@ let mapState = (state) => {
 };
 let mapDispatch = (dispatch) => {
    return {
-      showCreateAlbum() {
-         dispatch({type: globalType.ACTION_SHOW_DIALOG, dialog: {component: CollectionSong}})
+      showCreateAlbum(data) {
+         dispatch({type: globalType.ACTION_SHOW_DIALOG, dialog: {component: CollectionSong,data}})
       }
    }
 };

@@ -1,13 +1,15 @@
 .CollectionSong {
   width: 95%;
-  height: 498px;
+  height: 450px;
   position: absolute;
   bottom: 0;
   left: 0;
   top: 16.6%;
   right: 0;
+  overflow: hidden;
+  z-index: 1000;
   margin: 0 auto;
-  background-color: #F3F3F3;
+  background-color: #fff;
   font-family: "微软雅黑";
   p {
     width: 95%;
@@ -22,11 +24,9 @@
     z-index: 99;
   }
   .box {
-    overflow: hidden;
     padding-top: 85px;
     height: 413px;
-    background-color: #ffffff;
-    overflow: overlay;
+    overflow: scroll;
     .song_sheet {
       background-color: #ffffff;
       margin-bottom: 16px;
@@ -77,5 +77,52 @@
       }
     }
   }
+  .create-album-div {
+    position: absolute;
+    left: 0;
+    top: 0;
+    margin: auto;
+    bottom: 0;
+    right: 0;
+    z-index: 1001;
+    background-color: rgba(0, 0, 0, 0.6);
+    width: 100%;
+    height: 100%;
+    .center {
+      position: absolute;
+      left: 0;
+      top: 0;
+      margin: auto;
+      bottom: 0;
+      right: 0;
+      background-color: white;
+      width: 80%;
+      height: 200px;
+      box-sizing: border-box;
+      justify-content: space-between;
+      padding: 20px 18px 15px;
+      ::-webkit-input-placeholder { /* WebKit browsers */
+        color: #ddd;
+      }
+      input {
+        padding-bottom: 7px;
+        margin-top: 10px;
+        padding-left: 5px;
+        font-size: 15px;
+        border-bottom: 1px solid #ddd;
+        width: 100%;
+      }
+      .input-count {
+        align-self: flex-end;
+        color: #ddd;
+        font-size: 15px
+      }
+      .button{
+        color: #ff4500;
+        font-size: 16px;
+        padding: 5px 15px;
+      }
+    }
 
+  }
 }

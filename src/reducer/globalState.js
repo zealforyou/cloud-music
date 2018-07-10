@@ -16,7 +16,8 @@ const def = {
    },
    dialog: {
       component: null,
-      show: false
+      show: false,
+      data:null
    }
 };
 const actionType = {
