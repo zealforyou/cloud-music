@@ -11,6 +11,7 @@ import Toast from "./view/Toast";
 import Loading from "./view/Loading";
 import Collection from "./view/Collection";
 import CollectionSong from "./view/CollectionSong";
+import FindPage from "./page/FindPage";
 
 export default class RouterPage extends Component {
    constructor() {
@@ -29,6 +30,7 @@ export default class RouterPage extends Component {
                <Route exact path="/App" component={App}/>
                <Route exact path="/Collection" component={Collection}/>
                <Route exact path="/CollectionSong" component={CollectionSong}/>
+               <Route exact path="/FindPage" component={FindPage}/>
             </Switch>
             <MusicPage history={this.props.history}/>
             <Toast/>
