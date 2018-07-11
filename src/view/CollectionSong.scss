@@ -1,5 +1,5 @@
 .CollectionSong {
-  width: 95%;
+  width: 92%;
   height: 450px;
   position: absolute;
   bottom: 0;
@@ -12,9 +12,9 @@
   background-color: #fff;
   font-family: "微软雅黑";
   p {
-    width: 95%;
-    height: 85px;
-    line-height: 85px;
+    width: 92%;
+    height: 70px;
+    line-height: 80px;
     font-size: 19px;
     margin: 0;
     position: fixed;
@@ -24,8 +24,8 @@
     z-index: 99;
   }
   .box {
-    padding-top: 85px;
-    height: 413px;
+    padding-top: 80px;
+    height: 365px;
     overflow: scroll;
     .song_sheet {
       background-color: #ffffff;

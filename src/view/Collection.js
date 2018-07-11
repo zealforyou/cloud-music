@@ -136,7 +136,7 @@ class Collection extends Component {
                   </div>
                   <div className="flex-row-center item">
                      <img src={require('../img/a1n.png')} alt=""/>
-                     <div className='flex-row-center'>
+                     <div className='flex-row-center' style={{borderBottom:"none"}}>
                         <span>查看视频</span>
                      </div>
                   </div>

@@ -166,7 +166,7 @@ class App extends Component {
                      }}>
                         {/*专辑名称*/}
                         <span>{this.props.album_name ? this.props.album_name : this.title}</span>
-                        <div className='flex-row-center' style={{height: '60%'}}>
+                        <div className='flex-row-center' style={{height: '60%',marginTop:'15px'}}>
                            {/*用户头像*/}
                            <img src={user_avatar} className='avatar'/>
                            {/*用户昵称*/}

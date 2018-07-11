@@ -23,45 +23,60 @@ export default class FindPage extends Component {
          {
             id: 0, likes: 2,
             content: '独立电子|异彩纷呈的聆听感觉',
-            pic: 'http://img4.imgtn.bdimg.com/it/u=3036919756,557540970&fm=27&gp=0.jpg'
+            pic: 'http://i-2.497.com/2016/4/26/8af29e76-d8bb-4bbf-b917-01e3d50d7ead.jpg'
          },
          {
             id: 0, likes: 2,
             content: '神级Remix电音背后的优质原作总集...',
-            pic: 'http://img4.imgtn.bdimg.com/it/u=3036919756,557540970&fm=27&gp=0.jpg'
+            pic: 'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2449159407,2537923406&fm=27&gp=0.jpg'
          },
          {
             id: 0, likes: 2,
             content: '【社会人专用歌】',
-            pic: 'http://img4.imgtn.bdimg.com/it/u=3036919756,557540970&fm=27&gp=0.jpg'
+            pic: 'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=559184297,1413956307&fm=27&gp=0.jpg'
          },
          {
             id: 0, likes: 2,
             content: '梦龙，林肯公园，马老五，共和，酷...',
-            pic: 'http://img4.imgtn.bdimg.com/it/u=3036919756,557540970&fm=27&gp=0.jpg'
+            pic: 'http://img2.imgtn.bdimg.com/it/u=2784146309,152654913&fm=27&gp=0.jpg'
          },
          {
             id: 0, likes: 2,
             content: '适合读书时听得欧美小调',
-            pic: 'http://img4.imgtn.bdimg.com/it/u=3036919756,557540970&fm=27&gp=0.jpg'
+            pic: 'http://img3.imgtn.bdimg.com/it/u=1912113785,1587702892&fm=27&gp=0.jpg'
          },
 
       ];
       var data1 = [
          {
-            id: 0, likes: 2,
+            likes: 2,
             content: '华语速爆新歌',
-            pic: 'http://img0.imgtn.bdimg.com/it/u=3802209446,1934862206&fm=27&gp=0.jpg'
+            pic: 'http://img0.imgtn.bdimg.com/it/u=2418988982,3933915728&fm=27&gp=0.jpg'
          },
          {
-            id: 0, likes: 2,
+            likes: 2,
             content: '独立电子|异彩纷呈的聆听感觉',
+            pic: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3462574826,2219711957&fm=27&gp=0.jpg'
+         },
+         {
+            likes: 2,
+            content: '神级Remix电音背后的优质原作总集...',
+            pic: 'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=1985563160,1914119214&fm=27&gp=0.jpg'
+         },
+         {
+            id: 0, likes: 2,
+            content: '【社会人专用歌】',
+            pic: 'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=1710689230,770072986&fm=27&gp=0.jpg'
+         },
+         {
+            id: 0, likes: 2,
+            content: '梦龙，林肯公园，马老五，共和，酷...',
             pic: 'http://img0.imgtn.bdimg.com/it/u=3802209446,1934862206&fm=27&gp=0.jpg'
          },
          {
             id: 0, likes: 2,
-            content: '神级Remix电音背后的优质原作总集...',
-            pic: 'http://img0.imgtn.bdimg.com/it/u=3802209446,1934862206&fm=27&gp=0.jpg'
+            content: '适合读书时听得欧美小调',
+            pic: 'http://img4.imgtn.bdimg.com/it/u=3036919756,557540970&fm=27&gp=0.jpg'
          },
 
       ];
@@ -166,29 +181,13 @@ export default class FindPage extends Component {
                             <div className="recommend_song">
                                <div className="flex-c-center">
                                   <img src={item.pic} alt=""/>
-                                  <span>华语速爆新歌</span>
+                                  <span>{item.content}</span>
 
                                   <div className="number">
                                      <em><img src={require('../img/zh.png')} alt=""/></em>
-                                     <em>2亿</em>
+                                     <em>{item.likes}亿</em>
                                   </div>
                                </div>
-                              {/* <div className="flex-c-center">
-                                  <img src={require('../img/qingren.jpg')} alt=""/>
-                                  <span>独立电子|异彩纷呈的聆听感觉</span>
-                                  <div className="number">
-                                     <em><img src={require('../img/zh.png')} alt=""/></em>
-                                     <em>16万</em>
-                                  </div>
-                               </div>
-                               <div className="flex-c-center">
-                                  <img src={require('../img/album_default.png')} alt=""/>
-                                  <span>神级Remix电音背后的优质原作总集...</span>
-                                  <div className="number">
-                                     <em><img src={require('../img/zh.png')} alt=""/></em>
-                                     <em>1162万</em>
-                                  </div>
-                               </div>*/}
                             </div>
                          )
                       }}/>
