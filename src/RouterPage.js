@@ -11,9 +11,8 @@ import Toast from "./view/Toast";
 import Loading from "./view/Loading";
 import Collection from "./view/Collection";
 import CollectionSong from "./view/CollectionSong";
-import FindPage from "./page/FindPage";
 import Dialog from "./view/Dialog";
-import RadioStation from "./page/RadioStation";
+import HomePage from "./page/HomePage";
 
 export default class RouterPage extends Component {
    constructor() {
@@ -24,7 +23,6 @@ export default class RouterPage extends Component {
       return (
          <div>
             <Switch>
-               <Route exact path="/" component={Mypage}/>
                <Route path="*/Page2/:music" component={Page2}/>
                <Route exact path="/CommentPage" component={CommentPage}/>
                <Route exact path="/SearchPage" component={SearchPage}/>
@@ -32,8 +30,7 @@ export default class RouterPage extends Component {
                <Route exact path="/App" component={App}/>
                <Route exact path="/Collection" component={Collection}/>
                <Route exact path="/CollectionSong" component={CollectionSong}/>
-               <Route exact path="/FindPage" component={FindPage}/>
-               <Route exact path="/RadioStation" component={RadioStation}/>
+               <Route exact path="/HomePage" component={HomePage}/>
             </Switch>
             <MusicPage history={this.props.history}/>
             <Toast/>

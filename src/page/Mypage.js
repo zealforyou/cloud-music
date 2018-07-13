@@ -118,31 +118,6 @@ class Mypage extends Component {
    render() {
       return (
          <div className="Mypage">
-            <div style={{position: 'fixed', width: '100%'}}>
-               <div className="mypage app-title flex-row-center">
-               <span>
-                  <img src={require('../img/ov.png')} alt="" onClick={()=>{
-                     this.props.showToast("是否切换账号",function (e) {
-                        localManager.setPhone('');
-                        localManager.setName('');
-                        window.location.reload(true);
-                     }.bind(this))
-                  }}/>
-               </span>
-                  <div className="center flex-row" style={{justifyContent: 'center'}}>
-                     <img src={require('../img/video.png')} alt=""/>
-                     <img src={require('../img/wangyi.png')} alt=""/>
-                     <img src={require('../img/friends.png')} alt=""/>
-                  </div>
-                  <span>
-                  <img src={require('../img/pf.png')} alt="" onClick={() => {
-                     this.props.history.push('/SearchPage');
-                  }}/>
-               </span>
-               </div>
-               <MenuTab selectItem={1} menus={[{title: '发现'}, {title: '我的'}, {title: '电台'}]}/>
-            </div>
-
             <div style={{paddingBottom: "50px", paddingTop: '115px'}}>
                <div className="page_list">
                   <div className="flex-row-center item">

@@ -55,6 +55,9 @@ export default class MenuTab extends Component {
                              }}
                              onClick={(e) => {
                                 $('#readLine').animate({left: (index) * _this.state.childWidth + '%'});
+                                if (_this.props.itemClick){
+                                   _this.props.itemClick(index);
+                                }
                              }}>
                            {value.title}
                         </div>
@@ -67,7 +70,7 @@ export default class MenuTab extends Component {
                        style={{
                           width: _this.state.childWidth + '%',
                           left: (this.props.selectItem && this.props.selectItem < this.props.menus.length
-                             ? this.props.selectItem * _this.state.childWidth : 0)+'%'
+                             ? this.props.selectItem * _this.state.childWidth : 0) + '%'
                        }}>
                      <div></div>
                   </div>
