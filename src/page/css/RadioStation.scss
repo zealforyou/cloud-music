@@ -1,0 +1,90 @@
+.RadioStation {
+  .swiper {
+    width: 100%;
+    height: 167px;
+    background-color: #f7f7f7;
+    padding-top: 110px;
+  }
+
+    .Radio {
+      padding: 15px 0;
+      overflow: hidden;
+      border-bottom: 1px solid #e4e4e4;
+    }
+    .Radio > div {
+      width: 50%;
+      padding: 0 40px;
+      img {
+        margin-right: 15px;
+      }
+    }
+    .Radio > div:first-child {
+      border-right: 1px solid #e4e4e4;
+    }
+
+  .Radio_box{
+    padding: 35px 5px 15px 0px;
+    border-bottom: 1px solid #e4e4e4;
+    p{
+      font-size: 17px;
+      margin-right: 10px;
+      padding-left: 10px;
+      border-left: 2px solid red;
+    }
+    img{
+      width: 2.5%;
+    }
+  }
+  .content{
+    border-bottom: 1px solid #e4e4e4;
+    margin-bottom: 5px;
+  }
+.content>div{
+  line-height: 35px;
+  img{
+    width: 143px;
+    height: 143px;
+  }
+}
+  .content>div:first-child{
+    width: 143px;
+    height: 143px;
+    margin-right: 15px;
+    position: relative;
+    p{
+      position: absolute;
+      bottom: 0;
+      left: 10px;
+      color: #ffffff;
+      font-size: 12px;
+    }
+  }
+  .content>div:nth-child(2){
+    width: 100%;
+    p:nth-child(1){
+      font-size: 16px;
+    }
+    p:nth-child(2),p:nth-child(3){
+      font-size: 13px;
+      color: #A0A4A3;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      width: 93%;
+    }
+    p:nth-child(4){
+      color: #D7393A;
+    }
+    p:nth-child(3){
+      img{
+        width: 6%;
+        height: 10%;
+        vertical-align: middle;
+      }
+    }
+  }
+  .list-view-x li:last-child .content{
+    margin-bottom: 0;
+    border: none;
+  }
+}

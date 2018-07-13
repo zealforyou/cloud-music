@@ -13,6 +13,7 @@ import Collection from "./view/Collection";
 import CollectionSong from "./view/CollectionSong";
 import FindPage from "./page/FindPage";
 import Dialog from "./view/Dialog";
+import RadioStation from "./page/RadioStation";
 
 export default class RouterPage extends Component {
    constructor() {
@@ -32,6 +33,7 @@ export default class RouterPage extends Component {
                <Route exact path="/Collection" component={Collection}/>
                <Route exact path="/CollectionSong" component={CollectionSong}/>
                <Route exact path="/FindPage" component={FindPage}/>
+               <Route exact path="/RadioStation" component={RadioStation}/>
             </Switch>
             <MusicPage history={this.props.history}/>
             <Toast/>

@@ -1,4 +1,10 @@
 import React, {Component} from 'react';
+import {localManager} from "../utils/LocalManager";
+import MenuTab from "../view/MenuTab";
+import "../view/MenuTab.scss";
+import "./css/RadioStation.scss";
+import "./css/Mypage.scss";
+import ListView from "../ListView";
 
 export default class RadioStation extends Component {
    constructor() {
@@ -7,7 +13,61 @@ export default class RadioStation extends Component {
 
    //组件即将挂载
    componentWillMount() {
+      var data = [
+         {
+            pic: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1241090614,1586339867&fm=27&gp=0.jpg',
+            title: '阿里铁军销售实战秘笈',
+            content: '你离高收入只差一套靠谱的方法',
+            explain:'初次见面的6-分钟，做对了就能当场签约',
+            money:79,time:'07月16日',
+         },
+         {
+            pic: 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=1238871875,1707086016&fm=27&gp=0.jpg',
+            title: '刘雪枫 古典音乐怎么用',
+            content: '100个生活场景的音乐解决方案',
+            explain:'乐曲纯享|勃拉姆斯《间奏曲op.118-2》',
+            money:98,time:'07月16日',
+         },
+         {
+            pic: 'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=155021805,2616215770&fm=27&gp=0.jpg',
+            title: '阿里铁军销售实战秘笈',
+            content: '你离高收入只差一套靠谱的方法',
+            explain:'初次见面的6-分钟，做对了就能当场签约',
+            money:59,time:'07月16日',
+         },
+         {
+            pic: 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=2941537821,91652186&fm=27&gp=0.jpg',
+            title: '阿里铁军销售实战秘笈',
+            content: '你离高收入只差一套靠谱的方法',
+            explain:'初次见面的6-分钟，做对了就能当场签约',
+            money:105,time:'07月16日',
+         },
+         {
+            pic: 'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=545245121,1021087145&fm=27&gp=0.jpg',
+            title: '阿里铁军销售实战秘笈',
+            content: '你离高收入只差一套靠谱的方法',
+            explain:'初次见面的6-分钟，做对了就能当场签约',
+            money:89,time:'07月16日',
+         },
+         {
+            pic: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3272699629,2997225522&fm=27&gp=0.jpg',
+            title: '阿里铁军销售实战秘笈',
+            content: '你离高收入只差一套靠谱的方法',
+            explain:'初次见面的6-分钟，做对了就能当场签约',
+            money:112,time:'07月16日',
+         },
+         {
+            pic: 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3019593476,1807650631&fm=27&gp=0.jpg',
+            title: '阿里铁军销售实战秘笈',
+            content: '你离高收入只差一套靠谱的方法',
+            explain:'初次见面的6-分钟，做对了就能当场签约',
+            money:70,time:'07月16日',
+         },
 
+      ];
+      this.setState({
+         data,
+      });
    }
 
    //组件已经挂载
@@ -23,7 +83,65 @@ export default class RadioStation extends Component {
    //渲染
    render() {
       return (
-         <div>
+         <div className="RadioStation Mypage">
+            <div style={{position: 'fixed', width: '100%', zIndex: '999'}}>
+               <div className="mypage app-title flex-row-center">
+               <span>
+                  <img src={require('../img/ov.png')} alt="" onClick={() => {
+                     this.props.showToast("是否切换账号", function (e) {
+                        localManager.setPhone('');
+                        localManager.setName('');
+                        window.location.reload(true);
+                     }.bind(this))
+                  }}/>
+               </span>
+                  <div className="center flex-row" style={{justifyContent: 'center'}}>
+                     <img src={require('../img/video.png')} alt=""/>
+                     <img src={require('../img/wangyi.png')} alt=""/>
+                     <img src={require('../img/friends.png')} alt=""/>
+                  </div>
+                  <span>
+                  <img src={require('../img/pf.png')} alt="" onClick={() => {
+                     this.props.history.push('/SearchPage');
+                  }}/>
+               </span>
+               </div>
+               <MenuTab selectItem={2} menus={[{title: '发现'}, {title: '我的'}, {title: '电台'}]}/>
+            </div>
+            <div className="swiper"></div>
+
+            <div className="Radio flex-row-center">
+               <div className="flex-row-center">
+                  <span><img src={require('../img/fenlei.png')} alt=""/></span>
+                  <span>电台分类</span>
+               </div>
+               <div className="flex-row-center">
+                  <span><img src={require('../img/paihang1.png')} alt=""/></span>
+                  <span>电台排行</span>
+               </div>
+            </div>
+            <div className="Radio_box flex-row-center">
+               <p>付费精选</p>
+               <img src={require('../img/a2u.png')} alt=""/>
+            </div>
+
+            <ListView className="list-view-x" data={this.state.data}
+                      renderItem={(position, item) => {
+                         return (
+                            <div className="content flex-row-center">
+                               <div>
+                                  <img src={item.pic} alt=""/>
+                                  <p>{item.time}更新</p>
+                               </div>
+                               <div className="flex-c">
+                                  <p>{item.title}</p>
+                                  <p>{item.content}</p>
+                                  <p><img src={require('../img/jiantou.jpg')} alt=""/>{item.explain}</p>
+                                  <p>￥{item.money}</p>
+                               </div>
+                            </div>
+                         )
+                      }}/>
 
          </div>
       )
