@@ -1,9 +1,37 @@
+body{
+  background-color: #F0F4F3;
+}
 .RadioStation {
+  padding-bottom: 50px;
+  background-color:#F0F4F3 ;
+  overflow: hidden;
   .swiper {
     width: 100%;
-    height: 167px;
+    height: 270px;
     background-color: #f7f7f7;
     padding-top: 110px;
+    overflow: hidden;
+    .ant-carousel .slick-slide {
+      width: 100%;
+      text-align: center;
+      height: 160px;
+      line-height: 160px;
+      background: #364d79;
+      overflow: hidden;
+      img{
+        width: 100%;
+        height: 160px;
+      }
+    }
+    .ant-carousel .slick-dots li button{
+      width: 8px;
+      height: 8px;
+      border-radius:50%;
+      margin: 0 3px;
+    }
+    .ant-carousel .slick-dots li.slick-active button{
+      background-color:#D43C31;
+    }
   }
 
     .Radio {
@@ -70,7 +98,7 @@
       white-space:nowrap;
       overflow:hidden;
       text-overflow:ellipsis;
-      width: 93%;
+      width:240px;
     }
     p:nth-child(4){
       color: #D7393A;
@@ -83,11 +111,16 @@
       }
     }
   }
-  .list-view-x li:last-child .content{
-    margin-bottom: 0;
-    border: none;
+  .Radio_station{
+    .list-view-x li:last-child .content{
+      margin-bottom: 0;
+      border: none;
+    }
+    .list-view-x .list-item-x{
+      float: left;
+      width: auto;
+      padding-right: 0;
+    }
   }
-  .list-view-x .list-item-x{
-    float: left;
-  }
+
 }

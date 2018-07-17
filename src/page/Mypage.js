@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import MenuTab from "../view/MenuTab";
 import "../view/MenuTab.scss";
 import "./css/Mypage.scss";
 import SongSheet from "../view/SongSheet";
@@ -118,7 +117,7 @@ class Mypage extends Component {
    render() {
       return (
          <div className="Mypage">
-            <div style={{paddingBottom: "50px", paddingTop: '115px'}}>
+            <div style={{paddingBottom: "50px", paddingTop: '110px'}}>
                <div className="page_list">
                   <div className="flex-row-center item">
                      <img src={require('../img/a1_.png')} alt=""/>

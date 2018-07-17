@@ -20,7 +20,8 @@ export default class HomePage extends Component {
    componentWillMount() {
 
       this.setState({
-         likeId: []
+         likeId: [],
+         currentPage:1
       });
    }
 
@@ -37,7 +38,7 @@ export default class HomePage extends Component {
    //渲染
    render() {
       return (
-         <div className="Find Mypage">
+         <div className="Mypage">
             <div style={{position: 'fixed', width: '100%', zIndex: '999'}}>
                <div className="mypage app-title flex-row-center">
                <span>
@@ -60,7 +61,7 @@ export default class HomePage extends Component {
                   }}/>
                </span>
                </div>
-               <MenuTab selectItem={0} menus={[{title: '发现'}, {title: '我的'}, {title: '电台'}]}
+               <MenuTab selectItem={1} menus={[{title: '发现'}, {title: '我的'}, {title: '电台'}]}
                         itemClick={(index) => {
                            this.setState({currentPage:index})
                         }}/></div>
