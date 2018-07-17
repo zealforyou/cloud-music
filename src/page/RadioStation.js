@@ -8,14 +8,14 @@ import {component} from "../utils/ZUtil";
 import {albumActionType} from "../reducer/AlbumState";
 import {Carousel} from 'antd';
 
-class RadioStation extends Component {
+export default class RadioStation extends Component {
    constructor() {
       super();
    }
 
    //组件即将挂载
    componentWillMount() {
-      this.props.setShowPlay(true);
+      // this.props.setShowPlay(true);
       var data = [
          {
             pic: 'http://p1.music.126.net/x-9deD6k7eNFAsU8BdSjJg==/109951163106286192.jpg?param=200y200',
@@ -93,7 +93,7 @@ class RadioStation extends Component {
 
    //组件即将销毁
    componentWillUnmount() {
-      this.props.setShowPlay(false);
+      // this.props.setShowPlay(false);
    }
 
    //渲染
@@ -157,25 +157,25 @@ class RadioStation extends Component {
    }
 }
 
-const mapStateToProps = (state) => {
-   return {
-      data: state.albumState.data
-   }
-};
-const mapDispatchToProps = (dispatch) => {
-   return {
-      setShowPlay: (showPlay) => {
-         dispatch({type: actionType.ACTION_SHOW_PLAY_CONTROLLER, showPlay});
-      },
-      setAlbumData(data) {
-         dispatch({type: albumActionType.SET_DATA, data});
-      },
-      showToast(content, onClick) {
-         dispatch({type: globalType.ACTION_SHOW_TOAST, toast: {left: "取消", content, onClick}});
-      }
-   }
-};
-RadioStation = component(mapStateToProps, mapDispatchToProps, RadioStation);
-export default RadioStation
-
+// const mapStateToProps = (state) => {
+//    return {
+//       data: state.albumState.data
+//    }
+// };
+// const mapDispatchToProps = (dispatch) => {
+//    return {
+//       setShowPlay: (showPlay) => {
+//          dispatch({type: actionType.ACTION_SHOW_PLAY_CONTROLLER, showPlay});
+//       },
+//       setAlbumData(data) {
+//          dispatch({type: albumActionType.SET_DATA, data});
+//       },
+//       showToast(content, onClick) {
+//          dispatch({type: globalType.ACTION_SHOW_TOAST, toast: {left: "取消", content, onClick}});
+//       }
+//    }
+// };
+// RadioStation = component(mapStateToProps, mapDispatchToProps, RadioStation);
+// export default RadioStation
+//
 
