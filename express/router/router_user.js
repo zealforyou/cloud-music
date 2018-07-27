@@ -24,7 +24,7 @@ router.get("/register",async (req,res)=>{
       let sql_create_album="insert into  tb_album (user_id,album_name,type) value(?,'我喜欢的音乐',0)";
       var user=await query(sql,[phone]);
       if (user&&user.length>0){
-         if (name!==user.user_name){
+         if (name!==user[0].user_name){
             await query(update,[name,phone]);
          }
          res.send(baseResult(0,'',{...user[0],user_name:name}));

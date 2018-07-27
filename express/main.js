@@ -21,7 +21,7 @@ app.get("/music/item",router_music_item);
 app.use("/album",router_album);
 app.use("/user",router_user);
 app.use("/system",router_system);
-var server = app.listen(8081, function () {
+var server = app.listen(80, function () {
    var host = server.address().address;
    var port = server.address().port;
    console.log('Example app listening at http://%s:%s', host, port);

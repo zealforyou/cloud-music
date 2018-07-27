@@ -9,32 +9,121 @@ import ListView from "../ListView";
 import FindPage from "./FindPage";
 import Mypage from "./Mypage";
 import RadioStation from "./RadioStation";
+import {component} from "../utils/ZUtil";
+import {albumActionType} from "../reducer/AlbumState";
+import {actionType as globalType, actionType} from "../reducer/globalState";
+import * as baseUrl from "../config/BaseUrl";
 
 
-export default class HomePage extends Component {
+ class HomePage extends Component {
    constructor() {
       super();
    }
 
    //组件即将挂载
    componentWillMount() {
-
+      let phone = localManager.getPhone();
       this.setState({
          likeId: [],
-         currentPage:1
+         currentPage:1,
+         loginDialog:!phone
       });
+      if (phone){
+         this._getAlbumList();
+      }
    }
 
    //组件已经挂载
    componentDidMount() {
-
+      this.props.setShowPlay(true);
    }
 
    //组件即将销毁
    componentWillUnmount() {
-
+      this.props.setShowPlay(false);
    }
+    loginClick(e) {
+       if (!this.state.phone || this.state.phone.length < 11) {
+          this.showToast("请输入正确的手机号");
+          return;
+       }
+       if (!this.state.name) {
+          this.showToast("请输入昵称");
+          return;
+       }
+       this._register();
+    }
 
+
+    _getUser() {
+       var _this=this;
+       let url = baseUrl.base + "user/getUser?phone="+this.state.phone;
+       this.showLoading();
+       fetch(url).then((res) => {
+          return res.json();
+       }).then((res) => {
+          localManager.setAvatar(res.avatar?res.avatar:'');
+          this.hideLoading();
+          _this.setState({
+             name:res.user_name,
+             avatar:res.avatar
+          });
+       }).catch((e) => {
+          this.hideLoading();
+       })
+    }
+
+    _register(){
+       var _this=this;
+       let url = baseUrl.base + `user/register?phone=${this.state.phone}&name=${this.state.name}`;
+       this.showLoading();
+       fetch(url).then((res) => {
+          return res.json();
+       }).then((res) => {
+          _this.hideLoading();
+          if (res.error_code===0){
+             _this._go(res);
+          } else {
+             _this.props.showToast(res.error_msg)
+          }
+       }).catch((e) => {
+          _this.hideLoading();
+          _this.props.showToast("注册失败");
+       })
+    }
+
+    _go(user){
+       localManager.setName(user.user_name);
+       localManager.setPhone(user.user_id);
+       this.setState({loginDialog:false});
+       this._getAlbumList();
+    }
+    phoneInput(e) {
+       var _this=this;
+       let phone = e.currentTarget.value;
+       this.setState({phone},function () {
+          if (phone.length===11){
+             _this._getUser();
+          }
+       });
+
+    }
+
+    nameInput(e) {
+       let name = e.currentTarget.value;
+       this.setState({name});
+    }
+
+    _getAlbumList() {
+       var _this = this;
+       let url = baseUrl.base + "album/getList?phone="+localManager.getPhone();
+       fetch(url).then((res) => {
+          return res.json();
+       }).then((res) => {
+          _this.props.setAlbumData(res);
+       }).catch(() => {
+       })
+    }
    //渲染
    render() {
       return (
@@ -68,6 +157,20 @@ export default class HomePage extends Component {
             {
                this.switchPage(this.state.currentPage)
             }
+            <div className='div_login' style={{display: this.state.loginDialog?'block':'none'}}>
+               <div className='center'>
+                  <img className='avatar' src={this.state.avatar?this.state.avatar:require('../img/bt_girl.jpg')}/>
+                  <div className='input flex-c-center'>
+                     <input placeholder='phone' type='tel' value={this.state.phone}
+                            maxLength='11' onInput={this.phoneInput.bind(this)}/>
+                     <input value={this.state.name} placeholder='name' style={{marginTop: '15px'}}
+                            onInput={this.nameInput.bind(this)}/>
+                  </div>
+                  <strong className='btn-enter' onClick={this.loginClick.bind(this)}>
+                     Go
+                  </strong>
+               </div>
+            </div>
          </div>
       )
    }
@@ -83,4 +186,24 @@ export default class HomePage extends Component {
       }
       return '';
    }
+
 }
+const mapStateToProps = (state) => {
+   return {
+   }
+};
+const mapDispatchToProps = (dispatch) => {
+   return {
+      setShowPlay: (showPlay) => {
+         dispatch({type: actionType.ACTION_SHOW_PLAY_CONTROLLER, showPlay});
+      },
+      showToast(content,onClick){
+         dispatch({type: globalType.ACTION_SHOW_TOAST, toast:{left:"取消",content,onClick}});
+      },
+      setAlbumData(data) {
+         dispatch({type: albumActionType.SET_DATA, data});
+      }
+   }
+};
+HomePage = component(mapStateToProps, mapDispatchToProps,HomePage);
+export default HomePage

@@ -13,7 +13,7 @@ const def = {
    currentMusic: -1,
    playModeIndex: 0,
    playMode: playModer[0],
-   item: {},
+   item:{},
    album_data:[]
 };
 const actionType = {
