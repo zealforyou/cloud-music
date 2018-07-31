@@ -65,7 +65,7 @@ import * as baseUrl from "../config/BaseUrl";
           localManager.setAvatar(res.avatar?res.avatar:'');
           this.hideLoading();
           _this.setState({
-             name:res.user_name,
+             name:res.user_name?res.user_name:"",
              avatar:res.avatar
           });
        }).catch((e) => {
