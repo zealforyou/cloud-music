@@ -139,7 +139,7 @@ class App extends Component {
                {/*上半部分容器*/}
                <div className='top-bg flex-c'
                     style={{backgroundColor: `rgb(${this.bgColor[0]},${this.bgColor[1]},${this.bgColor[2]})`}}>
-                  <div className="flex-row" style={{paddingTop: '4em'}}>
+                  <div className="flex-row" style={{paddingTop: '65px'}}>
                      <div className='big-img'>
                         {/*专辑图片*/}
                         <img

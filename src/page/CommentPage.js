@@ -2,46 +2,87 @@ import React, {Component} from 'react';
 import './css/CommentPage.scss';
 import ListView from "../ListView";
 import ImgBtn from "../ImgButton";
-import {pics}from '../config/Resource';
-import {Title}from '../config/Resource';
-export default class CommentPage extends Component {
+import {pics} from '../config/Resource';
+import {Title} from '../config/Resource';
+import {component} from "../utils/ZUtil";
+import * as baseUrl from "../config/BaseUrl";
+import {localManager} from "../utils/LocalManager";
+
+class CommentPage extends Component {
    constructor() {
       super();
    }
 
    //组件即将挂载
    componentWillMount() {
-      var data = [
-         {
-            id: 0, title: 'CITTE', likes:910, time: '2017年4月16日',
-            content: '我喜欢我望向别处时你落在我身上的目光',
-            pic:'http://img4.imgtn.bdimg.com/it/u=3036919756,557540970&fm=27&gp=0.jpg'
-         },
-         {
-            id: 1, title: '傻傻傻傻了', likes: 610, time: '2017年4月16日',
-            content: '当你觉得孤独无助时，想一想还有十几亿的细胞只为了你一个人而活',
-            pic:'http://i-2.497.com/2016/4/26/8af29e76-d8bb-4bbf-b917-01e3d50d7ead.jpg'
-         },
-         {
-            id: 2, title: '小小强King', likes:599, time: '2017年4月16日',
-            content: '小时候刮奖刮出“谢”字还不扔，非要把“谢谢惠顾”都刮的干干净净才舍得放手，和后来太多的事一模一样。',
-            pic:'http://img0.imgtn.bdimg.com/it/u=3802209446,1934862206&fm=27&gp=0.jpg'
-         },
-      ];
       this.setState({
          likeId: [],
-         data
+         data: []
       });
    }
 
    //组件已经挂载
    componentDidMount() {
-
+      this._getComment();
    }
 
    //组件即将销毁
    componentWillUnmount() {
 
+   }
+
+   onComment(e) {
+      if (!this.state.content || !this.props.item || !localManager.getPhone()) {
+         return;
+      }
+      this.showLoading();
+      let _this = this;
+      let url = baseUrl.base + "user/setComment";
+      fetch(url, {
+         method: 'POST',
+         headers: {
+            "Content-Type": "application/json"
+         },
+         body: JSON.stringify({
+            content: this.state.content, music_id: this.props.item.id,
+            phone: localManager.getPhone()
+         })
+      }).then((res) => {
+         return res.json();
+      }).then((res) => {
+         _this.hideLoading();
+         if (res.error_code === 0) {
+            _this.setState({
+               content:""
+            });
+            _this._getComment();
+            window.scrollTo(0, 0);
+         } else {
+            _this.showToast(res.error_msg);
+         }
+
+      }).catch((e) => {
+         this.hideLoading();
+      });
+   }
+
+   _getComment() {
+      this.showLoading();
+      let _this = this;
+      let url = baseUrl.base + "user/getComment?music_id=" + this.props.item.id;
+      fetch(url).then((res) => {
+         return res.json();
+      }).then((res) => {
+         _this.hideLoading();
+         if (res.error_code === 0) {
+            _this.setState({data: res.commentList});
+         } else {
+            _this.showToast(res.error_msg);
+         }
+
+      }).catch((e) => {
+         this.hideLoading();
+      });
    }
 
    //渲染
@@ -55,16 +96,18 @@ export default class CommentPage extends Component {
                      <img src={require('../img/ic_left.png')} alt=""/>
 
                   </span>
-               <span>评论(5465)</span>
+               <span>评论({this.state.data.length})</span>
             </div>
 
             <div className="comm_conter">
                <div className="box">
                   <ul className="clearfix">
-                     <li><img src={require('../img/comm_hear.png')}/></li>
+                     <li><img
+                        src={this.props.item && this.props.item.pic ? this.props.item.pic : require('../img/comm_hear.png')}/>
+                     </li>
                      <li>
-                        <p>The Cure</p>
-                        <p>Lady Gaga</p>
+                        <p>{this.props.item && this.props.item.name ? this.props.item.name : "未知"}</p>
+                        <p>{this.props.item && this.props.item.author ? this.props.item.author : "未知"}</p>
                      </li>
                      <li><img src={require('../img/a2u.png')} alt=""/></li>
                   </ul>
@@ -91,32 +134,34 @@ export default class CommentPage extends Component {
                          renderItem={(position, item) => {
                             return (
                                <div className="comm_box test flex-row">
-                                  <div className='avatar'><img src={item.pic?item.pic:require('../img/bt_girl.jpg')} alt=""/></div>
+                                  <div className='avatar'><img src={item.avatar ? item.avatar : require('../img/bt_girl.jpg')}
+                                                               alt=""/>
+                                  </div>
                                   <div className="test_one flex-c" style={{flexGrow: 1}}>
                                      <div className="flex-row"
                                           style={{width: '100%', marginBottom: '2px', justifyContent: "space-between"}}>
                                  <span className="comm_left flex-c">
-                                    <em>{item.title}</em>
-                                    <em>{item.time}</em>
+                                    <em>{item.user_name}</em>
+                                    <em>{item.create_date}</em>
                                  </span>
-                                 <span className="comm_rigth flex-row-center">
-                                    <em style={{color: isInArray(this.state.likeId, item.id) ? "red" : '#98999A'}}>{item.likes}</em>
+                                        <span className="comm_rigth flex-row-center">
+                                    <em
+                                       style={{color: isInArray(this.state.likeId, item.id) ? "red" : '#98999A'}}>{item.likes}</em>
 
                                     <ImgBtn
                                        selected={isInArray(this.state.likeId, item.id)}
                                        drawable={{
-                                          src: [require('../img/aar.png'),
-                                             require('../img/note_btn_praised.png')],
-                                          press: [require('../img/aar.png'),
-                                             require('../img/note_btn_praised.png')]
+                                          src: [require('../img/aar.png'), require('../img/note_btn_praised.png')],
+                                          press: [require('../img/aar.png'), require('../img/note_btn_praised.png')]
                                        }} style={{
-                                          flexGrow:'contain',
+                                       flexGrow: 'contain',
                                        display: 'inline',
                                        animation: isInArray(this.state.likeId, item.id) ? this.state.animation : 'none'
                                     }}
                                        onCheckChanged={(selected) => {
                                           let likeId = this.state.likeId;
-                                          if (selected) {
+                                          let isLike = isInArray(likeId, item.id);
+                                          if (!isLike) {
                                              item.likes++;
                                              likeId.push(item.id);
                                              this.setState({
@@ -157,25 +202,7 @@ export default class CommentPage extends Component {
                      }}/>
                      <img src={require('../img/a9r.png')} alt="" style={{marginLeft: '-26px'}}/>
                   </span>
-                  <span onClick={() => {
-                     if (!this.state.content) {
-                        return;
-                     }
-                     let ct = new Date();
-                     ct = `${ct.getFullYear()}年${ct.getMonth() + 1}月${ct.getDate()}日`;
-
-                     let newObj = Object.assign({}, this.state.data[0], {
-                        id: Math.random() * 900000 + 100000,
-                        content: this.state.content,
-                        time: ct,
-                        likes: 0,
-                        pic:pics[parseInt(this.state.data.length%Title.length)],
-                        title:Title[parseInt(Math.random()*Title.length)]
-                     });
-                     this.state.data.unshift(newObj);
-                     this.setState({data: this.state.data, content: ''});
-                     window.scrollTo(0,0);
-                  }}>发送</span>
+                  <span onClick={this.onComment.bind(this)}>发送</span>
                </div>
             </div>
 
@@ -184,6 +211,18 @@ export default class CommentPage extends Component {
       )
    }
 }
+
+const mapStateToProps = (state) => {
+   return {
+      item: state.appState.item,
+   }
+};
+const mapDispToProps = () => {
+   return {}
+};
+
+CommentPage = component(mapStateToProps, mapDispToProps, CommentPage);
+export default CommentPage;
 
 function isInArray(arr, value) {
    for (let i = 0; i < arr.length; i++) {

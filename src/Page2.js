@@ -111,7 +111,7 @@ class Page2 extends Component {
          });
       }).catch((e) => {
          _this.setState({
-            liked:false
+            liked: false
          });
          if (call) {
             call.bind(_this);
@@ -201,7 +201,7 @@ class Page2 extends Component {
       let index = this.props.currentMusic;
       let cm = (index >= data.length - 1) ? 0 : index + 1;
       let item = data[cm];
-      this._isLiked(item.id,() => {
+      this._isLiked(item.id, () => {
          this.props.nextMusic(this.music);
       });
    }
@@ -296,7 +296,10 @@ class Page2 extends Component {
                   src: [require("./img/adc.png"), require('./img/ade.png')]
                }}/>
                <ImgBtn drawable={{press: require("./img/ad3.png"), src: require("./img/ad2.png")}}/>
-               <ImgBtn drawable={{press: require("./img/ad0.png"), src: require("./img/acz.png")}}>
+               <ImgBtn drawable={{press: require("./img/ad0.png"), src: require("./img/acz.png")}}
+                       onClick={() => {
+                          this.props.history.push("/CommentPage");
+                       }}>
                   <small style={{
                      fontSize: "0.1rem", position: 'absolute', right: '11%'
                      , top: "26%", transform: "scale(1)", fontFamily: "Consolas"
