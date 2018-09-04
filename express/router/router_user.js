@@ -43,20 +43,36 @@ router.post("/setComment", async (req, res) => {
    let music_id = req.body.music_id;
    try {
       let sql = "INSERT INTO tb_comment (content,user_id,music_id) VALUES (?,?,?)";
-      let result = await query(sql, [content,phone,music_id]);
+      let result = await query(sql, [content, phone, music_id]);
       res.send(baseResult(0, '评论成功', {}));
    } catch (e) {
       console.log(e);
       res.send(baseResult(1, "数据库错误"))
    }
 });
-router.post("/setCommentLike", async (req, res) => {
-   let phone = req.body.phone;
-   let comment_id = req.body.comment_id;
+router.get("/setCommentLike", async (req, res) => {
+   let phone = req.query.phone;
+   let comment_id = req.query.comment_id;
+   let isLike = 0;
    try {
-      let sql = "INSERT INTO tb_comment_like (user_id,comment_id) VALUES(?,?)";
-      let result = await query(sql, [phone,comment_id]);
-      res.send(baseResult(0, '点赞成功', {}));
+      let sql = "SELECT * FROM  tb_comment_like WHERE user_id=? AND comment_id=?";
+      let result = await query(sql, [phone, comment_id]);
+      isLike = result.length > 0 ? 0 : 1;
+   } catch (e) {
+      console.log(e);
+   }
+   try {
+      let sql;
+      if (isLike === 0) {
+         sql = "DELETE FROM tb_comment_like WHERE user_id=? AND comment_id=?";
+      } else {
+         sql = "INSERT INTO tb_comment_like (user_id,comment_id) VALUES(?,?)";
+      }
+      let result = await query(sql, [phone, comment_id]);
+      console.log("setCommentLike:" + result);
+      res.send(baseResult(0, isLike === 0 ? '取消点赞成功' : '点赞成功', {
+         isLike: isLike === 0 ? 1 : 0
+      }));
    } catch (e) {
       console.log(e);
       res.send(baseResult(1, "数据库错误"))
@@ -66,11 +82,13 @@ router.get("/getComment", async (req, res) => {
    let music_id = req.query.music_id;
    let phone = req.query.phone;
    try {
-      let sql = "select t1.id, t1.content,t2.avatar,t2.user_name,t2.user_id,t1.create_date \n" +
-         "from tb_comment t1 left join tb_user t2 on t1.user_id=t2.user_id\n" +
-         "WHERE t1.music_id=? order by create_date desc";
-      let commentList = await query(sql, [music_id]);
-      res.send(baseResult(0, '', {commentList:commentList}));
+      let sql = "SELECT a.*,CASE WHEN a.user_id = ? THEN 0 ELSE 1 END AS isLike,b.user_name,COUNT(c.id) as likeCount FROM tb_comment a \n" +
+         "LEFT JOIN tb_user b ON a.user_id = b.user_id\n" +
+         "LEFT JOIN tb_comment_like c ON a.id = c.comment_id\n" +
+         "WHERE a.music_id = ?\n" +
+         "GROUP BY a.id ORDER BY a.create_date DESC\n";
+      let commentList = await query(sql, [phone, music_id]);
+      res.send(baseResult(0, '', {commentList: commentList}));
    } catch (e) {
       console.log(e);
       res.send(baseResult(1, "数据库错误"))

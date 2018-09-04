@@ -16,7 +16,6 @@ class CommentPage extends Component {
    //组件即将挂载
    componentWillMount() {
       this.setState({
-         likeId: [],
          data: []
       });
    }
@@ -53,7 +52,7 @@ class CommentPage extends Component {
          _this.hideLoading();
          if (res.error_code === 0) {
             _this.setState({
-               content:""
+               content: ""
             });
             _this._getComment();
             window.scrollTo(0, 0);
@@ -66,15 +65,48 @@ class CommentPage extends Component {
       });
    }
 
-   _getComment() {
+   onCommentLike(position) {
       this.showLoading();
+      let item = this.state.data[position];
+      let comment_id = item.id;
       let _this = this;
-      let url = baseUrl.base + "user/getComment?music_id=" + this.props.item.id;
+      let url = baseUrl.base + "user/setCommentLike?phone=" + localManager.getPhone() + "&comment_id=" + comment_id;
       fetch(url).then((res) => {
          return res.json();
       }).then((res) => {
          _this.hideLoading();
          if (res.error_code === 0) {
+            if (res.isLike === 0) {
+               item.animation = "btnBig1 0.5s";
+               item.isLike = 0;
+               item.likeCount === +item.likeCount ? item.likeCount++ : item.likeCount = 1;
+            } else {
+               item.animation = "btnBig 0.5s";
+               item.isLike = 1;
+               item.likeCount === +item.likeCount ? item.likeCount-- : item.likeCount = 0;
+            }
+            this.setState({
+               data: _this.state.data,
+            });
+         } else {
+            _this.showToast(res.error_msg);
+         }
+
+      }).catch((e) => {
+         this.hideLoading();
+      });
+   }
+
+   _getComment() {
+      this.showLoading();
+      let _this = this;
+      let url = baseUrl.base + "user/getComment?music_id=" + this.props.item.id + "&phone=" + localManager.getPhone();
+      fetch(url).then((res) => {
+         return res.json();
+      }).then((res) => {
+         _this.hideLoading();
+         if (res.error_code === 0) {
+            console.log(res.commentList);
             _this.setState({data: res.commentList});
          } else {
             _this.showToast(res.error_msg);
@@ -146,41 +178,20 @@ class CommentPage extends Component {
                                  </span>
                                         <span className="comm_rigth flex-row-center">
                                     <em
-                                       style={{color: isInArray(this.state.likeId, item.id) ? "red" : '#98999A'}}>{item.likes}</em>
+                                       style={{color: item.isLike === 0 ? "red" : '#98999A'}}>{item.likeCount}</em>
 
                                     <ImgBtn
-                                       selected={isInArray(this.state.likeId, item.id)}
+                                       selected={item.isLike === 0}
                                        drawable={{
                                           src: [require('../img/aar.png'), require('../img/note_btn_praised.png')],
                                           press: [require('../img/aar.png'), require('../img/note_btn_praised.png')]
                                        }} style={{
                                        flexGrow: 'contain',
                                        display: 'inline',
-                                       animation: isInArray(this.state.likeId, item.id) ? this.state.animation : 'none'
+                                       animation: item.animation
                                     }}
                                        onCheckChanged={(selected) => {
-                                          let likeId = this.state.likeId;
-                                          let isLike = isInArray(likeId, item.id);
-                                          if (!isLike) {
-                                             item.likes++;
-                                             likeId.push(item.id);
-                                             this.setState({
-                                                likeId,
-                                                animation: `${selected ? "btnBig" : "btnBig1"} 0.5s`
-                                             });
-                                          } else {
-                                             item.likes--;
-                                             let index;
-                                             for (let i in likeId) {
-                                                if (likeId[i] === item.id) {
-                                                   index = i;
-                                                }
-                                             }
-                                             delete likeId[index];
-                                             this.setState({
-                                                likeId,
-                                             });
-                                          }
+                                          this.onCommentLike(position);
                                        }}
                                     />
                                  </span>
