@@ -6,6 +6,7 @@ import {component} from "./utils/ZUtil";
 import {actionType} from "./reducer/appState";
 import {PLAY_MODE} from "./AppConfig";
 import {localManager} from "./utils/LocalManager";
+import Collection from "./view/Collection";
 
 const Style = require('./Page2.css');
 const $ = require('jquery');
@@ -18,7 +19,7 @@ class Page2 extends Component {
    }
 
    componentWillMount() {
-      this.setState({});
+      this.setState({commentCount: 0, showCollection: false});
       this._isLiked(this.props.item.id);
    }
 
@@ -40,6 +41,7 @@ class Page2 extends Component {
          }
       }
 
+      this._getCommentCount();
       this.keydown = keydown;
    }
 
@@ -117,7 +119,7 @@ class Page2 extends Component {
             call.bind(_this);
             call();
          }
-         this.hideLoading();
+         _this.hideLoading();
       });
    }
 
@@ -142,12 +144,36 @@ class Page2 extends Component {
                liked: res.liked
             });
          } else {
-            this.showToast(res.error_msg);
+            _this.showToast(res.error_msg);
          }
 
       }).catch((e) => {
-         this.hideLoading();
+         _this.hideLoading();
       });
+   }
+
+   _getCommentCount() {
+      var _this = this;
+      let url = baseUrl.base + `user/getCommentCount?music_id=` + this.props.item.id;
+      fetch(url)
+         .then((res) => {
+            return res.json();
+         })
+         .then((res) => {
+            if (res.error_code === 0) {
+               if (res.commentCount > 999) {
+                  res.commentCount = "999+";
+               }
+               _this.setState({
+                  commentCount: res.commentCount
+               });
+            } else {
+               _this.showToast(res.error_msg);
+            }
+         })
+         .catch((e) => {
+            console.log(e);
+         })
    }
 
    _showLrc() {
@@ -240,7 +266,7 @@ class Page2 extends Component {
                      this.props.history.goBack()
                   }} src={require("./img/ic_left.png")} width="25px" style={{marginRight: "10px"}}/>
                   <div className='flex-c'>
-                     <span>{this.props.item.name}</span>
+                     <marquee width="280px" direction="left" align="middle" scrollamount="3">{this.props.item.name}</marquee>
                      <span style={{fontSize: "13px", color: "#ddd"}}>{this.props.item.author}</span>
                   </div>
 
@@ -301,13 +327,18 @@ class Page2 extends Component {
                           this.props.history.push("/CommentPage");
                        }}>
                   <small style={{
-                     fontSize: "0.1rem", position: 'absolute', right: '11%'
-                     , top: "26%", transform: "scale(1)", fontFamily: "Consolas"
+                     fontSize: "10px", position: 'absolute', left: '60%'
+                     , top: "24%", transform: "scale(1)", fontFamily: "Consolas"
                   }}
-                  >999+
+                  >{this.state.commentCount}
                   </small>
                </ImgBtn>
-               <ImgBtn drawable={{press: require("./img/adh.png"), src: require("./img/adg.png")}}/>
+               <ImgBtn drawable={{press: require("./img/adh.png"), src: require("./img/adg.png")}}
+                       onClick={()=>{
+                          this.setState({
+                             showCollection:true
+                          })
+                       }}/>
             </div>
             {/*进度条*/}
             <SeekBar progress={this.props.progress} duration={this.props.duration} currentTime={this.props.currentTime}
@@ -383,6 +414,10 @@ class Page2 extends Component {
 
                     }}/>
             </div>
+            {this.state.showCollection ? <Collection data={this.props.item}
+                                                     onHidden={(show) => {
+                                                        this.setState({showCollection: show});
+                                                     }}/> : ''}
          </div>
       )
    }

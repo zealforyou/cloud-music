@@ -221,7 +221,7 @@ class App extends Component {
                                   <span style={{color: "#888888"}}>{position + 1}</span>
                                   <div className='flex-row-center item-right'>
                                      <div className='flex-c' style={{flexGrow: 1}}>
-                                        <span>{item.name ? item.name : "歌曲名"}</span>
+                                        <span className='text-single-line' style={{maxWidth:'70vw'}}>{item.name ? item.name : "歌曲名"}</span>
                                         <div className='flex-row-center' style={{marginTop: '6px'}}>
                                            <img src={require('./img/a3n.png')} style={{width: '15px', marginRight: '5px'}}/>
                                            <span style={{

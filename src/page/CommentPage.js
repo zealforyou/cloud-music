@@ -138,7 +138,7 @@ class CommentPage extends Component {
                         src={this.props.item && this.props.item.pic ? this.props.item.pic : require('../img/comm_hear.png')}/>
                      </li>
                      <li>
-                        <p>{this.props.item && this.props.item.name ? this.props.item.name : "未知"}</p>
+                        <p className='text-single-line' style={{maxWidth:"75vw"}}>{this.props.item && this.props.item.name ? this.props.item.name : "未知"}</p>
                         <p>{this.props.item && this.props.item.author ? this.props.item.author : "未知"}</p>
                      </li>
                      <li><img src={require('../img/a2u.png')} alt=""/></li>
@@ -164,6 +164,7 @@ class CommentPage extends Component {
                </div>
                <ListView data={this.state.data}
                          renderItem={(position, item) => {
+                            let date = new Date(item.create_date);
                             return (
                                <div className="comm_box test flex-row">
                                   <div className='avatar'><img src={item.avatar ? item.avatar : require('../img/bt_girl.jpg')}
@@ -174,7 +175,7 @@ class CommentPage extends Component {
                                           style={{width: '100%', marginBottom: '2px', justifyContent: "space-between"}}>
                                  <span className="comm_left flex-c">
                                     <em>{item.user_name}</em>
-                                    <em>{item.create_date}</em>
+                                    <em>{date.getFullYear()+"年"+(date.getMonth()+1)+"月"+date.getDate()+"日"}</em>
                                  </span>
                                         <span className="comm_rigth flex-row-center">
                                     <em
