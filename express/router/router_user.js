@@ -82,7 +82,8 @@ router.get("/getComment", async (req, res) => {
    let music_id = req.query.music_id;
    let phone = req.query.phone;
    try {
-      let sql = "SELECT a.*,CASE WHEN a.user_id = ? THEN 0 ELSE 1 END AS isLike,b.user_name,COUNT(c.id) as likeCount FROM tb_comment a \n" +
+      let sql = "SELECT a.*,IF(find_in_set(?,GROUP_CONCAT(c.user_id)) > 0,0,1) AS isLike," +
+         "b.user_name,COUNT(c.id) as likeCount FROM tb_comment a \n" +
          "LEFT JOIN tb_user b ON a.user_id = b.user_id\n" +
          "LEFT JOIN tb_comment_like c ON a.id = c.comment_id\n" +
          "WHERE a.music_id = ?\n" +
