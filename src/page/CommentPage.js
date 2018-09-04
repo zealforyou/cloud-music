@@ -138,7 +138,7 @@ class CommentPage extends Component {
                         src={this.props.item && this.props.item.pic ? this.props.item.pic : require('../img/comm_hear.png')}/>
                      </li>
                      <li>
-                        <p className='text-single-line' style={{maxWidth:"75vw"}}>{this.props.item && this.props.item.name ? this.props.item.name : "未知"}</p>
+                        <p className='text-single-line' style={{maxWidth:"60vw"}}>{this.props.item && this.props.item.name ? this.props.item.name : "未知"}</p>
                         <p>{this.props.item && this.props.item.author ? this.props.item.author : "未知"}</p>
                      </li>
                      <li><img src={require('../img/a2u.png')} alt=""/></li>

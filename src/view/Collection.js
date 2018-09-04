@@ -65,8 +65,8 @@ class Collection extends Component {
                  }}>
 
             </div>
-            <div id='collection_modal' className="modal" onAnimationEnd={()=>{
-               this.props.onHidden&&this.animationName==='out' && this.props.onHidden(false)
+            <div id='collection_modal' className="modal" onAnimationEnd={() => {
+               this.props.onHidden && this.animationName === 'out' && this.props.onHidden(false)
             }}>
                <p>歌曲：{this.props.data.name}</p>
                <div className="page_list">
@@ -104,7 +104,10 @@ class Collection extends Component {
                         <span>分享</span>
                      </div>
                   </div>
-                  <div className="flex-row-center item">
+                  <div className="flex-row-center item" onClick={() => {
+                     this.onHideDialog();
+                     this.props.onAuthor&& this.props.onAuthor(this.props.data.author);
+                  }}>
                      <img src={require('../img/a0n.png')} alt=""/>
                      <div className='flex-row-center'>
                         <span>歌手：</span>
@@ -134,7 +137,8 @@ class Collection extends Component {
 
 Collection.propTypes = {
    show: PropTypes.bool,
-   onHidden: PropTypes.func
+   onHidden: PropTypes.func,
+   onAuthor: PropTypes.func
 };
 let mapState = (state) => {
    return {}

@@ -46,6 +46,7 @@ router.post('/setLike', async function (req, res) {
    let url = req.body.url;
    let pic = req.body.pic;
    let lrc1 = req.body.lrc1;
+   let sq = req.body.sq;
    if (!id) res.end();
    let sql = `SELECT * from tb_music t JOIN tb_album t2 on t.album_id=t2.id where t.id=? and t2.user_id=? and t2.type=0`;
 
@@ -75,8 +76,8 @@ router.post('/setLike', async function (req, res) {
       try {
          sql = 'select id from tb_album t where t.user_id=? and t.type=0';
          result = await query(sql, [user_id]);
-         sql = `INSERT INTO tb_music (id,name,author,url,pic,lrc1,album_id) VALUES (?,?,?,?,?,?,?)`;
-         await query(sql, [id, name, author, url, pic, lrc1, result[0].id]);
+         sql = `INSERT INTO tb_music (id,name,author,url,pic,lrc1,album_id,sq) VALUES (?,?,?,?,?,?,?,?)`;
+         await query(sql, [id, name, author, url, pic, lrc1, result[0].id,sq]);
          liked = true;
       } catch (e) {
          error_code = 1;
@@ -112,6 +113,7 @@ router.post('/collect', async function (req, res) {
    let url = req.body.url;
    let pic = req.body.pic;
    let lrc1 = req.body.lrc1;
+   let sq = req.body.sq;
    try {
       let sql="select * from tb_music where album_id=? and id=?";
       let result=await query(sql,[album_id,id]);
@@ -119,8 +121,8 @@ router.post('/collect', async function (req, res) {
          res.send(baseResult(1,'改歌单已收藏了此歌曲'));
          return;
       }
-       sql="insert into tb_music (id,name,author,url,pic,lrc1,album_id) values(?,?,?,?,?,?,?)";
-      await query(sql,[id,name,author,url,pic,lrc1,album_id]);
+       sql="insert into tb_music (id,name,author,url,pic,lrc1,album_id,sq) values(?,?,?,?,?,?,?,?)";
+      await query(sql,[id,name,author,url,pic,lrc1,album_id,sq]);
       res.send(baseResult(0,'收藏成功'));
    } catch (e) {
       res.send(baseResult(1,'收藏失败'));
