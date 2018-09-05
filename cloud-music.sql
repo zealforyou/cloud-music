@@ -64,6 +64,7 @@ CREATE TABLE `tb_music` (
   `pic` varchar(255) DEFAULT NULL,
   `lrc1` varchar(2500) DEFAULT NULL,
   `album_id` varchar(255) NOT NULL,
+  `sq` int(2) NOT NULL,
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`local_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
