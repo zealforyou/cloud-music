@@ -4,10 +4,12 @@ body {
     font-family: sans-serif;
     background-color: #F0F4F3;
 }
-.app-title{
+
+.app-title {
     height: 65px;
     line-height: 65px;
 }
+
 input {
     border: none;
 }
@@ -15,11 +17,40 @@ input {
 input:focus {
     outline: none;
 }
-#root{
+
+#root {
 }
-.text-single-line{
+
+.text-single-line {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
     max-width: 60vw;
+}
+
+.common-title {
+    height: 60px;
+    position: fixed;
+    width: 100%;
+    left:0;
+    top:0;
+    z-index: 1000;
+    line-height: 60px;
+    background-color: #D33A31;
+}
+
+.common-title .tt-back {
+    width: 28px;
+    height: 28px;
+    position: absolute;
+    left: 18px;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+}
+
+.common-title .tt-name {
+    color: #ffffff;
+    font-size: 17px;
+    padding-left: 65px;
 }

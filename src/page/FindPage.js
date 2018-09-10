@@ -4,8 +4,10 @@ import "./css/Mypage.scss";
 import "./css/FindPage.scss";
 import ListView from "../ListView";
 import {Carousel} from 'antd';
+import {actionType} from "../reducer/globalState";
+import {component} from "../utils/ZUtil";
 
-export default class FindPage extends Component {
+class FindPage extends Component {
    constructor() {
       super();
    }
@@ -81,13 +83,13 @@ export default class FindPage extends Component {
       var data2 = [
          {
             pic: 'http://p1.music.126.net/zyDlTGNNCACMN1st6AmzOA==/109951163410811405.jpg',
-            pic2:'http://p1.music.126.net/EQhQvuG-OysWp74yVCWXdQ==/109951163411042851.jpg',
-            pic3:'http://p1.music.126.net/d9j7TSyqSMIRjAh3sVdkaQ==/109951163410840018.jpg',
-            pic4:'http://p1.music.126.net/aoWfwrX70oAaxjvOKe7fTA==/109951163411046774.jpg',
-            pic5:'http://p1.music.126.net/SOqEUPKFRjVvPF8TktEtug==/109951163410835375.jpg',
-            pic6:'http://p1.music.126.net/UKo-YZN_JZtLwbsrp-6e5A==/109951163410830969.jpg',
-            pic7:'http://p1.music.126.net/DL3k4seDy_aHlcWp4D45ig==/109951163411043402.jpg',
-            pic8:'http://p1.music.126.net/WCqKTqy5lHdvErtloXApYA==/109951163411048644.jpg',
+            pic2: 'http://p1.music.126.net/EQhQvuG-OysWp74yVCWXdQ==/109951163411042851.jpg',
+            pic3: 'http://p1.music.126.net/d9j7TSyqSMIRjAh3sVdkaQ==/109951163410840018.jpg',
+            pic4: 'http://p1.music.126.net/aoWfwrX70oAaxjvOKe7fTA==/109951163411046774.jpg',
+            pic5: 'http://p1.music.126.net/SOqEUPKFRjVvPF8TktEtug==/109951163410835375.jpg',
+            pic6: 'http://p1.music.126.net/UKo-YZN_JZtLwbsrp-6e5A==/109951163410830969.jpg',
+            pic7: 'http://p1.music.126.net/DL3k4seDy_aHlcWp4D45ig==/109951163411043402.jpg',
+            pic8: 'http://p1.music.126.net/WCqKTqy5lHdvErtloXApYA==/109951163411048644.jpg',
          },
       ];
       this.setState({
@@ -132,11 +134,15 @@ export default class FindPage extends Component {
 
 
             <div className="find_title flex-row-center">
-               <div className="flex-c-center">
+               <div className="flex-c-center"
+               >
                   <img src={require('../img/FM.png')} alt=""/>
                   <span>私人FM</span>
                </div>
-               <div className="flex-c-center">
+               <div className="flex-c-center"
+                    onClick={() => {
+                       this.props.history.push("/RecommendPage");
+                    }}>
                   <img src={require('../img/tuijian.png')} alt=""/>
                   <span>每日推荐</span>
                </div>
@@ -204,3 +210,12 @@ export default class FindPage extends Component {
       )
    }
 }
+
+let mapStateToProps = (state) => {
+   return {}
+};
+let mapDispatchToProps = (dispatch) => {
+   return {}
+};
+FindPage = component(mapStateToProps, mapDispatchToProps, FindPage);
+export default FindPage;

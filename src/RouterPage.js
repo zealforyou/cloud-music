@@ -12,6 +12,8 @@ import Collection from "./view/Collection";
 import CollectionSong from "./view/CollectionSong";
 import Dialog from "./view/Dialog";
 import HomePage from "./page/HomePage";
+import RecommendPage from "./page/RecommendPage";
+import SearchPageInerCopy from "./page/SearchPageInerCopy";
 
 export default class RouterPage extends Component {
    constructor() {
@@ -25,10 +27,12 @@ export default class RouterPage extends Component {
                <Route path="*/Page2/:music" component={Page2}/>
                <Route exact path="/CommentPage" component={CommentPage}/>
                <Route exact path="/SearchPage" component={SearchPage}/>
-               <Route exact path="/SearchPageIner" component={SearchPageIner}/>
+               {/*<Route exact path="/SearchPageIner" component={SearchPageIner}/>*/}
+               <Route exact path="/SearchPageIner" component={SearchPageInerCopy}/>
                <Route exact path="/App" component={App}/>
                <Route exact path="/Collection" component={Collection}/>
                <Route exact path="/CollectionSong" component={CollectionSong}/>
+               <Route exact path="/RecommendPage" component={RecommendPage}/>
                <Route exact path="/" component={HomePage}/>
             </Switch>
             <MusicPage history={this.props.history}/>
