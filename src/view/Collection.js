@@ -44,32 +44,14 @@ class Collection extends Component {
       this.animationName = 'in';
       this.animation = true;
       this.$scroll.css({animation: "collection_fade_in 0.4s forwards"});
-      this.$scroll.animate({scrollTop: 400}, 400, '', () => {
-         console.log('end');
-         this.animation = false;
-      });
+      this.$modal.css({animation: "collection_up 0.4s  forwards"});
    }
 
    onHideDialog(e) {
       this.animationName = 'out';
       this.animation = true;
       this.$scroll.css({animation: "collection_fade_out 0.4s forwards"});
-      this.$scroll.animate({scrollTop: 0}, 400, '', () => {
-         this.animation = false;
-         this.props.onHidden && this.props.onHidden(false)
-      })
-   }
-
-   onTouchEnd(e) {
-      let top = this.$scroll.scrollTop();
-      if (!this.animation) {
-         console.log(top);
-         if (top < this.$modal.height() / 1.8) {
-            this.onHideDialog();
-         } else {
-            this.onShowDialog();
-         }
-      }
+      this.$modal.css({animation: "collection_down 0.4s forwards"});
    }
 
 
@@ -83,7 +65,9 @@ class Collection extends Component {
                  }}>
 
             </div>
-            <div id='collection_modal' className="modal">
+            <div id='collection_modal' className="modal" onAnimationEnd={() => {
+               this.props.onHidden && this.animationName === 'out' && this.props.onHidden(false)
+            }}>
                <p>歌曲：{this.props.data.name}</p>
                <div className="page_list">
                   <div className="flex-row-center item">
@@ -94,7 +78,7 @@ class Collection extends Component {
                   </div>
                   <div className="flex-row-center item" onClick={() => {
                      this.props.showCreateAlbum(this.props.data);
-                     this.onHideDialog()
+                     // this.onHideDialog()
                   }}>
                      <img src={require('../img/shoucang.png')} alt=""/>
                      <div className='flex-row-center'>
@@ -120,7 +104,10 @@ class Collection extends Component {
                         <span>分享</span>
                      </div>
                   </div>
-                  <div className="flex-row-center item">
+                  <div className="flex-row-center item" onClick={() => {
+                     this.onHideDialog();
+                     this.props.onAuthor&& this.props.onAuthor(this.props.data.author);
+                  }}>
                      <img src={require('../img/a0n.png')} alt=""/>
                      <div className='flex-row-center'>
                         <span>歌手：</span>
@@ -136,7 +123,7 @@ class Collection extends Component {
                   </div>
                   <div className="flex-row-center item">
                      <img src={require('../img/a1n.png')} alt=""/>
-                     <div className='flex-row-center' style={{borderBottom:"none"}}>
+                     <div className='flex-row-center' style={{borderBottom: "none"}}>
                         <span>查看视频</span>
                      </div>
                   </div>
@@ -150,7 +137,8 @@ class Collection extends Component {
 
 Collection.propTypes = {
    show: PropTypes.bool,
-   onHidden: PropTypes.func
+   onHidden: PropTypes.func,
+   onAuthor: PropTypes.func
 };
 let mapState = (state) => {
    return {}
@@ -158,7 +146,7 @@ let mapState = (state) => {
 let mapDispatch = (dispatch) => {
    return {
       showCreateAlbum(data) {
-         dispatch({type: globalType.ACTION_SHOW_DIALOG, dialog: {component: CollectionSong,data}})
+         dispatch({type: globalType.ACTION_SHOW_DIALOG, dialog: {component: CollectionSong, data}})
       }
    }
 };

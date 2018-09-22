@@ -13,7 +13,7 @@ import {component} from "../utils/ZUtil";
 import {albumActionType} from "../reducer/AlbumState";
 import {actionType as globalType, actionType} from "../reducer/globalState";
 import * as baseUrl from "../config/BaseUrl";
-
+import {pics} from "../config/Resource";
 
  class HomePage extends Component {
    constructor() {
@@ -75,9 +75,20 @@ import * as baseUrl from "../config/BaseUrl";
 
     _register(){
        var _this=this;
-       let url = baseUrl.base + `user/register?phone=${this.state.phone}&name=${this.state.name}`;
+       let avatar=pics[parseInt(Math.random()*pics.length)];
+       let url = baseUrl.base + `user/register`;
        this.showLoading();
-       fetch(url).then((res) => {
+       fetch(url,{
+          method:"POST",
+          headers: {
+             "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+             avatar: avatar,
+             name: this.state.name,
+             phone: this.state.phone
+          })
+       }).then((res) => {
           return res.json();
        }).then((res) => {
           _this.hideLoading();
@@ -95,6 +106,7 @@ import * as baseUrl from "../config/BaseUrl";
     _go(user){
        localManager.setName(user.user_name);
        localManager.setPhone(user.user_id);
+       localManager.setAvatar(user.avatar);
        this.setState({loginDialog:false});
        this._getAlbumList();
     }

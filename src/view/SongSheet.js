@@ -40,7 +40,7 @@ export default class SongSheet extends Component {
                   <img src={require('../img/a2u.png')} alt=""
                        style={{animation: this.state.animation}}/>
                </span>
-                  <span>创建的歌单(12)</span>
+                  <span>创建的歌单({this.props.data.length})</span>
                </div>
                <span className="shezhi">
                   <img src={require('../img/a62.png')} alt=""/>

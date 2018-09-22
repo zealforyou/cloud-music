@@ -58,7 +58,7 @@ class SearchPageIner extends Component {
          });
    }
 
-   _fetchMusic(hash,collect) {
+   _fetchMusic(hash, collect, sq) {
       var _this = this;
       let url = baseUrl.base + `music/item?hash=${hash}`;
       this.showLoading();
@@ -69,8 +69,9 @@ class SearchPageIner extends Component {
          .then((result) => {
             _this.hideLoading();
             let lrc = parseLrc(result.data.lyrics);
-            let music={
+            let music = {
                id: result.data.hash,
+               sq: sq,
                name: result.data.song_name,
                author: result.data.author_name,
                url: result.data.play_url,
@@ -79,11 +80,11 @@ class SearchPageIner extends Component {
                album_name: result.data.album_name,
                lrcEntity: lrc
             };
-            if(collect){
+            if (collect) {
                _this.setState({
-                  showCollection: true, musicItem:{...music,lrcEntity:''}
+                  showCollection: true, musicItem: {...music, lrcEntity: ''}
                });
-            }else {
+            } else {
                let player = document.getElementById("music");
                _this.props.playMusic(0, music, player);
             }
@@ -98,10 +99,28 @@ class SearchPageIner extends Component {
       document.onkeydown = null;
    }
 
-   openCollection(hash) {
-      this._fetchMusic(hash,true);
+   openCollection(item) {
+      let obj=this._sq(item);
+      this._fetchMusic(obj.hash, true,obj.sq);
    }
-
+   _sq(item){
+      let hash;
+      let sq;
+      if (item.sqhash) {
+         hash = item.sqhash;
+         sq = 2;
+      } else if (item["320hash"]) {
+         hash = item["320hash"];
+         sq = 1;
+      } else {
+         hash = item.hash;
+         sq = 0;
+      }
+      return {
+         hash,
+         sq
+      }
+   }
    render() {
       var _this = this;
       return (
@@ -131,10 +150,12 @@ class SearchPageIner extends Component {
             <div style={{marginTop: '65px'}}></div>
             <ListView data={this.props.data}
                       onItemClick={(postion, item) => {
-                         this._fetchMusic(item.hash);
+                         let obj=this._sq(item);
+                         this._fetchMusic(obj.hash, false,obj.sq);
                       }}
                       style={{paddingBottom: "3rem", backgroundColor: "#f6f6f6"}}
                       renderItem={(position, item) => {
+                         let obj=this._sq(item);
                          return (
                             <div className='flex-row-center list-item'>
                                <span style={{color: "#888888"}}>{position + 1}</span>
@@ -142,7 +163,8 @@ class SearchPageIner extends Component {
                                   <div className='flex-c' style={{flexGrow: 1}}>
                                      <span>{item.songname ? item.songname : "歌曲名"}</span>
                                      <div className='flex-row-center' style={{marginTop: '6px'}}>
-                                        <img src={require('../img/a3n.png')} style={{width: '15px', marginRight: '5px'}}/>
+                                        <img src={require('../img/a3n.png')} style={{width: '15px', marginRight: '5px'
+                                           ,display:obj.sq>1? "block" : 'none'}}/>
                                         <span style={{
                                            color: "#888888",
                                            fontSize: "13px"
@@ -152,7 +174,7 @@ class SearchPageIner extends Component {
                                   <img src={require('../img/a_2.png')} style={{width: '20px', marginRight: '10px'}}/>
                                   <img src={require('../img/a3c.png')} style={{width: '15px'}} onClick={(e) => {
                                      e.stopPropagation();
-                                     this.openCollection(item.hash);
+                                     this.openCollection(item);
                                   }}/>
                                </div>
 
@@ -160,6 +182,13 @@ class SearchPageIner extends Component {
                          )
                       }}/>
             {this.state.showCollection ? <Collection data={this.state.musicItem}
+                                                     onAuthor={(author)=>{
+                                                        this.setState({
+                                                           inputValue:author
+                                                        },()=>{
+                                                           this._fetchData();
+                                                        })
+                                                     }}
                                                      onHidden={(show) => {
                                                         this.setState({showCollection: show});
                                                      }}/> : ''}

@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : huangtaining
-Source Server Version : 50525
-Source Host           : 172.22.200.164:3306
+Source Server         : liuyong
+Source Server Version : 50717
+Source Host           : 172.22.203.99:3306
 Source Database       : cloud-music
 
 Target Server Type    : MYSQL
-Target Server Version : 50525
+Target Server Version : 50717
 File Encoding         : 65001
 
-Date: 2018-07-10 17:24:03
+Date: 2018-09-04 14:41:38
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -25,7 +25,31 @@ CREATE TABLE `tb_album` (
   `album_name` varchar(255) NOT NULL,
   `type` int(5) DEFAULT '1',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+
+-- ----------------------------
+-- Table structure for tb_comment
+-- ----------------------------
+DROP TABLE IF EXISTS `tb_comment`;
+CREATE TABLE `tb_comment` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `content` varchar(500) NOT NULL,
+  `user_id` varchar(50) NOT NULL,
+  `music_id` varchar(50) NOT NULL,
+  `create_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for tb_comment_like
+-- ----------------------------
+DROP TABLE IF EXISTS `tb_comment_like`;
+CREATE TABLE `tb_comment_like` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` varchar(50) NOT NULL,
+  `comment_id` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=63 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for tb_music
@@ -40,9 +64,10 @@ CREATE TABLE `tb_music` (
   `pic` varchar(255) DEFAULT NULL,
   `lrc1` varchar(2500) DEFAULT NULL,
   `album_id` varchar(255) NOT NULL,
+  `sq` int(2) NOT NULL,
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`local_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Table structure for tb_search_log
@@ -54,7 +79,7 @@ CREATE TABLE `tb_search_log` (
   `user_id` varchar(50) NOT NULL,
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for tb_user
