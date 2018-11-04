@@ -1,6 +1,6 @@
-import CollectionSong from "../view/CollectionSong";
 
 const def = {
+   homePageIndex:0,
    showPlay: false,
    toast: {
       show: false,
@@ -28,10 +28,13 @@ const actionType = {
    ACTION_HIDE_LOADING: ' action_hide_loading',
    ACTION_SHOW_DIALOG: ' action_show_dialog',
    ACTION_HIDE_DIALOG: ' action_hide_dialog',
+   ACTION_SET_HOME_INDEX: ' action_set_home_index',
 };
 
 function globalState(state = def, action) {
    switch (action.type) {
+      case actionType.ACTION_SET_HOME_INDEX:
+         return {...state, homePageIndex: action.homePageIndex};
       case actionType.ACTION_SHOW_PLAY_CONTROLLER:
          return {...state, showPlay: action.showPlay};
       case actionType.ACTION_SHOW_TOAST:

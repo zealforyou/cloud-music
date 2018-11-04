@@ -25,7 +25,6 @@ import {pics} from "../config/Resource";
       let phone = localManager.getPhone();
       this.setState({
          likeId: [],
-         currentPage:1,
          loginDialog:!phone
       });
       if (phone){
@@ -162,12 +161,12 @@ import {pics} from "../config/Resource";
                   }}/>
                </span>
                </div>
-               <MenuTab selectItem={1} menus={[{title: '发现'}, {title: '我的'}, {title: '电台'}]}
+               <MenuTab selectItem={this.props.homePageIndex} menus={[{title: '发现'}, {title: '我的'}, {title: '电台'}]}
                         itemClick={(index) => {
-                           this.setState({currentPage:index})
+                           this.props.setPageIndex(index);
                         }}/></div>
             {
-               this.switchPage(this.state.currentPage)
+               this.switchPage(this.props.homePageIndex)
             }
             <div className='div_login' style={{display: this.state.loginDialog?'block':'none'}}>
                <div className='center'>
@@ -202,6 +201,7 @@ import {pics} from "../config/Resource";
 }
 const mapStateToProps = (state) => {
    return {
+      homePageIndex:state.globalState.homePageIndex
    }
 };
 const mapDispatchToProps = (dispatch) => {
@@ -214,7 +214,10 @@ const mapDispatchToProps = (dispatch) => {
       },
       setAlbumData(data) {
          dispatch({type: albumActionType.SET_DATA, data});
-      }
+      },
+      setPageIndex(homePageIndex) {
+         dispatch({type: globalType.ACTION_SET_HOME_INDEX, homePageIndex});
+      },
    }
 };
 HomePage = component(mapStateToProps, mapDispatchToProps,HomePage);

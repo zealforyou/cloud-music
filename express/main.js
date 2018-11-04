@@ -6,6 +6,16 @@ var router_user=require('./router/router_user');
 var router_system=require('./router/router_system');
 var bodyParser=require('body-parser');
 var app = express();
+const timeout = require('connect-timeout');
+const proxy = require('http-proxy-middleware');
+// 超时时间
+const TIME_OUT = 30 * 1e3;
+// 设置超时 返回超时响应
+app.use(timeout(TIME_OUT));
+app.use((req, res, next) => {
+   if (!req.timedout) next();
+});
+const  HOST = 'http://www.gequdaquan.net';
 app.all("/*",function (req, res, next) {
    console.log("url:"+req.originalUrl);
    console.log(req.query);
@@ -21,6 +31,7 @@ app.get("/music/item",router_music_item);
 app.use("/album",router_album);
 app.use("/user",router_user);
 app.use("/system",router_system);
+app.use('/gqss/api.php', proxy({ target: HOST, changeOrigin: true }));
 var server = app.listen(80, function () {
    var host = server.address().address;
    var port = server.address().port;
