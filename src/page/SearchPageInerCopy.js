@@ -15,6 +15,7 @@ const parseLrc = require('../LrcManager');
 class SearchPageIner extends Component {
    constructor() {
       super();
+      this.source="tencent";
    }
 
    componentWillMount() {
@@ -47,7 +48,7 @@ class SearchPageIner extends Component {
       this.showLoading();
       $.ajax({
          method: "GET",
-         url: baseUrl.base+"gqss/api.php?types=search&count=20&pages=0&source=tencent&name="+this.state.inputValue,
+         url: baseUrl.base+"gqss/api.php?types=search&count=20&pages=0&source="+this.source+"&name="+this.state.inputValue,
          dataType: "jsonp",
          success: async function(jsonData) {
             _this.hideLoading();
@@ -82,7 +83,7 @@ class SearchPageIner extends Component {
       this.showLoading();
       $.ajax({
          method: "GET",
-         url: baseUrl.base+"gqss/api.php?types=url&source=netease&id="+item.id,
+         url: baseUrl.base+"gqss/api.php?types=url&source="+this.source+"&id="+item.id,
          dataType: "jsonp",
          success: async function(jsonData) {
             let lyric=await _this._getLrc(item.lyric_id);
@@ -117,11 +118,11 @@ class SearchPageIner extends Component {
       });
    }
    _getLrc(lyric_id) {
+      let _this = this;
       return  new Promise(function (resolve, reject) {
-         let _this = this;
          $.ajax({
             method: "GET",
-            url: baseUrl.base+"gqss/api.php?types=lyric&source=netease&id=" + lyric_id,
+            url: baseUrl.base+"gqss/api.php?types=lyric&source="+_this.source+"&id=" + lyric_id,
             dataType: "jsonp",
             success: jsonData => {
                resolve(jsonData.lyric);
@@ -134,11 +135,11 @@ class SearchPageIner extends Component {
       });
    }
    _getPic(picId) {
+      let _this = this;
       return  new Promise(function (resolve, reject) {
-         let _this = this;
          $.ajax({
             method: "GET",
-            url: baseUrl.base+"gqss/api.php?types=pic&source=netease&id=" + picId,
+            url: baseUrl.base+"gqss/api.php?types=pic&source="+_this.source+"&id=" + picId,
             dataType: "jsonp",
             success: jsonData => {
                resolve(jsonData.url);
