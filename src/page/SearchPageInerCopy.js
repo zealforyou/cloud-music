@@ -47,7 +47,7 @@ class SearchPageIner extends Component {
       this.showLoading();
       $.ajax({
          method: "GET",
-         url: baseUrl.base+"gqss/api.php?types=search&count=20&pages=0&source=QQ引擎&name="+this.state.inputValue,
+         url: baseUrl.base+"gqss/api.php?types=search&count=20&pages=0&source=tencent&name="+this.state.inputValue,
          dataType: "jsonp",
          success: async function(jsonData) {
             _this.hideLoading();
